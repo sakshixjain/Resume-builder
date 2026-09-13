@@ -50,7 +50,7 @@ export const LanguagesForm: React.FC = () => {
           className="text-xs"
           leftIcon={<Languages className="w-4 h-4" />}
         />
-        <Button type="submit" size="sm" variant="gradient" className="shrink-0 text-xs font-bold">
+        <Button type="submit" size="sm" className="shrink-0 text-xs font-semibold rounded-xl px-4 shadow-xs">
           <Plus className="w-3.5 h-3.5" />
           Add
         </Button>
@@ -58,8 +58,8 @@ export const LanguagesForm: React.FC = () => {
 
       {/* Quick suggestions */}
       <div>
-        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2 flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-teal-400" />
+        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2 flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-blue-600" />
           Quick Add:
         </span>
         <div className="flex flex-wrap gap-1.5">
@@ -73,7 +73,7 @@ export const LanguagesForm: React.FC = () => {
                 key={lang}
                 type="button"
                 onClick={() => addLanguage(lang)}
-                className="text-[11px] font-semibold px-2.5 py-1 bg-slate-900 hover:bg-teal-600 hover:text-white border border-slate-700 hover:border-teal-500 text-slate-300 transition-colors cursor-pointer"
+                className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-white hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 border border-slate-200 text-slate-700 transition-colors shadow-2xs cursor-pointer"
               >
                 + {lang}
               </button>
@@ -85,21 +85,21 @@ export const LanguagesForm: React.FC = () => {
       {/* Language List */}
       <div className="space-y-2 pt-2">
         {resume.languages.length === 0 ? (
-          <p className="text-xs text-slate-500 italic py-2">
+          <p className="text-xs text-slate-400 italic py-2">
             No languages added yet.
           </p>
         ) : (
           resume.languages.map((lang) => (
             <div
               key={lang.id}
-              className="flex items-center justify-between p-2 bg-slate-900 border border-slate-800"
+              className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50/70 border border-slate-200 shadow-2xs hover:border-slate-300 transition-colors"
             >
               <Input
                 value={lang.name}
                 onChange={(e) =>
                   updateLanguage(lang.id, { name: e.target.value })
                 }
-                className="h-8 max-w-[180px] text-xs font-bold bg-slate-950"
+                className="h-8 max-w-[180px] text-xs font-semibold bg-white"
               />
 
               <div className="flex items-center gap-2">
@@ -110,24 +110,22 @@ export const LanguagesForm: React.FC = () => {
                       proficiency: e.target.value as LanguageProficiency,
                     })
                   }
-                  className="h-8 border border-slate-700 bg-slate-950 px-2 text-xs font-semibold text-white focus:outline-none focus:border-cyan-400 cursor-pointer"
+                  className="h-8 rounded-lg border border-slate-200 bg-white px-2.5 text-xs font-semibold text-slate-700 focus:outline-none focus:border-blue-500 cursor-pointer shadow-2xs"
                 >
                   {PROFICIENCY_LEVELS.map((level) => (
-                    <option key={level} value={level} className="bg-slate-950 text-white">
+                    <option key={level} value={level}>
                       {level}
                     </option>
                   ))}
                 </select>
 
-                <Button
+                <button
                   type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="text-slate-400 hover:text-rose-400 hover:bg-slate-800 h-8 w-8"
+                  className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
                   onClick={() => deleteLanguage(lang.id)}
                 >
                   <Trash2 className="w-3.5 h-3.5" />
-                </Button>
+                </button>
               </div>
             </div>
           ))
@@ -136,3 +134,4 @@ export const LanguagesForm: React.FC = () => {
     </div>
   );
 };
+

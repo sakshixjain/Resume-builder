@@ -12,30 +12,29 @@ import { CertificationsForm } from "./sections/CertificationsForm";
 import { LanguagesForm } from "./sections/LanguagesForm";
 import { AchievementsForm } from "./sections/AchievementsForm";
 import { CustomSectionForm } from "./sections/CustomSectionForm";
-import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
+import { Button } from "@/components/ui/Button";
 import {
   User,
   FileText,
   Briefcase,
   GraduationCap,
   Code2,
-  FolderGit2,
+  Folder,
   Award,
-  Languages,
+  Globe,
   Trophy,
+  ChevronRight,
   ChevronDown,
-  ChevronUp,
+  Check,
+  Plus,
+  Layers,
   ArrowUp,
   ArrowDown,
   Eye,
   EyeOff,
-  Plus,
-  Layers,
-  CheckCircle2,
-  Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -53,13 +52,13 @@ export const EditorPanel: React.FC = () => {
   const [newSectionTitle, setNewSectionTitle] = useState("");
 
   const PRESET_CUSTOM_SECTIONS = [
-    "Publications",
     "Volunteer Experience",
+    "Publications",
     "Awards & Honors",
     "Patents",
     "Interests & Hobbies",
     "References",
-    "Speaking & Conferences",
+    "Conferences",
   ];
 
   const handleCreateCustomSection = (title: string) => {
@@ -70,107 +69,107 @@ export const EditorPanel: React.FC = () => {
     toast.success(`Added "${title.trim()}" section`);
   };
 
-  // Section meta descriptors with distinct vibrant color coding
+  // Section meta descriptors matching the reference UI
   const getSectionMeta = (sectionKey: string) => {
     switch (sectionKey) {
       case "personalInfo":
         return {
           title: "Personal Information",
-          icon: <User className="w-4 h-4 text-blue-400" />,
-          iconBg: "bg-blue-950/80 border-blue-800 text-blue-400",
-          borderAccent: "border-l-blue-500",
-          badgeColor: "text-blue-400 bg-blue-950/80 border-blue-800",
+          subtitle: "Basic details about you",
+          expandedSubtitle: "Tell us about yourself. This information will appear at the top of your resume.",
+          icon: <User className="w-5 h-5 text-blue-600" />,
+          iconBg: "bg-blue-50 text-blue-600 border border-blue-100",
           isFilled: !!resume.personalInfo.fullName && !!resume.personalInfo.email,
         };
       case "summary":
         return {
           title: "Professional Summary",
-          icon: <FileText className="w-4 h-4 text-cyan-400" />,
-          iconBg: "bg-cyan-950/80 border-cyan-800 text-cyan-400",
-          borderAccent: "border-l-cyan-500",
-          badgeColor: "text-cyan-400 bg-cyan-950/80 border-cyan-800",
+          subtitle: "A short introduction",
+          expandedSubtitle: "Write a compelling professional summary highlighting your key strengths.",
+          icon: <FileText className="w-5 h-5 text-teal-600" />,
+          iconBg: "bg-teal-50 text-teal-600 border border-teal-100",
           isFilled: !!resume.summary.trim(),
         };
-      case "experience":
-        return {
-          title: "Work Experience",
-          icon: <Briefcase className="w-4 h-4 text-indigo-400" />,
-          iconBg: "bg-indigo-950/80 border-indigo-800 text-indigo-400",
-          borderAccent: "border-l-indigo-500",
-          badgeColor: "text-indigo-400 bg-indigo-950/80 border-indigo-800",
-          isFilled: resume.experience.length > 0,
-          count: resume.experience.length,
-        };
       case "education":
+        const eduCount = resume.education.length;
         return {
           title: "Education",
-          icon: <GraduationCap className="w-4 h-4 text-amber-400" />,
-          iconBg: "bg-amber-950/80 border-amber-800 text-amber-400",
-          borderAccent: "border-l-amber-500",
-          badgeColor: "text-amber-400 bg-amber-950/80 border-amber-800",
-          isFilled: resume.education.length > 0,
-          count: resume.education.length,
+          subtitle: `${eduCount} ${eduCount === 1 ? "entry" : "entries"}`,
+          expandedSubtitle: "List your academic qualifications, degrees, GPA, and graduation dates.",
+          icon: <GraduationCap className="w-5 h-5 text-orange-600" />,
+          iconBg: "bg-orange-50 text-orange-600 border border-orange-100",
+          isFilled: eduCount > 0,
+        };
+      case "experience":
+        const expCount = resume.experience.length;
+        return {
+          title: "Work Experience",
+          subtitle: `${expCount} ${expCount === 1 ? "entry" : "entries"}`,
+          expandedSubtitle: "Highlight your career history, key responsibilities, and achievements.",
+          icon: <Briefcase className="w-5 h-5 text-purple-600" />,
+          iconBg: "bg-purple-50 text-purple-600 border border-purple-100",
+          isFilled: expCount > 0,
         };
       case "skills":
+        const skCount = resume.skills.length;
         return {
           title: "Skills & Proficiencies",
-          icon: <Code2 className="w-4 h-4 text-emerald-400" />,
-          iconBg: "bg-emerald-950/80 border-emerald-800 text-emerald-400",
-          borderAccent: "border-l-emerald-500",
-          badgeColor: "text-emerald-400 bg-emerald-950/80 border-emerald-800",
-          isFilled: resume.skills.length > 0,
-          count: resume.skills.length,
+          subtitle: `${skCount} ${skCount === 1 ? "entry" : "entries"}`,
+          expandedSubtitle: "Add technical skills, programming languages, frameworks, and tools.",
+          icon: <Code2 className="w-5 h-5 text-emerald-600" />,
+          iconBg: "bg-emerald-50 text-emerald-600 border border-emerald-100",
+          isFilled: skCount > 0,
         };
       case "projects":
+        const prjCount = resume.projects.length;
         return {
           title: "Projects",
-          icon: <FolderGit2 className="w-4 h-4 text-rose-400" />,
-          iconBg: "bg-rose-950/80 border-rose-800 text-rose-400",
-          borderAccent: "border-l-rose-500",
-          badgeColor: "text-rose-400 bg-rose-950/80 border-rose-800",
-          isFilled: resume.projects.length > 0,
-          count: resume.projects.length,
+          subtitle: `${prjCount} ${prjCount === 1 ? "entry" : "entries"}`,
+          expandedSubtitle: "Showcase notable projects, live demo links, and tech stacks.",
+          icon: <Folder className="w-5 h-5 text-rose-600" />,
+          iconBg: "bg-rose-50 text-rose-600 border border-rose-100",
+          isFilled: prjCount > 0,
         };
       case "certifications":
+        const certCount = resume.certifications.length;
         return {
           title: "Certifications",
-          icon: <Award className="w-4 h-4 text-purple-400" />,
-          iconBg: "bg-purple-950/80 border-purple-800 text-purple-400",
-          borderAccent: "border-l-purple-500",
-          badgeColor: "text-purple-400 bg-purple-950/80 border-purple-800",
-          isFilled: resume.certifications.length > 0,
-          count: resume.certifications.length,
+          subtitle: `${certCount} ${certCount === 1 ? "entry" : "entries"}`,
+          expandedSubtitle: "Include industry credentials, accredited licenses, and certifications.",
+          icon: <Award className="w-5 h-5 text-fuchsia-600" />,
+          iconBg: "bg-fuchsia-50 text-fuchsia-600 border border-fuchsia-100",
+          isFilled: certCount > 0,
         };
       case "languages":
+        const langCount = resume.languages.length;
         return {
           title: "Languages",
-          icon: <Languages className="w-4 h-4 text-teal-400" />,
-          iconBg: "bg-teal-950/80 border-teal-800 text-teal-400",
-          borderAccent: "border-l-teal-500",
-          badgeColor: "text-teal-400 bg-teal-950/80 border-teal-800",
-          isFilled: resume.languages.length > 0,
-          count: resume.languages.length,
+          subtitle: `${langCount} ${langCount === 1 ? "entry" : "entries"}`,
+          expandedSubtitle: "List languages you speak along with proficiency levels.",
+          icon: <Globe className="w-5 h-5 text-sky-600" />,
+          iconBg: "bg-sky-50 text-sky-600 border border-sky-100",
+          isFilled: langCount > 0,
         };
       case "achievements":
+        const achCount = resume.achievements.length;
         return {
           title: "Key Achievements",
-          icon: <Trophy className="w-4 h-4 text-yellow-400" />,
-          iconBg: "bg-yellow-950/80 border-yellow-800 text-yellow-400",
-          borderAccent: "border-l-yellow-500",
-          badgeColor: "text-yellow-400 bg-yellow-950/80 border-yellow-800",
-          isFilled: resume.achievements.length > 0,
-          count: resume.achievements.length,
+          subtitle: `${achCount} ${achCount === 1 ? "entry" : "entries"}`,
+          expandedSubtitle: "Highlight major awards, competitions, and key recognitions.",
+          icon: <Trophy className="w-5 h-5 text-yellow-600" />,
+          iconBg: "bg-amber-50 text-amber-600 border border-amber-100",
+          isFilled: achCount > 0,
         };
       default:
         const customSec = resume.customSections?.find((cs) => cs.id === sectionKey);
+        const count = customSec?.items.length || 0;
         return {
           title: customSec?.title || "Custom Section",
-          icon: <Layers className="w-4 h-4 text-fuchsia-400" />,
-          iconBg: "bg-fuchsia-950/80 border-fuchsia-800 text-fuchsia-400",
-          borderAccent: "border-l-fuchsia-500",
-          badgeColor: "text-fuchsia-400 bg-fuchsia-950/80 border-fuchsia-800",
-          isFilled: (customSec?.items.length || 0) > 0,
-          count: customSec?.items.length || 0,
+          subtitle: `${count} ${count === 1 ? "entry" : "entries"}`,
+          expandedSubtitle: "Custom section items and details.",
+          icon: <Layers className="w-5 h-5 text-indigo-600" />,
+          iconBg: "bg-indigo-50 text-indigo-600 border border-indigo-100",
+          isFilled: count > 0,
         };
     }
   };
@@ -181,10 +180,10 @@ export const EditorPanel: React.FC = () => {
         return <PersonalInfoForm />;
       case "summary":
         return <SummaryForm />;
-      case "experience":
-        return <ExperienceForm />;
       case "education":
         return <EducationForm />;
+      case "experience":
+        return <ExperienceForm />;
       case "skills":
         return <SkillsForm />;
       case "projects":
@@ -205,20 +204,19 @@ export const EditorPanel: React.FC = () => {
   const allSectionsToRender = ["personalInfo", ...resume.sectionOrder];
 
   return (
-    <div className="flex flex-col h-full bg-slate-900 border-r border-slate-800 text-slate-100">
-      {/* Top Banner Indicator */}
-      <div className="px-4 py-2 bg-slate-950 border-b border-slate-800 flex items-center justify-between text-xs font-mono">
-        <span className="text-slate-400 uppercase tracking-wider flex items-center gap-1.5 font-bold">
-          <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-          Editor Sections
-        </span>
-        <span className="text-[10px] text-slate-400">
-          Click section to expand & edit
-        </span>
+    <div className="flex flex-col h-full bg-white border-r border-slate-200/80 text-slate-900">
+      {/* Top Header */}
+      <div className="px-5 pt-5 pb-3">
+        <h1 className="text-lg font-bold text-slate-900 tracking-tight">
+          Edit Your Resume
+        </h1>
+        <p className="text-xs text-slate-500 mt-0.5">
+          Fill in your details and see the changes live
+        </p>
       </div>
 
-      {/* Editor Content Scroll Container */}
-      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2.5 pb-24">
+      {/* Section Cards Scrollable Area */}
+      <div className="flex-1 overflow-y-auto px-5 py-2 space-y-3 pb-20">
         {allSectionsToRender.map((sectionKey) => {
           const meta = getSectionMeta(sectionKey);
           const isOpen = activeSection === sectionKey;
@@ -228,106 +226,105 @@ export const EditorPanel: React.FC = () => {
           return (
             <div
               key={sectionKey}
-              className={`border border-l-4 transition-all duration-150 ${meta.borderAccent} ${
+              className={`rounded-2xl border transition-all duration-150 overflow-hidden ${
                 isOpen
-                  ? "bg-slate-950 border-slate-700 shadow-xl"
-                  : "bg-slate-950/80 border-slate-800/90 hover:border-slate-700"
+                  ? "border-blue-500/80 ring-2 ring-blue-500/10 shadow-sm bg-white"
+                  : "border-slate-200/80 bg-white hover:border-slate-300 hover:shadow-2xs"
               }`}
             >
-              {/* Accordion Header */}
+              {/* Card Header */}
               <div
-                className={`flex items-center justify-between p-3 select-none cursor-pointer transition-colors ${
-                  isOpen ? "bg-slate-900/90 border-b border-slate-800" : "hover:bg-slate-900/60"
+                className={`p-3.5 sm:p-4 flex items-center justify-between cursor-pointer select-none transition-colors ${
+                  isOpen ? "bg-white border-b border-slate-100" : "bg-white hover:bg-slate-50/40"
                 }`}
                 onClick={() => setActiveSection(isOpen ? "" : sectionKey)}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`w-8 h-8 border flex items-center justify-center shrink-0 ${meta.iconBg}`}>
+                {/* Left: Icon, Title, Subtitle */}
+                <div className="flex items-center gap-3.5">
+                  <div
+                    className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shrink-0 shadow-2xs ${meta.iconBg}`}
+                  >
                     {meta.icon}
                   </div>
 
                   <div>
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-xs sm:text-sm font-bold text-white tracking-tight">
-                        {meta.title}
-                      </h3>
-                      {meta.isFilled && (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                      )}
-                    </div>
-                    {meta.count !== undefined && (
-                      <span className="text-[10px] font-mono text-slate-400">
-                        {meta.count} {meta.count === 1 ? "ENTRY" : "ENTRIES"}
-                      </span>
-                    )}
+                    <h2 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
+                      {meta.title}
+                    </h2>
+                    <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">
+                      {isOpen ? meta.expandedSubtitle : meta.subtitle}
+                    </p>
                   </div>
                 </div>
 
-                {/* Right controls: Reorder, Visibility, Accordion expand */}
+                {/* Right: Status Pill & Chevron */}
                 <div
-                  className="flex items-center gap-1"
-                  onClick={(e) => e.stopPropagation()}
+                  className="flex items-center gap-2.5 shrink-0 ml-2"
+                  onClick={(e) => isOpen && e.stopPropagation()}
                 >
-                  {!isAnchored && (
-                    <>
-                      {/* Move Up */}
+                  {/* Reorder and Visibility controls when open */}
+                  {isOpen && !isAnchored && (
+                    <div className="flex items-center gap-1 mr-1">
                       <button
                         type="button"
                         title="Move Up"
                         onClick={() => moveSection(sectionKey, "up")}
-                        className="p-1 text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition-colors cursor-pointer"
+                        className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded transition-colors"
                       >
                         <ArrowUp className="w-3.5 h-3.5" />
                       </button>
-
-                      {/* Move Down */}
                       <button
                         type="button"
                         title="Move Down"
                         onClick={() => moveSection(sectionKey, "down")}
-                        className="p-1 text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition-colors cursor-pointer"
+                        className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded transition-colors"
                       >
                         <ArrowDown className="w-3.5 h-3.5" />
                       </button>
-
-                      {/* Visibility Toggle */}
                       <button
                         type="button"
-                        title={isVisible ? "Hide section in preview" : "Show section in preview"}
+                        title={isVisible ? "Hide in preview" : "Show in preview"}
                         onClick={() => toggleSectionVisibility(sectionKey)}
-                        className={`p-1 transition-colors cursor-pointer border ${
-                          isVisible
-                            ? "text-slate-400 hover:text-white hover:bg-slate-800 border-transparent hover:border-slate-700"
-                            : "text-amber-400 bg-amber-950/60 border-amber-800"
-                        }`}
+                        className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded transition-colors"
                       >
                         {isVisible ? (
                           <Eye className="w-3.5 h-3.5" />
                         ) : (
-                          <EyeOff className="w-3.5 h-3.5" />
+                          <EyeOff className="w-3.5 h-3.5 text-amber-600" />
                         )}
                       </button>
-                    </>
+                    </div>
                   )}
 
-                  {/* Expand / Collapse */}
-                  <button
-                    type="button"
-                    onClick={() => setActiveSection(isOpen ? "" : sectionKey)}
-                    className="p-1 text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition-colors ml-0.5 cursor-pointer"
-                  >
-                    {isOpen ? (
-                      <ChevronUp className="w-4 h-4 text-cyan-400" />
+                  {/* Completed Green Badge Pill when open or checkmark when collapsed */}
+                  {meta.isFilled && (
+                    isOpen ? (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600 border border-emerald-200/80 shadow-2xs">
+                        <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                        Completed
+                      </span>
                     ) : (
-                      <ChevronDown className="w-4 h-4" />
-                    )}
-                  </button>
+                      <div className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center shrink-0">
+                        <Check className="w-3 h-3 stroke-[2.5]" />
+                      </div>
+                    )
+                  )}
+
+                  {/* Chevron Indicator */}
+                  {isOpen ? (
+                    <div className="p-1 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors">
+                      <ChevronDown className="w-5 h-5 rotate-180" />
+                    </div>
+                  ) : (
+                    <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
+                  )}
                 </div>
               </div>
 
-              {/* Accordion Content Body */}
+
+              {/* Expanded Sub-form Content */}
               {isOpen && (
-                <div className="p-4 bg-slate-950 border-t border-slate-800 animate-in fade-in-50 duration-100">
+                <div className="p-4 sm:p-5 bg-white animate-in fade-in duration-150">
                   {renderSectionForm(sectionKey)}
                 </div>
               )}
@@ -335,17 +332,25 @@ export const EditorPanel: React.FC = () => {
           );
         })}
 
-        {/* Add Section Button */}
-        <div className="pt-2">
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full py-3 border-dashed border-slate-700 hover:border-cyan-500 bg-slate-950 text-slate-200 hover:text-cyan-300 font-bold text-xs shadow-lg transition-all"
-            onClick={() => setIsAddSectionModalOpen(true)}
-          >
-            <Plus className="w-4 h-4 text-cyan-400" />
-            + Add New Custom Section
-          </Button>
+        {/* Add Custom Section Button */}
+        <div
+          onClick={() => setIsAddSectionModalOpen(true)}
+          className="rounded-2xl border border-dashed border-blue-200 bg-blue-50/20 hover:bg-blue-50/50 p-3.5 sm:p-4 flex items-center justify-between cursor-pointer transition-all shadow-2xs group"
+        >
+          <div className="flex items-center gap-3.5">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-blue-100/80 text-blue-600 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <Plus className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-blue-600">
+                Add Custom Section
+              </h2>
+              <p className="text-xs text-slate-400">
+                Add achievements, interests, volunteer work, etc.
+              </p>
+            </div>
+          </div>
+          <ChevronRight className="w-4 h-4 text-blue-400" />
         </div>
       </div>
 
@@ -359,13 +364,13 @@ export const EditorPanel: React.FC = () => {
         <div className="space-y-4">
           <div>
             <Label>Popular Section Presets</Label>
-            <div className="grid grid-cols-2 gap-2 mt-1.5">
+            <div className="grid grid-cols-2 gap-2 mt-2">
               {PRESET_CUSTOM_SECTIONS.map((preset) => (
                 <button
                   key={preset}
                   type="button"
                   onClick={() => handleCreateCustomSection(preset)}
-                  className="p-2.5 text-left text-xs font-semibold text-slate-200 bg-slate-900 hover:bg-indigo-600 hover:text-white border border-slate-800 hover:border-indigo-600 transition-all cursor-pointer"
+                  className="p-2.5 text-left text-xs font-medium text-slate-800 bg-slate-50 hover:bg-blue-50 hover:text-blue-600 border border-slate-200 hover:border-blue-200 rounded-lg transition-all cursor-pointer"
                 >
                   + {preset}
                 </button>
@@ -373,7 +378,7 @@ export const EditorPanel: React.FC = () => {
             </div>
           </div>
 
-          <div className="pt-2 border-t border-slate-800 space-y-2">
+          <div className="pt-3 border-t border-slate-100 space-y-2">
             <Label>Or Custom Section Title</Label>
             <div className="flex gap-2">
               <Input

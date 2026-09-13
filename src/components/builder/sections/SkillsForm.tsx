@@ -81,16 +81,16 @@ export const SkillsForm: React.FC = () => {
           <select
             value={selectedLevel}
             onChange={(e) => setSelectedLevel(e.target.value as SkillLevel)}
-            className="h-9 border border-slate-700 bg-slate-900 px-2.5 text-xs font-semibold text-white focus:outline-none focus:border-cyan-400 cursor-pointer"
+            className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-800 focus:outline-none focus:border-blue-500 cursor-pointer shadow-2xs"
           >
             {SKILL_LEVELS.map((lvl) => (
-              <option key={lvl} value={lvl} className="bg-slate-950 text-white">
+              <option key={lvl} value={lvl}>
                 {lvl}
               </option>
             ))}
           </select>
 
-          <Button type="submit" size="sm" variant="gradient" className="shrink-0 text-xs font-bold">
+          <Button type="submit" size="sm" className="shrink-0 text-xs font-semibold rounded-xl px-4 shadow-xs">
             <Plus className="w-3.5 h-3.5" />
             Add
           </Button>
@@ -99,8 +99,8 @@ export const SkillsForm: React.FC = () => {
 
       {/* Popular Suggestions */}
       <div>
-        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2 flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2 flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-blue-600" />
           Quick Add Popular Tech Skills:
         </span>
         <div className="flex flex-wrap gap-1.5">
@@ -115,13 +115,13 @@ export const SkillsForm: React.FC = () => {
                 type="button"
                 onClick={() => handleQuickAdd(skillName)}
                 disabled={isAdded}
-                className={`inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 transition-colors cursor-pointer border ${
+                className={`inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1 rounded-lg transition-colors cursor-pointer border ${
                   isAdded
-                    ? "bg-slate-950 text-slate-600 border-slate-800 cursor-default"
-                    : "bg-slate-900 text-slate-200 hover:bg-emerald-600 hover:text-white border-slate-700 hover:border-emerald-500 shadow-xs"
+                    ? "bg-slate-100 text-slate-400 border-slate-200 cursor-default"
+                    : "bg-white text-slate-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 border-slate-200 shadow-2xs"
                 }`}
               >
-                {isAdded ? <Check className="w-3 h-3 text-emerald-500" /> : <Plus className="w-3 h-3 text-emerald-400" />}
+                {isAdded ? <Check className="w-3 h-3 text-emerald-600" /> : <Plus className="w-3 h-3 text-blue-600" />}
                 {skillName}
               </button>
             );
@@ -131,12 +131,12 @@ export const SkillsForm: React.FC = () => {
 
       {/* Current Added Skills */}
       <div className="pt-2">
-        <span className="text-xs font-bold text-white uppercase tracking-wider block mb-2">
+        <span className="text-xs font-bold text-slate-700 block mb-2.5">
           Your Skills ({resume.skills.length})
         </span>
 
         {resume.skills.length === 0 ? (
-          <p className="text-xs text-slate-500 italic py-2">
+          <p className="text-xs text-slate-400 italic py-2">
             No skills added yet. Type a skill above or click from suggestions.
           </p>
         ) : (
@@ -144,10 +144,10 @@ export const SkillsForm: React.FC = () => {
             {resume.skills.map((skill) => (
               <div
                 key={skill.id}
-                className="flex items-center justify-between p-2 bg-slate-900 border border-slate-800 text-xs"
+                className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50/70 border border-slate-200 text-xs shadow-2xs hover:border-slate-300 transition-colors"
               >
                 <div className="flex items-center gap-2 truncate mr-2">
-                  <span className="font-bold text-white truncate">
+                  <span className="font-semibold text-slate-900 truncate">
                     {skill.name}
                   </span>
                 </div>
@@ -160,10 +160,10 @@ export const SkillsForm: React.FC = () => {
                         level: e.target.value as SkillLevel,
                       })
                     }
-                    className="h-6 text-[10px] font-semibold border border-slate-700 bg-slate-950 px-1 text-slate-300 cursor-pointer"
+                    className="h-6 text-[10px] font-semibold rounded-md border border-slate-200 bg-white px-1.5 text-slate-700 cursor-pointer shadow-2xs"
                   >
                     {SKILL_LEVELS.map((lvl) => (
-                      <option key={lvl} value={lvl} className="bg-slate-950 text-white">
+                      <option key={lvl} value={lvl}>
                         {lvl}
                       </option>
                     ))}
@@ -172,7 +172,7 @@ export const SkillsForm: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => deleteSkill(skill.id)}
-                    className="text-slate-400 hover:text-rose-400 p-1 hover:bg-slate-800"
+                    className="text-slate-400 hover:text-rose-600 p-1 rounded hover:bg-rose-50 transition-colors"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -185,3 +185,4 @@ export const SkillsForm: React.FC = () => {
     </div>
   );
 };
+

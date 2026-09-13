@@ -13,16 +13,16 @@ export const Badge: React.FC<BadgeProps> = ({
 }) => {
   const variants = {
     default: "bg-slate-900 text-white border-slate-900",
-    secondary: "bg-slate-100 text-slate-800 border-slate-300",
-    outline: "bg-transparent text-slate-700 border-slate-300",
-    success: "bg-emerald-50 text-emerald-800 border-emerald-300",
-    warning: "bg-amber-50 text-amber-800 border-amber-300",
+    secondary: "bg-slate-100 text-slate-800 border-slate-200",
+    outline: "bg-transparent text-slate-700 border-slate-200",
+    success: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    warning: "bg-amber-50 text-amber-700 border-amber-200",
   };
 
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 px-2 py-0.5 rounded-none text-xs font-medium border uppercase tracking-wider",
+        "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium border",
         variants[variant],
         className
       )}

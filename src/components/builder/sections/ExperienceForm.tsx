@@ -51,46 +51,46 @@ export const ExperienceForm: React.FC = () => {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {resume.experience.length === 0 ? (
-        <div className="text-center py-6 border border-dashed border-slate-700 bg-slate-900/50">
-          <Briefcase className="w-7 h-7 text-slate-500 mx-auto mb-2" />
-          <p className="text-xs text-slate-400 font-medium">No work experience added yet.</p>
+        <div className="text-center py-8 rounded-xl border border-dashed border-slate-200 bg-slate-50/50">
+          <Briefcase className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+          <p className="text-xs text-slate-600 font-medium">No work experience added yet.</p>
           <Button
             type="button"
             size="sm"
             variant="outline"
-            className="mt-3 text-xs font-bold bg-slate-900 text-white border-slate-700"
+            className="mt-3 text-xs font-semibold bg-white text-slate-700 hover:bg-slate-50 shadow-2xs"
             onClick={addExperience}
           >
-            <Plus className="w-3.5 h-3.5 text-cyan-400" />
+            <Plus className="w-3.5 h-3.5 text-blue-600" />
             Add First Job
           </Button>
         </div>
       ) : (
-        <div className="space-y-2.5">
+        <div className="space-y-3">
           {resume.experience.map((exp, index) => {
             const isExpanded = expandedId === exp.id;
 
             return (
               <div
                 key={exp.id}
-                className="border border-slate-800 bg-slate-950 shadow-md transition-all"
+                className="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-2xs transition-all"
               >
                 {/* Header */}
                 <div
-                  className="flex items-center justify-between p-3 bg-slate-900/90 hover:bg-slate-900 cursor-pointer select-none transition-colors border-b border-slate-800/80"
+                  className="flex items-center justify-between p-3.5 bg-slate-50/70 hover:bg-slate-50 cursor-pointer select-none transition-colors border-b border-slate-100"
                   onClick={() => setExpandedId(isExpanded ? null : exp.id)}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 bg-indigo-600 text-white text-xs font-bold font-mono flex items-center justify-center">
+                  <div className="flex items-center gap-3">
+                    <span className="w-6 h-6 rounded-md bg-blue-50 text-blue-600 text-xs font-bold flex items-center justify-center border border-blue-100">
                       {index + 1}
                     </span>
                     <div>
-                      <h4 className="text-xs font-bold text-white">
+                      <h4 className="text-xs font-bold text-slate-900">
                         {exp.jobTitle || "Untitled Position"}
                       </h4>
-                      <p className="text-[11px] text-slate-400 font-mono">
+                      <p className="text-[11px] text-slate-400">
                         {exp.company || "Company"} •{" "}
                         {exp.current ? "Present" : exp.endDate || "Date"}
                       </p>
@@ -98,11 +98,9 @@ export const ExperienceForm: React.FC = () => {
                   </div>
 
                   <div className="flex items-center gap-1">
-                    <Button
+                    <button
                       type="button"
-                      variant="ghost"
-                      size="icon"
-                      className="text-slate-400 hover:text-rose-400 hover:bg-slate-800"
+                      className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
                       onClick={(e) => {
                         e.stopPropagation();
                         deleteExperience(exp.id);
@@ -110,14 +108,14 @@ export const ExperienceForm: React.FC = () => {
                       }}
                     >
                       <Trash2 className="w-4 h-4" />
-                    </Button>
+                    </button>
 
                     <button
                       type="button"
-                      className="text-slate-400 hover:text-white p-1"
+                      className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg"
                     >
                       {isExpanded ? (
-                        <ChevronUp className="w-4 h-4 text-cyan-400" />
+                        <ChevronUp className="w-4 h-4 text-blue-600" />
                       ) : (
                         <ChevronDown className="w-4 h-4" />
                       )}
@@ -127,8 +125,8 @@ export const ExperienceForm: React.FC = () => {
 
                 {/* Form Fields Body */}
                 {isExpanded && (
-                  <div className="p-4 space-y-3 bg-slate-950">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="p-4 space-y-3.5 bg-white">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                       <div>
                         <Label required>Job Title</Label>
                         <Input
@@ -156,7 +154,7 @@ export const ExperienceForm: React.FC = () => {
                       <div>
                         <Label>Location</Label>
                         <Input
-                          placeholder="e.g. New York, NY (or Remote)"
+                          placeholder="e.g. San Francisco, CA (or Remote)"
                           value={exp.location || ""}
                           onChange={(e) =>
                             updateExperience(exp.id, { location: e.target.value })
@@ -206,32 +204,32 @@ export const ExperienceForm: React.FC = () => {
                             endDate: e.target.checked ? "" : exp.endDate,
                           })
                         }
-                        className="border-slate-700 text-indigo-600 focus:ring-indigo-600 w-4 h-4 cursor-pointer"
+                        className="rounded border-slate-300 text-blue-600 focus:ring-blue-600 w-4 h-4 cursor-pointer"
                       />
                       <label
                         htmlFor={`current-${exp.id}`}
-                        className="text-xs text-slate-300 font-semibold cursor-pointer select-none"
+                        className="text-xs text-slate-700 font-medium cursor-pointer select-none"
                       >
                         I currently work in this role
                       </label>
                     </div>
 
                     <div>
-                      <div className="flex justify-between items-center mb-1">
+                      <div className="flex justify-between items-center mb-1.5">
                         <Label>Description & Key Achievements</Label>
                         <Button
                           type="button"
                           variant="ai"
                           size="sm"
-                          className="text-[11px] h-6 px-2 font-bold"
+                          className="text-[11px] h-6 px-2.5 font-semibold rounded-md"
                           onClick={() => handleOpenAiModal(exp.id, exp.description)}
                         >
-                          <Sparkles className="w-3 h-3 text-cyan-300 mr-1" />
+                          <Sparkles className="w-3 h-3 text-blue-600 mr-1" />
                           AI Bullet Polish
                         </Button>
                       </div>
                       <Textarea
-                        placeholder="• Spearheaded architecture of high-load API microservices handling 10k RPS&#10;• Reduced latency by 35% through query optimization"
+                        placeholder="• Spearheaded architecture of high-load API microservices handling 10k RPS&#10;• Reduced query latency by 35% through Redis caching"
                         value={exp.description}
                         onChange={(e) =>
                           updateExperience(exp.id, {
@@ -239,7 +237,7 @@ export const ExperienceForm: React.FC = () => {
                           })
                         }
                         rows={4}
-                        className="font-mono text-xs leading-relaxed"
+                        className="text-xs leading-relaxed"
                       />
                     </div>
                   </div>
@@ -250,15 +248,14 @@ export const ExperienceForm: React.FC = () => {
         </div>
       )}
 
-      <Button
+      <button
         type="button"
-        variant="outline"
-        className="w-full text-xs font-bold border-dashed border-slate-700 hover:border-cyan-500 bg-slate-950 text-slate-300 hover:text-cyan-300 py-2.5"
+        className="w-full text-xs font-semibold border border-dashed border-blue-200 hover:border-blue-500 bg-blue-50/20 hover:bg-blue-50/40 text-blue-600 rounded-xl py-2.5 shadow-2xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
         onClick={addExperience}
       >
-        <Plus className="w-3.5 h-3.5 text-cyan-400" />
+        <Plus className="w-4 h-4" />
         Add Another Experience
-      </Button>
+      </button>
 
       {/* AI Bullet Suggestions Modal */}
       <Modal
@@ -271,13 +268,13 @@ export const ExperienceForm: React.FC = () => {
           {suggestions.map((suggestion, index) => (
             <div
               key={index}
-              className="p-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-indigo-500/80 transition-colors flex items-start justify-between gap-3 cursor-pointer group"
+              className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50/60 border border-slate-200 hover:border-blue-300 transition-colors flex items-start justify-between gap-3 cursor-pointer group shadow-2xs"
               onClick={() => handleApplyAiSuggestion(suggestion)}
             >
-              <p className="text-xs text-slate-200 leading-relaxed">
+              <p className="text-xs text-slate-700 leading-relaxed">
                 • {suggestion}
               </p>
-              <Button size="sm" variant="gradient" className="shrink-0 text-xs font-bold gap-1">
+              <Button size="sm" className="shrink-0 text-xs font-semibold gap-1 rounded-lg">
                 <Check className="w-3 h-3" />
                 Add
               </Button>
@@ -288,3 +285,4 @@ export const ExperienceForm: React.FC = () => {
     </div>
   );
 };
+

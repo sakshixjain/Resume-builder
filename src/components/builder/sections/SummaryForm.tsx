@@ -23,36 +23,36 @@ export const SummaryForm: React.FC = () => {
   const wordCount = resume.summary.trim() ? resume.summary.trim().split(/\s+/).length : 0;
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3.5">
       <div className="flex items-center justify-between flex-wrap gap-2">
-        <span className="text-xs text-slate-300 font-medium">
-          Write a concise 2-4 sentence summary of your background, key strengths, and impact.
+        <span className="text-xs text-slate-500">
+          Write a concise 2-4 sentence summary of your background, key strengths, and career achievements.
         </span>
 
         <Button
           type="button"
           variant="ai"
           size="sm"
-          className="text-xs font-bold gap-1.5"
+          className="text-xs font-semibold gap-1.5 rounded-lg"
           onClick={() => setIsAiModalOpen(true)}
         >
-          <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
+          <Sparkles className="w-3.5 h-3.5 text-blue-600" />
           Improve with AI
         </Button>
       </div>
 
       <Textarea
-        placeholder="e.g. Results-driven Software Engineer with 5+ years of experience designing high-throughput web applications..."
+        placeholder="e.g. Results-driven Senior Full Stack Software Engineer with 6+ years of experience architecting high-throughput distributed web systems..."
         value={resume.summary}
         onChange={(e) => updateSummary(e.target.value)}
         rows={5}
-        className="text-xs leading-relaxed font-sans"
+        className="text-xs leading-relaxed"
       />
 
-      <div className="flex justify-between items-center text-[11px] font-mono text-slate-400">
-        <span>RECOMMENDED: 40 - 80 WORDS</span>
-        <span className={wordCount > 100 ? "text-amber-400 font-bold" : "text-cyan-400 font-bold"}>
-          {wordCount} WORDS
+      <div className="flex justify-between items-center text-xs text-slate-400">
+        <span>Recommended: 40 - 80 words</span>
+        <span className={wordCount > 100 ? "text-amber-600 font-semibold" : "text-blue-600 font-semibold"}>
+          {wordCount} words
         </span>
       </div>
 
@@ -65,15 +65,15 @@ export const SummaryForm: React.FC = () => {
         maxWidth="lg"
       >
         <div className="space-y-4">
-          <div className="flex flex-wrap gap-1.5 pb-3 border-b border-slate-800">
+          <div className="flex flex-wrap gap-1.5 pb-3 border-b border-slate-100">
             {AI_ROLE_PRESETS.map((preset, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedRole(preset)}
-                className={`px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer border ${
+                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer border ${
                   selectedRole.role === preset.role
-                    ? "bg-indigo-600 text-white border-indigo-500 shadow-xs"
-                    : "bg-slate-900 text-slate-300 hover:bg-slate-800 border-slate-700"
+                    ? "bg-blue-600 text-white border-blue-600 shadow-xs"
+                    : "bg-slate-50 text-slate-700 hover:bg-slate-100 border-slate-200"
                 }`}
               >
                 {preset.role}
@@ -81,18 +81,18 @@ export const SummaryForm: React.FC = () => {
             ))}
           </div>
 
-          <div className="p-4 bg-slate-900 border border-slate-800 space-y-3">
+          <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200 space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+              <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
                 {selectedRole.role}
               </span>
-              <span className="text-[10px] uppercase font-mono font-bold text-cyan-400 tracking-wider bg-cyan-950/80 border border-cyan-800 px-2 py-0.5">
+              <span className="text-[10px] uppercase font-bold text-blue-700 tracking-wider bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-full">
                 {selectedRole.category}
               </span>
             </div>
 
-            <p className="text-xs text-slate-200 leading-relaxed italic bg-slate-950 p-3 border border-slate-800">
+            <p className="text-xs text-slate-700 leading-relaxed italic bg-white p-3.5 rounded-lg border border-slate-200">
               "{selectedRole.summary}"
             </p>
 
@@ -100,13 +100,14 @@ export const SummaryForm: React.FC = () => {
               <Button
                 variant="outline"
                 size="sm"
+                className="rounded-lg"
                 onClick={() => setIsAiModalOpen(false)}
               >
                 Cancel
               </Button>
               <Button
                 size="sm"
-                variant="gradient"
+                className="rounded-lg"
                 onClick={() => handleApplyPreset(selectedRole.summary)}
               >
                 <Check className="w-3.5 h-3.5" />
@@ -119,3 +120,4 @@ export const SummaryForm: React.FC = () => {
     </div>
   );
 };
+

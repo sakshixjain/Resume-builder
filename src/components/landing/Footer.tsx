@@ -1,21 +1,20 @@
 import React from "react";
 import Link from "next/link";
 import { FileText } from "lucide-react";
-import { GithubIcon } from "@/components/ui/Icons";
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-950 text-slate-400 py-12 sm:py-16 border-t border-slate-800">
+    <footer className="bg-slate-900 text-slate-400 py-12 sm:py-16 border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-slate-800">
           {/* Brand Col */}
           <div className="md:col-span-2 space-y-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-none bg-white text-slate-950 flex items-center justify-center font-bold">
+              <div className="w-8 h-8 rounded-none bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 text-white flex items-center justify-center font-bold shadow-sm">
                 <FileText className="w-4 h-4" />
               </div>
-              <span className="font-extrabold text-lg text-white tracking-tight">
-                QuickCV<span className="text-blue-500">.</span>
+              <span className="font-black text-lg text-white tracking-tight">
+                QuickCV<span className="text-cyan-400">.</span>
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
@@ -55,7 +54,7 @@ export const Footer: React.FC = () => {
           {/* Legal / Trust */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">
-              Privacy & Legal
+              Privacy & Trust
             </h4>
             <ul className="space-y-2 text-xs">
               <li>

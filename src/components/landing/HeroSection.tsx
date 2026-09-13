@@ -9,36 +9,35 @@ import {
   Download,
   FileCheck2,
   Zap,
-  Star,
 } from "lucide-react";
 
 export const HeroSection: React.FC = () => {
   return (
-    <section className="relative pt-16 pb-24 sm:pt-24 sm:pb-32 overflow-hidden bg-slate-950 text-white border-b border-slate-800">
-      {/* Background ambient lighting effects */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-gradient-to-tr from-indigo-600/20 via-blue-500/15 to-cyan-400/10 blur-[120px] pointer-events-none -z-10" />
-      <div className="absolute inset-0 hero-grid-pattern opacity-40 pointer-events-none -z-10" />
+    <section className="relative pt-16 pb-20 sm:pt-24 sm:pb-28 overflow-hidden bg-white text-slate-900 border-b border-slate-200">
+      {/* Background ambient lighting and subtle grid */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-gradient-to-tr from-blue-100/70 via-indigo-50/50 to-cyan-50/60 blur-[100px] pointer-events-none -z-10" />
+      <div className="absolute inset-0 light-grid-pattern opacity-40 pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto">
           {/* Glowing Sharp Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-slate-900/90 border border-indigo-500/40 text-indigo-300 text-xs font-mono font-bold uppercase tracking-widest mb-6 shadow-md shadow-indigo-500/10 backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-blue-50 border border-blue-200 text-blue-800 text-xs font-mono font-bold uppercase tracking-widest mb-6 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-blue-600 animate-pulse" />
             <span>AI-POWERED RESUME BUILDER</span>
-            <span className="w-1.5 h-1.5 bg-cyan-400" />
-            <span className="text-white font-black">100% FREE & ATS READY</span>
+            <span className="w-1.5 h-1.5 bg-blue-600" />
+            <span className="text-slate-900 font-black">100% FREE & ATS READY</span>
           </div>
 
           {/* Heading */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] mb-6 text-white">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] mb-6 text-slate-950">
             Land Top Tech Interviews With A{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600">
               High-Impact Resume
             </span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-lg text-slate-300 mb-8 leading-relaxed max-w-2xl mx-auto font-normal">
+          <p className="text-base sm:text-lg text-slate-600 mb-8 leading-relaxed max-w-2xl mx-auto font-normal">
             Build recruiter-approved, ATS-compliant resumes with instant live A4
             preview, metric-driven AI bullet points, and 1-click vector PDF export.
           </p>
@@ -46,7 +45,7 @@ export const HeroSection: React.FC = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12">
             <Link href="/builder" className="w-full sm:w-auto">
-              <Button variant="gradient" size="lg" className="w-full sm:w-auto px-8 font-black text-sm">
+              <Button variant="gradient" size="lg" className="w-full sm:w-auto px-8 font-black text-sm shadow-md shadow-blue-500/25">
                 Build Your Resume Now
                 <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
@@ -56,7 +55,7 @@ export const HeroSection: React.FC = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto px-6 font-bold text-sm bg-slate-900/90 text-white border-slate-700 hover:bg-slate-800 hover:border-slate-500"
+                className="w-full sm:w-auto px-6 font-bold text-sm bg-white text-slate-800 border-slate-300 hover:bg-slate-50 hover:border-slate-400"
               >
                 View 4 Live Templates
               </Button>
@@ -64,21 +63,21 @@ export const HeroSection: React.FC = () => {
           </div>
 
           {/* Trust Highlights */}
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">
-            <span className="flex items-center gap-1.5 text-cyan-400">
-              <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-mono font-bold text-slate-700 uppercase tracking-wider">
+            <span className="flex items-center gap-1.5 text-blue-700">
+              <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
               Instant A4 Sync
             </span>
-            <span className="flex items-center gap-1.5 text-indigo-300">
-              <FileCheck2 className="w-3.5 h-3.5 text-indigo-400" />
+            <span className="flex items-center gap-1.5 text-indigo-700">
+              <FileCheck2 className="w-3.5 h-3.5 text-indigo-600" />
               98% ATS Pass Rate
             </span>
-            <span className="flex items-center gap-1.5 text-blue-300">
-              <Download className="w-3.5 h-3.5 text-blue-400" />
+            <span className="flex items-center gap-1.5 text-cyan-700">
+              <Download className="w-3.5 h-3.5 text-cyan-600" />
               Vector PDF Export
             </span>
-            <span className="flex items-center gap-1.5 text-emerald-300">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="flex items-center gap-1.5 text-emerald-700">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
               100% Client-Side Private
             </span>
           </div>
@@ -86,71 +85,71 @@ export const HeroSection: React.FC = () => {
 
         {/* Hero Interactive App Mockup Preview */}
         <div className="mt-14 relative max-w-5xl mx-auto">
-          {/* Glow backdrop */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 opacity-30 blur-xl -z-10" />
+          {/* Subtle glow backdrop */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-blue-200 via-indigo-200 to-cyan-200 opacity-60 blur-xl -z-10" />
 
-          <div className="border border-slate-700/80 bg-slate-900 shadow-2xl">
-            {/* Fake Browser Bar */}
-            <div className="flex items-center justify-between px-4 py-2.5 bg-slate-950 border-b border-slate-800">
+          <div className="border border-slate-300 bg-white shadow-2xl">
+            {/* Window Bar */}
+            <div className="flex items-center justify-between px-4 py-2.5 bg-slate-100 border-b border-slate-300">
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 bg-rose-500" />
                 <div className="w-2.5 h-2.5 bg-amber-500" />
                 <div className="w-2.5 h-2.5 bg-emerald-500" />
               </div>
-              <div className="px-3 py-0.5 bg-slate-900 text-[11px] font-mono text-slate-400 border border-slate-800 flex items-center gap-1.5">
-                <span className="text-cyan-400 font-bold">https://</span>quickcv.app/builder
+              <div className="px-3 py-0.5 bg-white text-[11px] font-mono text-slate-600 border border-slate-200 flex items-center gap-1.5 shadow-2xs">
+                <span className="text-blue-600 font-bold">https://</span>quickcv.app/builder
               </div>
-              <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 border border-emerald-800/60">
-                <span className="w-1.5 h-1.5 bg-emerald-400 animate-ping" />
+              <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 border border-emerald-300">
+                <span className="w-1.5 h-1.5 bg-emerald-600 animate-ping" />
                 AUTOSAVING
               </div>
             </div>
 
             {/* Mockup Split Layout View */}
-            <div className="grid grid-cols-1 md:grid-cols-12 bg-slate-950 text-slate-100 min-h-[360px] sm:min-h-[400px]">
+            <div className="grid grid-cols-1 md:grid-cols-12 bg-white text-slate-900 min-h-[360px] sm:min-h-[400px]">
               {/* Editor side mockup */}
-              <div className="md:col-span-5 p-5 border-r border-slate-800 space-y-3 bg-slate-900/50">
-                <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-200">
+              <div className="md:col-span-5 p-5 border-r border-slate-200 space-y-3 bg-slate-50">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-800">
                     Editor Sections
                   </span>
-                  <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/80 px-2 py-0.5 border border-cyan-800/80">
+                  <span className="text-[10px] font-mono font-bold text-blue-700 bg-blue-100 px-2 py-0.5 border border-blue-300">
                     ✓ SYNCED
                   </span>
                 </div>
 
                 <div className="space-y-2 text-xs font-mono">
-                  <div className="p-2.5 bg-indigo-950/60 border-l-2 border-indigo-500 border-t border-r border-b border-indigo-900/60 flex items-center justify-between text-indigo-200 font-bold">
+                  <div className="p-2.5 bg-white border-l-4 border-l-blue-600 border border-slate-200 flex items-center justify-between text-slate-900 font-bold shadow-2xs">
                     <span>Personal Info</span>
-                    <span className="text-[10px] text-cyan-400 font-bold">READY</span>
+                    <span className="text-[10px] text-blue-600 font-bold">READY</span>
                   </div>
-                  <div className="p-2.5 bg-slate-900 border-l-2 border-purple-500 border-t border-r border-b border-slate-800 flex items-center justify-between text-slate-300">
+                  <div className="p-2.5 bg-white border-l-4 border-l-indigo-600 border border-slate-200 flex items-center justify-between text-slate-800 shadow-2xs">
                     <span>Experience (3)</span>
-                    <span className="text-[10px] text-emerald-400">FILLED</span>
+                    <span className="text-[10px] text-emerald-600 font-bold">FILLED</span>
                   </div>
-                  <div className="p-2.5 bg-slate-900 border-l-2 border-amber-500 border-t border-r border-b border-slate-800 flex items-center justify-between text-slate-300">
+                  <div className="p-2.5 bg-white border-l-4 border-l-amber-600 border border-slate-200 flex items-center justify-between text-slate-800 shadow-2xs">
                     <span>Education (1)</span>
-                    <span className="text-[10px] text-slate-500">SAVED</span>
+                    <span className="text-[10px] text-slate-500 font-bold">SAVED</span>
                   </div>
-                  <div className="p-2.5 bg-slate-900 border-l-2 border-cyan-500 border-t border-r border-b border-slate-800 flex items-center justify-between text-slate-300">
+                  <div className="p-2.5 bg-white border-l-4 border-l-emerald-600 border border-slate-200 flex items-center justify-between text-slate-800 shadow-2xs">
                     <span>Skills (10)</span>
-                    <span className="text-[10px] text-slate-500">EXPERT</span>
+                    <span className="text-[10px] text-slate-500 font-bold">EXPERT</span>
                   </div>
-                  <div className="p-2 bg-slate-950 border border-dashed border-slate-800 text-center text-slate-500 text-xs hover:border-slate-700 cursor-pointer">
+                  <div className="p-2 bg-white border border-dashed border-slate-300 text-center text-slate-600 text-xs hover:border-slate-500 cursor-pointer font-semibold">
                     + Add Custom Section
                   </div>
                 </div>
               </div>
 
               {/* Preview side mockup */}
-              <div className="md:col-span-7 bg-slate-900/90 p-4 sm:p-6 flex items-center justify-center canvas-grid-pattern">
-                <div className="w-full max-w-md bg-white shadow-2xl p-5 text-slate-900 space-y-3 font-sans border border-slate-300">
+              <div className="md:col-span-7 bg-slate-200/80 p-4 sm:p-6 flex items-center justify-center canvas-grid-pattern">
+                <div className="w-full max-w-md bg-white shadow-xl p-5 text-slate-900 space-y-3 font-sans border border-slate-300">
                   <div className="flex justify-between items-start border-b border-slate-900 pb-2">
                     <div>
                       <div className="text-base font-black text-slate-950 uppercase tracking-tight">
                         Alexander Morgan
                       </div>
-                      <div className="text-[10px] font-bold text-indigo-600 uppercase tracking-wide">
+                      <div className="text-[10px] font-bold text-blue-600 uppercase tracking-wide">
                         Senior Full Stack Software Engineer
                       </div>
                     </div>
@@ -161,7 +160,7 @@ export const HeroSection: React.FC = () => {
                   </div>
 
                   <div>
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-indigo-600 mb-1 border-b pb-0.5 border-indigo-100 flex items-center justify-between">
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-blue-600 mb-1 border-b pb-0.5 border-blue-100 flex items-center justify-between">
                       <span>Work Experience</span>
                       <span className="text-[8px] text-slate-400 font-mono font-normal">2018 - Present</span>
                     </div>
@@ -177,7 +176,7 @@ export const HeroSection: React.FC = () => {
                   </div>
 
                   <div>
-                    <div className="text-[9px] font-bold uppercase tracking-wider text-indigo-600 mb-1 border-b pb-0.5 border-indigo-100">
+                    <div className="text-[9px] font-bold uppercase tracking-wider text-blue-600 mb-1 border-b pb-0.5 border-blue-100">
                       Skills & Technologies
                     </div>
                     <div className="flex flex-wrap gap-1 text-[8px]">

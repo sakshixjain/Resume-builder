@@ -6,13 +6,7 @@ import {
   Phone,
   MapPin,
   Globe,
-  Award,
   Calendar,
-  Briefcase,
-  GraduationCap,
-  Sparkles,
-  Code2,
-  FolderGit2,
 } from "lucide-react";
 import { LinkedinIcon, GithubIcon } from "@/components/ui/Icons";
 
@@ -21,9 +15,47 @@ interface TemplateProps {
 }
 
 export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
-  const { personalInfo, summary, experience, education, skills, projects, certifications, languages, achievements, customSections, sectionOrder, sectionVisibility, settings } = resume;
+  const {
+    personalInfo,
+    summary,
+    experience,
+    education,
+    skills,
+    projects,
+    certifications,
+    languages,
+    achievements,
+    customSections,
+    sectionOrder,
+    sectionVisibility,
+    settings,
+  } = resume;
+
   const primaryColor = settings.primaryColor || "#2563eb";
-  const showIcons = settings.showIcons;
+
+  // Split name for dual-color styling (e.g. "SHUMAYLA KHAN")
+  const getFormattedName = (fullName: string) => {
+    if (!fullName) return { first: "YOUR", last: "NAME" };
+    const parts = fullName.trim().split(" ");
+    if (parts.length === 1) {
+      return { first: parts[0].toUpperCase(), last: "" };
+    }
+    const last = parts.pop() || "";
+    const first = parts.join(" ").toUpperCase();
+    return { first, last: last.toUpperCase() };
+  };
+
+  const nameParts = getFormattedName(personalInfo.fullName);
+
+  // Get Initials for avatar circle
+  const getInitials = (name: string) => {
+    if (!name) return "CV";
+    const parts = name.trim().split(" ");
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  };
+
+  const initials = getInitials(personalInfo.fullName);
 
   const renderSection = (sectionKey: string) => {
     if (sectionVisibility[sectionKey] === false) return null;
@@ -32,51 +64,61 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "summary":
         if (!summary) return null;
         return (
-          <div key="summary" className="mb-5">
-            <h3
-              className="text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5 pb-1 border-b"
-              style={{ color: primaryColor, borderColor: `${primaryColor}30` }}
+          <div key="summary" className="mb-4">
+            <h2
+              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
-              {showIcons && <Sparkles className="w-3.5 h-3.5" />}
-              About Me
-            </h3>
-            <p className="text-xs text-slate-700 leading-relaxed whitespace-pre-line">
+              Professional Summary
+            </h2>
+            <p className="text-[11px] text-slate-700 leading-relaxed whitespace-pre-line text-justify">
               {summary}
             </p>
           </div>
         );
 
-      case "experience":
-        if (!experience || experience.length === 0) return null;
+      case "education":
+        if (!education || education.length === 0) return null;
         return (
-          <div key="experience" className="mb-5">
-            <h3
-              className="text-xs font-bold uppercase tracking-wider mb-2.5 flex items-center gap-1.5 pb-1 border-b"
-              style={{ color: primaryColor, borderColor: `${primaryColor}30` }}
+          <div key="education" className="mb-4">
+            <h2
+              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
-              {showIcons && <Briefcase className="w-3.5 h-3.5" />}
-              Work Experience
-            </h3>
-            <div className="space-y-3.5">
-              {experience.map((exp) => (
-                <div key={exp.id} className="relative pl-3 border-l-2" style={{ borderColor: `${primaryColor}50` }}>
-                  <div
-                    className="absolute -left-[5px] top-1 w-2 h-2"
-                    style={{ backgroundColor: primaryColor }}
-                  />
+              Education
+            </h2>
+            <div className="space-y-3">
+              {education.map((edu) => (
+                <div key={edu.id}>
+                  {/* Top line: Degree & Date */}
                   <div className="flex justify-between items-baseline flex-wrap gap-1">
-                    <h4 className="text-xs font-bold text-slate-900">{exp.jobTitle}</h4>
-                    <span className="text-[10px] font-medium text-slate-500">
-                      {formatDateRange(exp.startDate, exp.endDate, exp.current)}
-                    </span>
+                    <h3 className="text-xs font-bold text-slate-900">{edu.degree}</h3>
+                    <div className="flex items-center gap-1 text-[10px] text-slate-500 font-medium">
+                      <Calendar className="w-3 h-3 text-slate-400" />
+                      <span>{formatDateRange(edu.startDate, edu.endDate)}</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between text-[11px] font-semibold text-slate-600 mb-1">
-                    <span>{exp.company}</span>
-                    {exp.location && <span className="text-slate-400 font-normal">{exp.location}</span>}
+
+                  {/* Second line: Institution & Location */}
+                  <div className="flex justify-between items-baseline text-[11px] text-slate-600 mb-0.5">
+                    <span className="font-semibold text-slate-700">{edu.institution}</span>
+                    {edu.location && (
+                      <div className="flex items-center gap-1 text-[10px] text-slate-400">
+                        <MapPin className="w-3 h-3 text-slate-400" />
+                        <span>{edu.location}</span>
+                      </div>
+                    )}
                   </div>
-                  {exp.description && (
-                    <p className="text-[11px] text-slate-600 leading-relaxed whitespace-pre-line">
-                      {exp.description}
+
+                  {/* GPA and Description */}
+                  {edu.gpa && (
+                    <div className="text-[10px] font-medium text-slate-600">
+                      GPA: {edu.gpa}
+                    </div>
+                  )}
+                  {edu.description && (
+                    <p className="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
+                      {edu.description}
                     </p>
                   )}
                 </div>
@@ -85,22 +127,103 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
           </div>
         );
 
+      case "experience":
+        if (!experience || experience.length === 0) return null;
+        return (
+          <div key="experience" className="mb-4">
+            <h2
+              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
+            >
+              Work Experience
+            </h2>
+            <div className="space-y-3.5">
+              {experience.map((exp) => (
+                <div key={exp.id}>
+                  {/* Top Line: Job Title & Date */}
+                  <div className="flex justify-between items-baseline flex-wrap gap-1">
+                    <h3 className="text-xs font-bold text-slate-900">{exp.jobTitle}</h3>
+                    <div className="flex items-center gap-1 text-[10px] text-slate-500 font-medium">
+                      <Calendar className="w-3 h-3 text-slate-400" />
+                      <span>{formatDateRange(exp.startDate, exp.endDate, exp.current)}</span>
+                    </div>
+                  </div>
+
+                  {/* Second Line: Company (Accent Color) & Location */}
+                  <div className="flex justify-between items-baseline text-[11px] mb-1">
+                    <span
+                      className="font-bold tracking-tight"
+                      style={{ color: primaryColor }}
+                    >
+                      {exp.company}
+                    </span>
+                    {exp.location && (
+                      <div className="flex items-center gap-1 text-[10px] text-slate-400">
+                        <MapPin className="w-3 h-3 text-slate-400" />
+                        <span>{exp.location}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Description / Bullet Points */}
+                  {exp.description && (
+                    <div className="text-[11px] text-slate-600 leading-relaxed whitespace-pre-line space-y-1">
+                      {exp.description}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
+      case "skills":
+        if (!skills || skills.length === 0) return null;
+        return (
+          <div key="skills" className="mb-4">
+            <h2
+              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
+            >
+              Skills & Proficiencies
+            </h2>
+            <div className="flex flex-wrap gap-1.5">
+              {skills.map((skill) => (
+                <span
+                  key={skill.id}
+                  className="inline-flex items-center px-2 py-0.5 text-[10px] font-medium rounded-md border text-slate-800"
+                  style={{
+                    backgroundColor: `${primaryColor}08`,
+                    borderColor: `${primaryColor}25`,
+                  }}
+                >
+                  {skill.name}
+                  {skill.level && (
+                    <span className="text-slate-400 ml-1 text-[9px]">
+                      • {skill.level}
+                    </span>
+                  )}
+                </span>
+              ))}
+            </div>
+          </div>
+        );
+
       case "projects":
         if (!projects || projects.length === 0) return null;
         return (
-          <div key="projects" className="mb-5">
-            <h3
-              className="text-xs font-bold uppercase tracking-wider mb-2.5 flex items-center gap-1.5 pb-1 border-b"
-              style={{ color: primaryColor, borderColor: `${primaryColor}30` }}
+          <div key="projects" className="mb-4">
+            <h2
+              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
-              {showIcons && <FolderGit2 className="w-3.5 h-3.5" />}
-              Featured Projects
-            </h3>
-            <div className="space-y-3">
+              Projects
+            </h2>
+            <div className="space-y-2.5">
               {projects.map((proj) => (
-                <div key={proj.id} className="bg-slate-50/70 p-2.5 border border-slate-200">
-                  <div className="flex justify-between items-baseline flex-wrap gap-1 mb-0.5">
-                    <h4 className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                <div key={proj.id}>
+                  <div className="flex justify-between items-baseline flex-wrap gap-1">
+                    <h3 className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
                       {proj.name}
                       {proj.projectUrl && (
                         <a
@@ -112,7 +235,7 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
                           Live Demo
                         </a>
                       )}
-                    </h4>
+                    </h3>
                     {proj.startDate && (
                       <span className="text-[10px] text-slate-400">
                         {formatDateRange(proj.startDate, proj.endDate)}
@@ -120,8 +243,8 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
                     )}
                   </div>
                   {proj.technologies && (
-                    <div className="text-[10px] font-mono text-slate-500 mb-1">
-                      Tech: <span className="text-slate-700">{proj.technologies}</span>
+                    <div className="text-[10px] font-medium text-slate-500 mb-0.5">
+                      Technologies: <span className="text-slate-700">{proj.technologies}</span>
                     </div>
                   )}
                   {proj.description && (
@@ -135,23 +258,67 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
           </div>
         );
 
+      case "certifications":
+        if (!certifications || certifications.length === 0) return null;
+        return (
+          <div key="certifications" className="mb-4">
+            <h2
+              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
+            >
+              Certifications
+            </h2>
+            <div className="space-y-1.5 text-[11px]">
+              {certifications.map((cert) => (
+                <div key={cert.id} className="flex justify-between items-baseline">
+                  <div>
+                    <span className="font-semibold text-slate-800">{cert.name}</span>
+                    <span className="text-slate-500 ml-1.5">— {cert.issuer}</span>
+                  </div>
+                  {cert.date && <span className="text-[10px] text-slate-400">{cert.date}</span>}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
+      case "languages":
+        if (!languages || languages.length === 0) return null;
+        return (
+          <div key="languages" className="mb-4">
+            <h2
+              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
+            >
+              Languages
+            </h2>
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-700">
+              {languages.map((l) => (
+                <div key={l.id} className="flex items-center gap-1.5">
+                  <span className="font-semibold text-slate-900">{l.name}</span>
+                  <span className="text-slate-500 text-[10px]">({l.proficiency})</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
       case "achievements":
         if (!achievements || achievements.length === 0) return null;
         return (
-          <div key="achievements" className="mb-5">
-            <h3
-              className="text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5 pb-1 border-b"
-              style={{ color: primaryColor, borderColor: `${primaryColor}30` }}
+          <div key="achievements" className="mb-4">
+            <h2
+              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
-              {showIcons && <Award className="w-3.5 h-3.5" />}
-              Key Honors & Achievements
-            </h3>
-            <ul className="space-y-1.5">
+              Key Achievements
+            </h2>
+            <ul className="space-y-1.5 text-[11px] text-slate-700">
               {achievements.map((ach) => (
-                <li key={ach.id} className="text-[11px] text-slate-700 flex items-start gap-1.5">
-                  <span className="w-1.5 h-1.5 mt-1 shrink-0" style={{ backgroundColor: primaryColor }} />
+                <li key={ach.id} className="flex items-start gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: primaryColor }} />
                   <div>
-                    <span className="font-semibold">{ach.title}</span>
+                    <span className="font-semibold text-slate-900">{ach.title}</span>
                     {ach.date && <span className="text-slate-400 text-[10px] ml-1">({ach.date})</span>}
                     {ach.description && <p className="text-slate-600 mt-0.5">{ach.description}</p>}
                   </div>
@@ -162,17 +329,16 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
         );
 
       default:
-        // Handle custom section
         const customSec = customSections?.find((cs) => cs.id === sectionKey);
         if (!customSec || customSec.items.length === 0) return null;
         return (
-          <div key={customSec.id} className="mb-5">
-            <h3
-              className="text-xs font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5 pb-1 border-b"
-              style={{ color: primaryColor, borderColor: `${primaryColor}30` }}
+          <div key={customSec.id} className="mb-4">
+            <h2
+              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
               {customSec.title}
-            </h3>
+            </h2>
             <div className="space-y-2">
               {customSec.items.map((item) => (
                 <div key={item.id} className="text-[11px]">
@@ -191,176 +357,93 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col font-sans text-slate-800">
-      {/* Top Header Banner */}
-      <div className="p-6 pb-4 border-b border-slate-200 flex justify-between items-start gap-4" style={{ backgroundColor: `${primaryColor}08` }}>
-        <div className="flex-1">
-          <h1 className="text-2xl font-black tracking-tight text-slate-900 leading-tight">
-            {personalInfo.fullName || "Your Full Name"}
-          </h1>
-          <p className="text-sm font-semibold tracking-wide mt-0.5" style={{ color: primaryColor }}>
-            {personalInfo.title || "Professional Job Title"}
-          </p>
-        </div>
+    <div className="w-full h-full p-8 font-sans text-slate-800 flex flex-col justify-start bg-white">
+      {/* Top Header Banner matching screenshot */}
+      <div className="pb-3 border-b border-slate-200/80 mb-4">
+        <div className="flex justify-between items-start gap-4">
+          <div className="flex-1">
+            {/* Dual color full name */}
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 uppercase leading-none">
+              {nameParts.first}{" "}
+              <span style={{ color: primaryColor }}>{nameParts.last}</span>
+            </h1>
 
-        {personalInfo.photo && (
-          <img
-            src={personalInfo.photo}
-            alt={personalInfo.fullName}
-            className="w-16 h-16 object-cover border-2 shadow-xs"
-            style={{ borderColor: primaryColor }}
-          />
-        )}
-      </div>
-
-      {/* Main Two-Column Layout */}
-      <div className="grid grid-cols-12 flex-1 p-6 gap-6">
-        {/* Left Sidebar (4 cols) */}
-        <div className="col-span-4 space-y-5 border-r border-slate-100 pr-4">
-          {/* Contact Details */}
-          <div>
-            <h3
-              className="text-[11px] font-bold uppercase tracking-wider mb-2 pb-1 border-b"
-              style={{ color: primaryColor, borderColor: `${primaryColor}30` }}
-            >
-              Contact
-            </h3>
-            <div className="space-y-1.5 text-[10px] text-slate-600">
-              {personalInfo.email && (
-                <div className="flex items-center gap-1.5 break-all">
-                  <Mail className="w-3 h-3 shrink-0" style={{ color: primaryColor }} />
-                  <span>{personalInfo.email}</span>
-                </div>
-              )}
-              {personalInfo.phone && (
-                <div className="flex items-center gap-1.5">
-                  <Phone className="w-3 h-3 shrink-0" style={{ color: primaryColor }} />
-                  <span>{personalInfo.phone}</span>
-                </div>
-              )}
-              {personalInfo.location && (
-                <div className="flex items-center gap-1.5">
-                  <MapPin className="w-3 h-3 shrink-0" style={{ color: primaryColor }} />
-                  <span>{personalInfo.location}</span>
-                </div>
-              )}
-              {personalInfo.website && (
-                <div className="flex items-center gap-1.5 break-all">
-                  <Globe className="w-3 h-3 shrink-0" style={{ color: primaryColor }} />
-                  <span>{personalInfo.website.replace(/^https?:\/\//, "")}</span>
-                </div>
-              )}
-              {personalInfo.linkedin && (
-                <div className="flex items-center gap-1.5 break-all">
-                  <LinkedinIcon className="w-3 h-3 shrink-0" style={{ color: primaryColor }} />
-                  <span>{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?linkedin\.com\/in\//, "in/")}</span>
-                </div>
-              )}
-              {personalInfo.github && (
-                <div className="flex items-center gap-1.5 break-all">
-                  <GithubIcon className="w-3 h-3 shrink-0" style={{ color: primaryColor }} />
-                  <span>{personalInfo.github.replace(/^https?:\/\/(www\.)?github\.com\//, "gh/")}</span>
-                </div>
-              )}
-            </div>
+            {/* Subtitle / Role */}
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 mt-1.5">
+              {personalInfo.title || "SENIOR FULL STACK SOFTWARE ENGINEER"}
+            </p>
           </div>
 
-          {/* Education */}
-          {sectionVisibility["education"] !== false && education && education.length > 0 && (
-            <div>
-              <h3
-                className="text-[11px] font-bold uppercase tracking-wider mb-2 flex items-center gap-1 pb-1 border-b"
-                style={{ color: primaryColor, borderColor: `${primaryColor}30` }}
-              >
-                {showIcons && <GraduationCap className="w-3 h-3" />}
-                Education
-              </h3>
-              <div className="space-y-3">
-                {education.map((edu) => (
-                  <div key={edu.id} className="text-[10px]">
-                    <div className="font-bold text-slate-900">{edu.degree}</div>
-                    <div className="text-slate-700 font-medium">{edu.institution}</div>
-                    <div className="text-slate-400">
-                      {formatDateRange(edu.startDate, edu.endDate)}
-                    </div>
-                    {edu.gpa && <div className="text-slate-500 font-medium mt-0.5">GPA: {edu.gpa}</div>}
-                    {edu.description && <p className="text-slate-600 mt-1 leading-normal">{edu.description}</p>}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Skills */}
-          {sectionVisibility["skills"] !== false && skills && skills.length > 0 && (
-            <div>
-              <h3
-                className="text-[11px] font-bold uppercase tracking-wider mb-2 flex items-center gap-1 pb-1 border-b"
-                style={{ color: primaryColor, borderColor: `${primaryColor}30` }}
-              >
-                {showIcons && <Code2 className="w-3 h-3" />}
-                Skills
-              </h3>
-              <div className="flex flex-wrap gap-1.5">
-                {skills.map((skill) => (
-                  <span
-                    key={skill.id}
-                    className="inline-flex items-center px-2 py-0.5 text-[10px] font-semibold bg-slate-100 text-slate-800 border border-slate-300"
-                  >
-                    {skill.name}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Languages */}
-          {sectionVisibility["languages"] !== false && languages && languages.length > 0 && (
-            <div>
-              <h3
-                className="text-[11px] font-bold uppercase tracking-wider mb-2 pb-1 border-b"
-                style={{ color: primaryColor, borderColor: `${primaryColor}30` }}
-              >
-                Languages
-              </h3>
-              <div className="space-y-1 text-[10px]">
-                {languages.map((lang) => (
-                  <div key={lang.id} className="flex justify-between">
-                    <span className="font-semibold text-slate-800">{lang.name}</span>
-                    <span className="text-slate-500">{lang.proficiency}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Certifications */}
-          {sectionVisibility["certifications"] !== false && certifications && certifications.length > 0 && (
-            <div>
-              <h3
-                className="text-[11px] font-bold uppercase tracking-wider mb-2 flex items-center gap-1 pb-1 border-b"
-                style={{ color: primaryColor, borderColor: `${primaryColor}30` }}
-              >
-                Certifications
-              </h3>
-              <div className="space-y-2 text-[10px]">
-                {certifications.map((cert) => (
-                  <div key={cert.id}>
-                    <div className="font-semibold text-slate-800">{cert.name}</div>
-                    <div className="text-slate-500">{cert.issuer} ({cert.date})</div>
-                  </div>
-                ))}
-              </div>
+          {/* Right Avatar circle with initials or photo */}
+          {personalInfo.photo ? (
+            <img
+              src={personalInfo.photo}
+              alt={personalInfo.fullName}
+              className="w-14 h-14 rounded-full object-cover border-2 shadow-2xs shrink-0"
+              style={{ borderColor: primaryColor }}
+            />
+          ) : (
+            <div
+              className="w-14 h-14 rounded-full flex items-center justify-center font-bold text-base shadow-2xs shrink-0 select-none"
+              style={{
+                backgroundColor: `${primaryColor}15`,
+                color: primaryColor,
+              }}
+            >
+              {initials}
             </div>
           )}
         </div>
 
-        {/* Right Main Body (8 cols) */}
-        <div className="col-span-8">
-          {sectionOrder
-            .filter((sec) => !["education", "skills", "languages", "certifications"].includes(sec))
-            .map((sec) => renderSection(sec))}
+        {/* Contact Links Row */}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10px] text-slate-600 font-medium mt-3 pt-2 border-t border-slate-100">
+          {personalInfo.email && (
+            <div className="flex items-center gap-1.5">
+              <Mail className="w-3.5 h-3.5" style={{ color: primaryColor }} />
+              <span>{personalInfo.email}</span>
+            </div>
+          )}
+
+          {personalInfo.phone && (
+            <div className="flex items-center gap-1.5">
+              <Phone className="w-3.5 h-3.5" style={{ color: primaryColor }} />
+              <span>{personalInfo.phone}</span>
+            </div>
+          )}
+
+          {personalInfo.location && (
+            <div className="flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5" style={{ color: primaryColor }} />
+              <span>{personalInfo.location}</span>
+            </div>
+          )}
+
+          {personalInfo.linkedin && (
+            <div className="flex items-center gap-1.5">
+              <LinkedinIcon className="w-3.5 h-3.5" style={{ color: primaryColor }} />
+              <span>{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</span>
+            </div>
+          )}
+
+          {personalInfo.github && (
+            <div className="flex items-center gap-1.5">
+              <GithubIcon className="w-3.5 h-3.5 text-slate-800" />
+              <span>{personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}</span>
+            </div>
+          )}
+
+          {personalInfo.website && (
+            <div className="flex items-center gap-1.5">
+              <Globe className="w-3.5 h-3.5" style={{ color: primaryColor }} />
+              <span>{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</span>
+            </div>
+          )}
         </div>
+      </div>
+
+      {/* Sections list rendered in user-configured order */}
+      <div className="flex-1 space-y-1">
+        {sectionOrder.map((sec) => renderSection(sec))}
       </div>
     </div>
   );

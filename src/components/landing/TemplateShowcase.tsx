@@ -1,71 +1,68 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { LayoutTemplate, ArrowRight, Check, Sparkles } from "lucide-react";
+import { LayoutTemplate, ArrowRight, Check } from "lucide-react";
 
 const TEMPLATE_CARDS = [
   {
     id: "modern",
     title: "Modern Sidebar",
     tag: "Most Popular",
-    tagColor: "bg-blue-600 text-white border-blue-500",
+    tagColor: "bg-blue-100 text-blue-800 border-blue-300",
     description: "Two-column design with colorful sidebar accents, structured timeline, and skill badges.",
-    previewBg: "bg-slate-900 border-blue-500/50",
+    previewBg: "bg-blue-50/70 border-blue-200",
     headerColor: "bg-blue-600",
-    accentColor: "bg-blue-500",
+    accentColor: "bg-blue-400",
     features: ["Two-Column Layout", "Sidebar Contact & Skills", "Visual Experience Timeline", "Recruiter Favorite"],
   },
   {
     id: "professional",
     title: "Professional ATS",
     tag: "ATS-Optimized",
-    tagColor: "bg-emerald-600 text-white border-emerald-500",
+    tagColor: "bg-emerald-100 text-emerald-800 border-emerald-300",
     description: "Traditional single-column layout strictly formatted to achieve top scores in Applicant Tracking Systems.",
-    previewBg: "bg-slate-900 border-emerald-500/50",
+    previewBg: "bg-emerald-50/70 border-emerald-200",
     headerColor: "bg-emerald-600",
-    accentColor: "bg-emerald-500",
+    accentColor: "bg-emerald-400",
     features: ["100% ATS-Compliant", "Single-Column Flow", "Clean Section Dividers", "Standard Font Hierarchy"],
   },
   {
     id: "minimal",
     title: "Minimalist Swiss",
     tag: "Ultra Clean",
-    tagColor: "bg-purple-600 text-white border-purple-500",
+    tagColor: "bg-purple-100 text-purple-800 border-purple-300",
     description: "Refined Scandinavian typography with numbered sections, generous whitespace, and high readability.",
-    previewBg: "bg-slate-900 border-purple-500/50",
+    previewBg: "bg-purple-50/70 border-purple-200",
     headerColor: "bg-purple-600",
-    accentColor: "bg-purple-500",
+    accentColor: "bg-purple-400",
     features: ["Generous Whitespace", "Numbered Section Headers", "Editorial Typography", "Modern Aesthetic"],
   },
   {
     id: "executive",
     title: "Executive Leadership",
     tag: "Senior Roles",
-    tagColor: "bg-amber-600 text-white border-amber-500",
+    tagColor: "bg-amber-100 text-amber-800 border-amber-300",
     description: "High-contrast top banner header with metric grid containers engineered for directors and tech leads.",
-    previewBg: "bg-slate-900 border-amber-500/50",
+    previewBg: "bg-amber-50/70 border-amber-200",
     headerColor: "bg-amber-600",
-    accentColor: "bg-amber-500",
+    accentColor: "bg-amber-400",
     features: ["Header Card Banner", "Core Competencies Grid", "Highlight Projects", "Leadership Ready"],
   },
 ];
 
 export const TemplateShowcase: React.FC = () => {
   return (
-    <section id="templates" className="py-24 bg-slate-900 text-white border-b border-slate-800 relative overflow-hidden">
-      {/* Light glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-indigo-600/10 blur-[140px] pointer-events-none -z-10" />
-
+    <section id="templates" className="py-24 bg-slate-50 text-slate-900 border-b border-slate-200 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-mono font-bold uppercase tracking-widest mb-3">
-            <LayoutTemplate className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-blue-200 text-blue-700 text-xs font-mono font-bold uppercase tracking-widest mb-3 shadow-2xs">
+            <LayoutTemplate className="w-3.5 h-3.5 text-blue-600" />
             RESUME TEMPLATES
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black tracking-tight mb-4 uppercase text-white">
+          <h2 className="text-3xl sm:text-5xl font-black tracking-tight mb-4 uppercase text-slate-950">
             Designed for Every Career Level
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base">
+          <p className="text-slate-600 text-sm sm:text-base">
             Choose from battle-tested layouts. Switch templates anytime with a single click without losing your resume data.
           </p>
         </div>
@@ -75,7 +72,7 @@ export const TemplateShowcase: React.FC = () => {
           {TEMPLATE_CARDS.map((tmpl) => (
             <div
               key={tmpl.id}
-              className="border border-slate-800 bg-slate-950 p-5 hover:border-indigo-500/80 transition-all flex flex-col justify-between group shadow-xl hover:shadow-indigo-500/10"
+              className="border border-slate-300 bg-white p-5 hover:border-blue-600 transition-all flex flex-col justify-between group shadow-sm hover:shadow-md"
             >
               <div>
                 {/* Visual Thumbnail Representation */}
@@ -88,15 +85,15 @@ export const TemplateShowcase: React.FC = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <div className="h-1.5 w-full bg-slate-700" />
-                    <div className="h-1.5 w-5/6 bg-slate-700" />
-                    <div className="h-1.5 w-4/6 bg-slate-700" />
+                    <div className="h-1.5 w-full bg-slate-300" />
+                    <div className="h-1.5 w-5/6 bg-slate-300" />
+                    <div className="h-1.5 w-4/6 bg-slate-300" />
                   </div>
 
                   <div className="flex gap-1.5">
-                    <div className="h-2 w-1/4 bg-slate-800" />
-                    <div className="h-2 w-1/4 bg-slate-800" />
-                    <div className="h-2 w-1/4 bg-slate-800" />
+                    <div className="h-2 w-1/4 bg-slate-200" />
+                    <div className="h-2 w-1/4 bg-slate-200" />
+                    <div className="h-2 w-1/4 bg-slate-200" />
                   </div>
 
                   {/* Badge */}
@@ -107,18 +104,18 @@ export const TemplateShowcase: React.FC = () => {
                   </span>
                 </div>
 
-                <h3 className="text-base font-bold text-white mb-1.5 flex items-center justify-between">
+                <h3 className="text-base font-bold text-slate-900 mb-1.5 flex items-center justify-between">
                   <span>{tmpl.title}</span>
                 </h3>
-                <p className="text-xs text-slate-400 mb-5 leading-relaxed">
+                <p className="text-xs text-slate-600 mb-5 leading-relaxed">
                   {tmpl.description}
                 </p>
 
                 {/* Features list */}
-                <ul className="space-y-2 mb-6 text-[11px] text-slate-300 font-medium">
+                <ul className="space-y-2 mb-6 text-[11px] text-slate-700 font-medium">
                   {tmpl.features.map((feat, idx) => (
                     <li key={idx} className="flex items-center gap-2">
-                      <Check className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                      <Check className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                       <span>{feat}</span>
                     </li>
                   ))}
@@ -130,7 +127,7 @@ export const TemplateShowcase: React.FC = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="w-full justify-between font-bold bg-slate-900 text-white border-slate-700 hover:bg-indigo-600 hover:border-indigo-600 group-hover:bg-indigo-600 group-hover:border-indigo-600 group-hover:text-white transition-colors"
+                  className="w-full justify-between font-bold bg-white text-slate-800 border-slate-300 hover:bg-blue-600 hover:border-blue-600 hover:text-white transition-colors"
                 >
                   <span>Use This Template</span>
                   <ArrowRight className="w-4 h-4" />

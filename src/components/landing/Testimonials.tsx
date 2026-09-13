@@ -36,17 +36,17 @@ const REVIEWS = [
 
 export const Testimonials: React.FC = () => {
   return (
-    <section id="reviews" className="py-24 bg-slate-950 text-white border-b border-slate-800 relative overflow-hidden">
+    <section id="reviews" className="py-24 bg-white text-slate-900 border-b border-slate-200 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono font-bold uppercase tracking-widest mb-3">
-            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-mono font-bold uppercase tracking-widest mb-3 shadow-2xs">
+            <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
             CANDIDATE REVIEWS
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4 uppercase">
+          <h2 className="text-3xl sm:text-5xl font-black text-slate-950 tracking-tight mb-4 uppercase">
             Trusted by Top Candidates Worldwide
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+          <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
             Join thousands of professionals who landed roles at Google, Amazon, Stripe, and leading tech startups.
           </p>
         </div>
@@ -56,34 +56,34 @@ export const Testimonials: React.FC = () => {
           {REVIEWS.map((rev, index) => (
             <div
               key={index}
-              className="p-7 bg-slate-900/90 border border-slate-800 shadow-xl flex flex-col justify-between hover:border-amber-500/60 transition-all duration-200 group"
+              className="p-7 bg-slate-50 border border-slate-300 shadow-sm flex flex-col justify-between hover:border-amber-500 transition-all duration-200 group"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="flex gap-1 text-amber-400">
+                  <div className="flex gap-1 text-amber-500">
                     {[...Array(rev.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                      <Star key={i} className="w-4 h-4 fill-amber-500 text-amber-500" />
                     ))}
                   </div>
-                  <Quote className="w-6 h-6 text-slate-700 group-hover:text-amber-500/50 transition-colors" />
+                  <Quote className="w-6 h-6 text-slate-300 group-hover:text-amber-500/60 transition-colors" />
                 </div>
 
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6 italic">
+                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed mb-6 italic">
                   "{rev.content}"
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-slate-800 flex items-center gap-3">
+              <div className="pt-4 border-t border-slate-200 flex items-center gap-3">
                 <div className={`w-9 h-9 ${rev.accentColor} text-white font-black text-xs flex items-center justify-center`}>
                   {rev.initials}
                 </div>
                 <div>
-                  <div className="font-bold text-sm text-white flex items-center gap-1.5">
+                  <div className="font-bold text-sm text-slate-900 flex items-center gap-1.5">
                     <span>{rev.name}</span>
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                   </div>
-                  <div className="text-xs text-slate-400">
-                    {rev.role} · <strong className="text-cyan-400 font-semibold">{rev.company}</strong>
+                  <div className="text-xs text-slate-500">
+                    {rev.role} · <strong className="text-blue-700 font-semibold">{rev.company}</strong>
                   </div>
                 </div>
               </div>

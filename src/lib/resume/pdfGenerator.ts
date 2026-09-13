@@ -15,25 +15,33 @@ export async function exportResumeToPDF(
     throw new Error(`Element with id '${elementId}' not found`);
   }
 
-  // Set default filename
   const fileName = options?.fileName || "Resume.pdf";
   options?.onProgress?.(15);
 
-  // Temporarily store original styles to ensure pristine rendering
-  const originalTransform = element.style.transform;
-  const originalTransformOrigin = element.style.transformOrigin;
+  const transformWrapper = document.getElementById("resume-transform-wrapper");
+  const originalTransform = transformWrapper?.style.transform || "";
+  const originalMargin = transformWrapper?.style.marginBottom || "";
 
   try {
-    element.style.transform = "none";
-    element.style.transformOrigin = "top left";
+    // Reset zoom scale temporarily for pixel-perfect 1:1 render
+    if (transformWrapper) {
+      transformWrapper.style.transform = "none";
+      transformWrapper.style.marginBottom = "0px";
+    }
 
-    options?.onProgress?.(30);
+    // Wait 100ms for browser layout recalculation
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    options?.onProgress?.(35);
 
     const canvas = await html2canvas(element, {
-      scale: 2.5, // High DPI for crisp vector-like text
+      scale: 2, // 2x DPI for crisp text and graphics
       useCORS: true,
+      allowTaint: true,
       logging: false,
       backgroundColor: "#ffffff",
+      scrollX: 0,
+      scrollY: 0,
       windowWidth: 1200,
     });
 
@@ -41,7 +49,7 @@ export async function exportResumeToPDF(
 
     const imgData = canvas.toDataURL("image/jpeg", 0.98);
 
-    // A4 dimensions in mm: 210 x 297
+    // Standard A4 dimensions in mm: 210 x 297
     const pdf = new jsPDF({
       orientation: "portrait",
       unit: "mm",
@@ -52,7 +60,6 @@ export async function exportResumeToPDF(
     const pdfWidth = 210;
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-    // If content exceeds 1 page (297mm), split or fit gracefully
     if (pdfHeight <= 297) {
       pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
     } else {
@@ -73,13 +80,19 @@ export async function exportResumeToPDF(
     options?.onProgress?.(95);
     pdf.save(fileName);
     options?.onProgress?.(100);
+  } catch (err) {
+    console.warn("Direct PDF generation error, executing browser print fallback", err);
+    window.print();
   } finally {
-    // Restore element style
-    element.style.transform = originalTransform;
-    element.style.transformOrigin = originalTransformOrigin;
+    if (transformWrapper) {
+      transformWrapper.style.transform = originalTransform;
+      transformWrapper.style.marginBottom = originalMargin;
+    }
   }
 }
 
 export function printResume(): void {
   window.print();
 }
+
+

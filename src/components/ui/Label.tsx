@@ -15,13 +15,14 @@ export const Label: React.FC<LabelProps> = ({
   return (
     <label
       className={cn(
-        "block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1 select-none",
+        "block text-[11px] font-semibold text-slate-700 mb-1 select-none",
         className
       )}
       {...props}
     >
       {children}
-      {required && <span className="text-cyan-400 ml-1">*</span>}
+      {required && <span className="text-rose-500 font-bold ml-0.5">*</span>}
     </label>
   );
 };
+

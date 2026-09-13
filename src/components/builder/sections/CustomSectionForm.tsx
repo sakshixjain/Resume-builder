@@ -28,7 +28,7 @@ export const CustomSectionForm: React.FC<CustomSectionFormProps> = ({
   return (
     <div className="space-y-4">
       {/* Section Title Editor */}
-      <div className="flex items-center justify-between gap-3 p-3 bg-slate-900 border border-slate-800">
+      <div className="flex items-center justify-between gap-3 p-3.5 rounded-xl bg-slate-50/80 border border-slate-200">
         <div className="flex-1">
           <Label>Section Title</Label>
           <Input
@@ -37,7 +37,7 @@ export const CustomSectionForm: React.FC<CustomSectionFormProps> = ({
               updateCustomSectionTitle(section.id, e.target.value)
             }
             placeholder="e.g. Publications, Volunteer Work, Awards"
-            className="font-bold text-xs bg-slate-950 text-white"
+            className="font-bold text-xs bg-white text-slate-900"
           />
         </div>
 
@@ -45,7 +45,7 @@ export const CustomSectionForm: React.FC<CustomSectionFormProps> = ({
           type="button"
           variant="danger"
           size="sm"
-          className="self-end"
+          className="self-end rounded-lg"
           onClick={() => {
             deleteCustomSection(section.id);
             toast.info(`Deleted "${section.title}" section`);
@@ -57,29 +57,29 @@ export const CustomSectionForm: React.FC<CustomSectionFormProps> = ({
       </div>
 
       {/* Items list */}
-      <div className="space-y-2.5">
+      <div className="space-y-3">
         {section.items.map((item, index) => (
           <div
             key={item.id}
-            className="p-3.5 border border-slate-800 bg-slate-950 shadow-md space-y-3"
+            className="p-4 rounded-xl border border-slate-200 bg-white shadow-2xs space-y-3.5"
           >
-            <div className="flex justify-between items-center pb-2 border-b border-slate-800">
-              <span className="text-xs font-bold text-fuchsia-400 flex items-center gap-1.5 uppercase font-mono">
-                <Layers className="w-3.5 h-3.5 text-fuchsia-400" />
+            <div className="flex justify-between items-center pb-2.5 border-b border-slate-100">
+              <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <span className="w-5 h-5 rounded-md bg-blue-50 text-blue-600 text-[11px] font-bold flex items-center justify-center border border-blue-100">
+                  {index + 1}
+                </span>
                 Entry #{index + 1}
               </span>
-              <Button
+              <button
                 type="button"
-                variant="ghost"
-                size="icon"
-                className="text-slate-400 hover:text-rose-400 hover:bg-slate-800 h-7 w-7"
+                className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
                 onClick={() => deleteCustomSectionItem(section.id, item.id)}
               >
                 <Trash2 className="w-3.5 h-3.5" />
-              </Button>
+              </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               <div>
                 <Label required>Title / Role / Publication</Label>
                 <Input
@@ -131,22 +131,22 @@ export const CustomSectionForm: React.FC<CustomSectionFormProps> = ({
                   })
                 }
                 rows={2}
-                className="text-xs"
+                className="text-xs leading-relaxed"
               />
             </div>
           </div>
         ))}
       </div>
 
-      <Button
+      <button
         type="button"
-        variant="outline"
-        className="w-full text-xs font-bold border-dashed border-slate-700 hover:border-fuchsia-500 bg-slate-950 text-slate-300 hover:text-fuchsia-300 py-2.5"
+        className="w-full text-xs font-semibold border border-dashed border-blue-200 hover:border-blue-500 bg-blue-50/20 hover:bg-blue-50/40 text-blue-600 rounded-xl py-2.5 shadow-2xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
         onClick={() => addCustomSectionItem(section.id)}
       >
-        <Plus className="w-3.5 h-3.5 text-fuchsia-400" />
+        <Plus className="w-4 h-4" />
         Add Entry to {section.title}
-      </Button>
+      </button>
     </div>
   );
 };
+

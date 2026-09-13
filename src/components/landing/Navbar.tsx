@@ -5,33 +5,30 @@ import { Button } from "@/components/ui/Button";
 
 export const Navbar: React.FC = () => {
   return (
-    <header className="sticky top-0 z-50 w-full bg-slate-950/95 backdrop-blur-md border-b border-slate-800 text-white">
+    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 text-slate-900 shadow-2xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-8 h-8 bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 text-white flex items-center justify-center font-bold shadow-md shadow-indigo-500/30 group-hover:scale-105 transition-transform">
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="w-8 h-8 rounded-lg bg-[#6366f1] text-white flex items-center justify-center font-bold shadow-xs group-hover:bg-[#4f46e5] transition-colors">
             <FileText className="w-4 h-4 text-white" />
           </div>
-          <span className="font-black text-lg tracking-tight text-white flex items-center gap-0.5">
-            QuickCV<span className="text-cyan-400">.</span>
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-1.5 py-0.2 ml-2 hidden sm:inline">
-              PRO
-            </span>
+          <span className="font-bold text-lg tracking-tight text-slate-900">
+            QuickCV
           </span>
         </Link>
 
         {/* Center Nav Links */}
-        <nav className="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-widest text-slate-400">
-          <a href="#features" className="hover:text-cyan-400 transition-colors">
+        <nav className="hidden md:flex items-center gap-8 text-xs font-medium text-slate-600">
+          <a href="#features" className="hover:text-indigo-600 transition-colors">
             Features
           </a>
-          <a href="#templates" className="hover:text-cyan-400 transition-colors">
+          <a href="#templates" className="hover:text-indigo-600 transition-colors">
             Templates
           </a>
-          <a href="#how-it-works" className="hover:text-cyan-400 transition-colors">
+          <a href="#how-it-works" className="hover:text-indigo-600 transition-colors">
             How It Works
           </a>
-          <a href="#reviews" className="hover:text-cyan-400 transition-colors">
+          <a href="#reviews" className="hover:text-indigo-600 transition-colors">
             Reviews
           </a>
         </nav>
@@ -39,7 +36,7 @@ export const Navbar: React.FC = () => {
         {/* Right CTA */}
         <div className="flex items-center gap-3">
           <Link href="/builder">
-            <Button variant="gradient" size="md" className="gap-2 font-black">
+            <Button variant="primary" size="md" className="gap-2 font-medium">
               <Sparkles className="w-3.5 h-3.5" />
               Build Resume
               <ArrowRight className="w-3.5 h-3.5" />
