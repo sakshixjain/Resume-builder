@@ -13,8 +13,10 @@ import {
   CustomSectionItem,
   ResumeSettings,
   SectionType,
+  PresetId,
 } from "@/lib/resume/types";
 import { initialResumeData, emptyResumeData } from "@/lib/resume/defaultResume";
+import { RESUME_PRESETS } from "@/lib/resume/presets";
 import { getStoredResume, saveResumeToStorage } from "@/lib/resume/storage";
 
 interface ResumeStoreState {
@@ -28,6 +30,7 @@ interface ResumeStoreState {
 
   // Actions
   setResume: (resume: Resume) => void;
+  loadPreset: (presetId: PresetId) => void;
   updatePersonalInfo: (info: Partial<PersonalInfo>) => void;
   updateSummary: (summary: string) => void;
   
@@ -119,6 +122,25 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
       newHistory.push(resume);
       return {
         resume,
+        history: newHistory,
+        historyIndex: newHistory.length - 1,
+      };
+    });
+    triggerAutosave(get, set);
+  },
+
+  loadPreset: (presetId: PresetId) => {
+    const target = RESUME_PRESETS.find((p) => p.id === presetId);
+    if (!target) return;
+    const freshData = {
+      ...target.data,
+      updatedAt: new Date().toISOString(),
+    };
+    set((state) => {
+      const newHistory = state.history.slice(0, state.historyIndex + 1);
+      newHistory.push(freshData);
+      return {
+        resume: freshData,
         history: newHistory,
         historyIndex: newHistory.length - 1,
       };

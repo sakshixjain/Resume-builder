@@ -15,7 +15,11 @@ interface PreviewPanelProps {
   onOpenCustomizer?: () => void;
 }
 
-const QUICK_TEMPLATES: { id: TemplateId; label: string }[] = [
+const QUICK_TEMPLATES: { id: TemplateId; label: string; group?: string }[] = [
+  { id: "tech", label: "💻 Tech" },
+  { id: "corporate", label: "💼 Corporate" },
+  { id: "creative", label: "🎨 Creative" },
+  { id: "academic", label: "🎓 Academic CV" },
   { id: "modern", label: "Modern" },
   { id: "professional", label: "ATS Pro" },
   { id: "minimal", label: "Minimal" },

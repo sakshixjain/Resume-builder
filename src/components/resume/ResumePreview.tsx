@@ -6,6 +6,10 @@ import { ModernTemplate } from "./templates/ModernTemplate";
 import { ProfessionalTemplate } from "./templates/ProfessionalTemplate";
 import { MinimalTemplate } from "./templates/MinimalTemplate";
 import { ExecutiveTemplate } from "./templates/ExecutiveTemplate";
+import { TechTemplate } from "./templates/TechTemplate";
+import { CorporateTemplate } from "./templates/CorporateTemplate";
+import { CreativeTemplate } from "./templates/CreativeTemplate";
+import { AcademicTemplate } from "./templates/AcademicTemplate";
 import { cn } from "@/lib/utils";
 
 interface ResumePreviewProps {
@@ -60,6 +64,14 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({ resume, className 
 
   const renderTemplate = () => {
     switch (settings.template) {
+      case "tech":
+        return <TechTemplate resume={resume} />;
+      case "corporate":
+        return <CorporateTemplate resume={resume} />;
+      case "creative":
+        return <CreativeTemplate resume={resume} />;
+      case "academic":
+        return <AcademicTemplate resume={resume} />;
       case "professional":
         return <ProfessionalTemplate resume={resume} />;
       case "minimal":

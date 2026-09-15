@@ -71,11 +71,11 @@ const FEATURES = [
     icon: <Palette className="w-5 h-5 text-amber-600" />,
     iconBg: "bg-amber-50 border-amber-200 text-amber-600",
     accentGlow: "hover:border-amber-500",
-    title: "Themes, Colors & Typography",
+    title: "8 Pro Templates & Industry Kits",
     description:
-      "Customize sapphire blue, emerald, royal purple, crimson, deep slate, serif/sans fonts, scaling, and spacing with live preview feedback.",
+      "Dedicated templates and presets for Tech, Non-Tech Corporate, Creative Portfolio, and Academic CVs with customizable palettes, typography, and spacing.",
     colSpan: "lg:col-span-1",
-    badge: "4 TEMPLATES",
+    badge: "8 TEMPLATES",
     badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
   },
   {

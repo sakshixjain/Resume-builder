@@ -17,6 +17,7 @@ import {
   Trash2,
   Download,
   RotateCcw,
+  Sparkles,
 } from "lucide-react";
 import { exportResumeToPDF } from "@/lib/resume/pdfGenerator";
 import confetti from "canvas-confetti";
@@ -24,12 +25,14 @@ import { toast } from "sonner";
 
 interface BuilderHeaderProps {
   onOpenCustomizer: () => void;
+  onOpenPresetSelector?: () => void;
   activeNavTab?: string;
   setActiveNavTab?: (tab: string) => void;
 }
 
 export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
   onOpenCustomizer,
+  onOpenPresetSelector,
   activeNavTab = "builder",
   setActiveNavTab,
 }) => {
@@ -95,7 +98,7 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
             onClick={() => setActiveNavTab?.("builder")}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-all cursor-pointer ${
               activeNavTab === "builder"
-                ? "bg-[#eeeffc] text-[#4f46e5] border border-indigo-100"
+                ? "bg-[#eeeffc] text-[#4f46e5] border border-indigo-100 font-semibold"
                 : "text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent"
             }`}
           >
@@ -112,7 +115,16 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
             className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 flex items-center gap-1.5 transition-colors cursor-pointer border border-transparent"
           >
             <FileText className="w-3.5 h-3.5" />
-            <span>Templates</span>
+            <span>Templates (8)</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => onOpenPresetSelector?.()}
+            className="px-3 py-1.5 rounded-lg text-xs font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100/80 border border-amber-200/80 flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <span>Sample Presets</span>
           </button>
 
           <button

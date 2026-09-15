@@ -9,20 +9,57 @@ import { CustomizerModal } from "./CustomizerModal";
 import { MobileTabs } from "./MobileTabs";
 import { getStoredResume } from "@/lib/resume/storage";
 
+import { useSearchParams } from "next/navigation";
+import { PresetSelectorModal } from "./PresetSelectorModal";
+import { TemplateId, PresetId } from "@/lib/resume/types";
+import { RESUME_PRESETS } from "@/lib/resume/presets";
+
 export const BuilderLayout: React.FC = () => {
-  const { mobileTab, setResume } = useResumeStore();
+  const { mobileTab, setResume, updateSettings, loadPreset } = useResumeStore();
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
+  const [isPresetSelectorOpen, setIsPresetSelectorOpen] = useState(false);
   const [activeNavTab, setActiveNavTab] = useState("builder");
   const [isHydrated, setIsHydrated] = useState(false);
+  const searchParams = useSearchParams();
 
-  // Restore saved resume from localStorage on mount
+  // Restore saved resume from localStorage on mount and apply template/preset query params
   useEffect(() => {
     const saved = getStoredResume();
-    if (saved) {
-      setResume(saved);
+    const templateParam = searchParams.get("template");
+    const presetParam = searchParams.get("preset");
+    const validTemplates: TemplateId[] = [
+      "modern",
+      "professional",
+      "minimal",
+      "executive",
+      "tech",
+      "corporate",
+      "creative",
+      "academic",
+    ];
+
+    if (presetParam && RESUME_PRESETS.some((p) => p.id === presetParam)) {
+      loadPreset(presetParam as PresetId);
+      if (templateParam && validTemplates.includes(templateParam as TemplateId)) {
+        updateSettings({ template: templateParam as TemplateId });
+      }
+    } else if (saved) {
+      if (templateParam && validTemplates.includes(templateParam as TemplateId)) {
+        setResume({
+          ...saved,
+          settings: {
+            ...saved.settings,
+            template: templateParam as TemplateId,
+          },
+        });
+      } else {
+        setResume(saved);
+      }
+    } else if (templateParam && validTemplates.includes(templateParam as TemplateId)) {
+      updateSettings({ template: templateParam as TemplateId });
     }
     setIsHydrated(true);
-  }, [setResume]);
+  }, [setResume, searchParams, updateSettings, loadPreset]);
 
   if (!isHydrated) {
     return (
@@ -41,6 +78,7 @@ export const BuilderLayout: React.FC = () => {
       <div className="print:hidden">
         <BuilderHeader
           onOpenCustomizer={() => setIsCustomizerOpen(true)}
+          onOpenPresetSelector={() => setIsPresetSelectorOpen(true)}
           activeNavTab={activeNavTab}
           setActiveNavTab={setActiveNavTab}
         />
@@ -77,6 +115,10 @@ export const BuilderLayout: React.FC = () => {
         <CustomizerModal
           isOpen={isCustomizerOpen}
           onClose={() => setIsCustomizerOpen(false)}
+        />
+        <PresetSelectorModal
+          isOpen={isPresetSelectorOpen}
+          onClose={() => setIsPresetSelectorOpen(false)}
         />
       </div>
     </div>

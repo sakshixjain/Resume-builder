@@ -61,6 +61,50 @@ export const AI_ROLE_PRESETS: AISuggestion[] = [
       "Implemented automated onboarding nurture sequence increasing 30-day user activation rate by 28%.",
     ],
   },
+  {
+    category: "Tech (Fresher)",
+    role: "Junior Software Engineer / CS Graduate",
+    summary:
+      "Passionate and fast-learning Computer Science graduate with strong command of Data Structures, Algorithms, Full-Stack Web Development, and Cloud fundamentals. Winner of collegiate hackathons with hands-on project experience in React, Node.js, and TypeScript. Eager to contribute clean code, rapid prototyping, and bug fixes to a fast-paced engineering team.",
+    bulletPoints: [
+      "Built and deployed full-stack web applications in Next.js and PostgreSQL, serving 1,000+ active student users.",
+      "Developed RESTful APIs and integrated third-party payment and authentication microservices.",
+      "Maintained 90%+ test coverage by implementing automated unit and integration tests using Jest and Playwright.",
+    ],
+  },
+  {
+    category: "Business & Operations",
+    role: "Business Operations & Strategy Manager",
+    summary:
+      "Detail-oriented Business Operations professional with proven ability to optimize workflows, analyze financial models, and lead cross-departmental initiatives. Adept at turning complex datasets into strategic roadmaps, driving cost reductions, and scaling organizational throughput.",
+    bulletPoints: [
+      "Streamlined core operational workflows across 4 business units, reducing cycle turnaround time by 35%.",
+      "Built automated financial KPI dashboards in Looker Studio and Excel, saving 15 hours of manual weekly reporting.",
+      "Collaborated with executive leadership on annual budget allocation and strategic resource forecasting.",
+    ],
+  },
+  {
+    category: "Non-Tech (Fresher)",
+    role: "Business & Marketing Graduate",
+    summary:
+      "Enthusiastic Business Administration graduate with strong foundation in market research, digital marketing campaigns, financial modeling, and consumer analytics. Proven campus leader with experience managing student organizations, public relations, and social media growth.",
+    bulletPoints: [
+      "Formulated comprehensive go-to-market and brand positioning strategy for collegiate capstone project.",
+      "Executed social media growth sprints generating a 45% increase in audience engagement over 8 weeks.",
+      "Conducted qualitative consumer research surveys with 300+ respondents to extract actionable product insights.",
+    ],
+  },
+  {
+    category: "Academic & Research",
+    role: "Research Scientist / Academic Postdoc",
+    summary:
+      "Distinguished researcher with Ph.D. and publications in leading peer-reviewed journals and conferences. Expert in experimental design, statistical modeling, interdisciplinary collaboration, and scientific grant writing. Proven mentor to graduate and undergraduate researchers.",
+    bulletPoints: [
+      "Authored 5+ first-author peer-reviewed publications with over 500 citations in top international venues.",
+      "Co-authored competitive research grant proposals securing over $300k in foundational scientific funding.",
+      "Mentored junior doctoral candidates and designed undergraduate laboratory seminar curricula.",
+    ],
+  },
 ];
 
 export function generateBulletImprovements(text: string): string[] {

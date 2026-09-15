@@ -7,7 +7,44 @@ export type LanguageProficiency =
   | "Intermediate"
   | "Basic";
 
-export type TemplateId = "modern" | "professional" | "minimal" | "executive";
+export type TemplateId =
+  | "modern"
+  | "professional"
+  | "minimal"
+  | "executive"
+  | "tech"
+  | "corporate"
+  | "creative"
+  | "academic";
+
+export type PresetId =
+  | "tech-experienced"
+  | "tech-fresher"
+  | "nontech-experienced"
+  | "nontech-fresher"
+  | "academic-cv";
+
+export type TemplateCategory =
+  | "all"
+  | "tech"
+  | "non-tech"
+  | "creative"
+  | "academic";
+
+export type CareerLevel = "all" | "experienced" | "fresher";
+
+export interface TemplateMetadata {
+  id: TemplateId;
+  name: string;
+  desc: string;
+  category: "tech" | "non-tech" | "creative" | "academic" | "universal";
+  categoryLabel: string;
+  level: "experienced" | "fresher" | "all";
+  tag: string;
+  tagColor: string;
+  primaryColor: string;
+  features: string[];
+}
 
 export type FontFamily =
   | "inter"

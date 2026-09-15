@@ -23,29 +23,28 @@ export const HeroSection: React.FC = () => {
           {/* Glowing Sharp Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-blue-50 border border-blue-200 text-blue-800 text-xs font-mono font-bold uppercase tracking-widest mb-6 shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-blue-600 animate-pulse" />
-            <span>AI-POWERED RESUME BUILDER</span>
+            <span>AI-POWERED RESUME & CV BUILDER</span>
             <span className="w-1.5 h-1.5 bg-blue-600" />
-            <span className="text-slate-900 font-black">100% FREE & ATS READY</span>
+            <span className="text-slate-900 font-black">TECH · NON-TECH · FRESHER · EXPERIENCED</span>
           </div>
 
           {/* Heading */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] mb-6 text-slate-950">
-            Land Top Tech Interviews With A{" "}
+            Land Top Roles With A{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600">
-              High-Impact Resume
+              High-Impact Resume & CV
             </span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-base sm:text-lg text-slate-600 mb-8 leading-relaxed max-w-2xl mx-auto font-normal">
-            Build recruiter-approved, ATS-compliant resumes with instant live A4
-            preview, metric-driven AI bullet points, and 1-click vector PDF export.
+            Tailored templates and starter kits for <strong>Tech & Non-Tech</strong> professionals, <strong>Freshers & Experienced</strong> leaders, and <strong>Academic CVs</strong>. Instant live A4 preview and 1-click vector PDF export.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12">
             <Link href="/builder" className="w-full sm:w-auto">
-              <Button variant="gradient" size="lg" className="w-full sm:w-auto px-8 font-black text-sm shadow-md shadow-blue-500/25">
+              <Button variant="gradient" size="lg" className="w-full sm:w-auto px-8 font-black text-sm shadow-md shadow-blue-500/25 cursor-pointer">
                 Build Your Resume Now
                 <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
@@ -55,9 +54,9 @@ export const HeroSection: React.FC = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto px-6 font-bold text-sm bg-white text-slate-800 border-slate-300 hover:bg-slate-50 hover:border-slate-400"
+                className="w-full sm:w-auto px-6 font-bold text-sm bg-white text-slate-800 border-slate-300 hover:bg-slate-50 hover:border-slate-400 cursor-pointer"
               >
-                View 4 Live Templates
+                View 8 Live Templates
               </Button>
             </a>
           </div>
