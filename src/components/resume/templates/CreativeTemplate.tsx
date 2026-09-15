@@ -41,10 +41,10 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "summary":
         if (!summary) return null;
         return (
-          <div key="summary" className="mb-4">
+          <div key="summary" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
-              <h2 className="text-xs font-black uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
                 About & Creative Vision
               </h2>
             </div>
@@ -57,10 +57,10 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "skills":
         if (!skills || skills.length === 0) return null;
         return (
-          <div key="skills" className="mb-4">
+          <div key="skills" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
-              <h2 className="text-xs font-black uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
                 Creative Capabilities & Tools
               </h2>
             </div>
@@ -68,7 +68,7 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
               {skills.map((skill) => (
                 <span
                   key={skill.id}
-                  className="px-2.5 py-1 rounded-full text-[10.5px] font-medium transition-all"
+                  className="resume-item px-2.5 py-1 rounded-full text-[10.5px] font-medium transition-all"
                   style={{
                     backgroundColor: `${primaryColor}12`,
                     color: primaryColor,
@@ -89,16 +89,16 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "experience":
         if (!experience || experience.length === 0) return null;
         return (
-          <div key="experience" className="mb-4">
+          <div key="experience" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
-              <h2 className="text-xs font-black uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
                 Professional Experience
               </h2>
             </div>
             <div className="space-y-3">
               {experience.map((exp) => (
-                <div key={exp.id} className="relative pl-3.5 border-l-2" style={{ borderColor: `${primaryColor}40` }}>
+                <div key={exp.id} className="resume-item relative pl-3.5 border-l-2" style={{ borderColor: `${primaryColor}40` }}>
                   <div className="flex justify-between items-baseline flex-wrap gap-1">
                     <h3 className="text-[12px] font-bold text-slate-900">{exp.jobTitle}</h3>
                     <span className="text-[10px] font-medium text-slate-500">
@@ -138,16 +138,16 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "projects":
         if (!projects || projects.length === 0) return null;
         return (
-          <div key="projects" className="mb-4">
+          <div key="projects" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
-              <h2 className="text-xs font-black uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
                 Featured Portfolio & Campaigns
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {projects.map((proj) => (
-                <div key={proj.id} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
+                <div key={proj.id} className="resume-item p-2.5 rounded-lg bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
                   <div>
                     <div className="flex justify-between items-baseline mb-0.5">
                       <span className="font-bold text-slate-900 text-[11.5px]">{proj.name}</span>
@@ -173,16 +173,16 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "education":
         if (!education || education.length === 0) return null;
         return (
-          <div key="education" className="mb-4">
+          <div key="education" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
-              <h2 className="text-xs font-black uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
                 Education & Academics
               </h2>
             </div>
             <div className="space-y-2">
               {education.map((edu) => (
-                <div key={edu.id} className="flex justify-between items-start flex-wrap gap-1">
+                <div key={edu.id} className="resume-item flex justify-between items-start flex-wrap gap-1">
                   <div>
                     <h3 className="text-[11.5px] font-bold text-slate-900">{edu.degree}</h3>
                     <p className="text-[10.5px] text-slate-600 font-medium">
@@ -211,16 +211,16 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "certifications":
         if (!certifications || certifications.length === 0) return null;
         return (
-          <div key="certifications" className="mb-4">
+          <div key="certifications" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
-              <h2 className="text-xs font-black uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
                 Certifications & Accreditations
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {certifications.map((cert) => (
-                <div key={cert.id} className="text-[10.5px] p-2 rounded bg-slate-50 border border-slate-200/80">
+                <div key={cert.id} className="resume-item text-[10.5px] p-2 rounded bg-slate-50 border border-slate-200/80">
                   <span className="font-bold text-slate-800 block">{cert.name}</span>
                   <span className="text-[9.5px] text-slate-500">{cert.issuer} {cert.date && `• ${cert.date}`}</span>
                 </div>
@@ -232,16 +232,16 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "achievements":
         if (!achievements || achievements.length === 0) return null;
         return (
-          <div key="achievements" className="mb-4">
+          <div key="achievements" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
-              <h2 className="text-xs font-black uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
                 Honors & Creative Awards
               </h2>
             </div>
             <div className="space-y-1.5">
               {achievements.map((ach) => (
-                <div key={ach.id} className="text-[10.5px]">
+                <div key={ach.id} className="resume-item text-[10.5px]">
                   <div className="flex justify-between items-baseline">
                     <span className="font-bold text-slate-900">{ach.title}</span>
                     {ach.date && <span className="text-[9.5px] text-slate-500">{ach.date}</span>}
@@ -256,16 +256,16 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "languages":
         if (!languages || languages.length === 0) return null;
         return (
-          <div key="languages" className="mb-4">
+          <div key="languages" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
-              <h2 className="text-xs font-black uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
                 Languages
               </h2>
             </div>
             <div className="flex flex-wrap gap-2 text-[10.5px]">
               {languages.map((lang) => (
-                <span key={lang.id} className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">
+                <span key={lang.id} className="resume-item px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">
                   <span className="font-semibold text-slate-900">{lang.name}</span> ({lang.proficiency})
                 </span>
               ))}
@@ -277,16 +277,16 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
         const customSec = customSections.find((cs) => cs.id === sectionKey);
         if (!customSec || customSec.items.length === 0) return null;
         return (
-          <div key={customSec.id} className="mb-4">
+          <div key={customSec.id} className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
-              <h2 className="text-xs font-black uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
                 {customSec.title}
               </h2>
             </div>
             <div className="space-y-2">
               {customSec.items.map((item) => (
-                <div key={item.id} className="text-[10.5px]">
+                <div key={item.id} className="resume-item text-[10.5px]">
                   <div className="flex justify-between items-baseline">
                     <span className="font-bold text-slate-900">{item.title}</span>
                     {item.date && <span className="text-[9.5px] text-slate-500">{item.date}</span>}
@@ -308,9 +308,9 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
   };
 
   return (
-    <div className="p-8 font-sans text-slate-900 bg-white min-h-[297mm]">
+    <div className="resume-template-root p-8 font-sans text-slate-900 bg-white min-h-[297mm]">
       {/* Dynamic Creative Header */}
-      <header className="mb-6 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+      <div className="resume-header mb-6 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
         <div className="flex justify-between items-start gap-4 flex-wrap">
           <div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-950">
@@ -347,10 +347,10 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
             </span>
           )}
         </div>
-      </header>
+      </div>
 
       {/* Main Flow */}
-      <main>{sectionOrder.map((sectionKey) => renderSection(sectionKey))}</main>
+      <div className="resume-main">{sectionOrder.map((sectionKey) => renderSection(sectionKey))}</div>
     </div>
   );
 };

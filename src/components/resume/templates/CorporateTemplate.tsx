@@ -41,9 +41,9 @@ export const CorporateTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "summary":
         if (!summary) return null;
         return (
-          <div key="summary" className="mb-4">
+          <div key="summary" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
               style={{ color: primaryColor, borderColor: primaryColor }}
             >
               Executive Profile & Leadership Scope
@@ -57,9 +57,9 @@ export const CorporateTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "skills":
         if (!skills || skills.length === 0) return null;
         return (
-          <div key="skills" className="mb-4">
+          <div key="skills" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
               style={{ color: primaryColor, borderColor: primaryColor }}
             >
               Core Business Competencies & Strategic Domains
@@ -68,7 +68,7 @@ export const CorporateTemplate: React.FC<TemplateProps> = ({ resume }) => {
               {skills.map((skill) => (
                 <div
                   key={skill.id}
-                  className="flex items-center gap-1.5 text-[10.5px] font-medium text-slate-800"
+                  className="resume-item flex items-center gap-1.5 text-[10.5px] font-medium text-slate-800"
                 >
                   <span
                     className="w-1.5 h-1.5 rounded-full shrink-0"
@@ -84,16 +84,16 @@ export const CorporateTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "experience":
         if (!experience || experience.length === 0) return null;
         return (
-          <div key="experience" className="mb-4">
+          <div key="experience" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
               style={{ color: primaryColor, borderColor: primaryColor }}
             >
               Professional Career History & Business Impact
             </h2>
-            <div className="space-y-3.5">
+            <div className="space-y-3">
               {experience.map((exp) => (
-                <div key={exp.id}>
+                <div key={exp.id} className="resume-item">
                   <div className="flex justify-between items-baseline flex-wrap gap-1">
                     <h3 className="text-[12px] font-bold text-slate-950">
                       {exp.jobTitle}
@@ -135,16 +135,16 @@ export const CorporateTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "education":
         if (!education || education.length === 0) return null;
         return (
-          <div key="education" className="mb-4">
+          <div key="education" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
               style={{ color: primaryColor, borderColor: primaryColor }}
             >
               Academic Background & Executive Education
             </h2>
             <div className="space-y-2">
               {education.map((edu) => (
-                <div key={edu.id} className="flex justify-between items-start flex-wrap gap-1">
+                <div key={edu.id} className="resume-item flex justify-between items-start flex-wrap gap-1">
                   <div>
                     <h3 className="text-[11.5px] font-bold text-slate-900">{edu.degree}</h3>
                     <p className="text-[10.5px] text-slate-600 font-medium">
@@ -173,16 +173,16 @@ export const CorporateTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "projects":
         if (!projects || projects.length === 0) return null;
         return (
-          <div key="projects" className="mb-4">
+          <div key="projects" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
               style={{ color: primaryColor, borderColor: primaryColor }}
             >
               Strategic Initiatives & Major Campaigns
             </h2>
             <div className="space-y-2.5">
               {projects.map((proj) => (
-                <div key={proj.id} className="text-[10.5px]">
+                <div key={proj.id} className="resume-item text-[10.5px]">
                   <div className="flex justify-between items-baseline">
                     <span className="font-bold text-slate-900 text-[11px]">{proj.name}</span>
                     {(proj.startDate || proj.endDate) && (
@@ -206,16 +206,16 @@ export const CorporateTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "certifications":
         if (!certifications || certifications.length === 0) return null;
         return (
-          <div key="certifications" className="mb-4">
+          <div key="certifications" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
               style={{ color: primaryColor, borderColor: primaryColor }}
             >
               Executive Credentials & Industry Certifications
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {certifications.map((cert) => (
-                <div key={cert.id} className="text-[10.5px] border-l-2 pl-2" style={{ borderColor: primaryColor }}>
+                <div key={cert.id} className="resume-item text-[10.5px] border-l-2 pl-2" style={{ borderColor: primaryColor }}>
                   <span className="font-bold text-slate-800 block">{cert.name}</span>
                   <span className="text-[9.5px] text-slate-500">
                     {cert.issuer} {cert.date && `• ${cert.date}`}
@@ -229,16 +229,16 @@ export const CorporateTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "achievements":
         if (!achievements || achievements.length === 0) return null;
         return (
-          <div key="achievements" className="mb-4">
+          <div key="achievements" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
               style={{ color: primaryColor, borderColor: primaryColor }}
             >
               Key Honors & Industry Recognition
             </h2>
             <div className="space-y-1.5">
               {achievements.map((ach) => (
-                <div key={ach.id} className="text-[10.5px]">
+                <div key={ach.id} className="resume-item text-[10.5px]">
                   <div className="flex justify-between items-baseline">
                     <span className="font-bold text-slate-900">{ach.title}</span>
                     {ach.date && <span className="text-[9.5px] text-slate-500">{ach.date}</span>}
@@ -253,16 +253,16 @@ export const CorporateTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "languages":
         if (!languages || languages.length === 0) return null;
         return (
-          <div key="languages" className="mb-4">
+          <div key="languages" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
               style={{ color: primaryColor, borderColor: primaryColor }}
             >
               Languages & Global Communication
             </h2>
             <div className="flex flex-wrap gap-3 text-[10.5px]">
               {languages.map((lang) => (
-                <span key={lang.id} className="font-medium text-slate-800">
+                <span key={lang.id} className="resume-item font-medium text-slate-800">
                   {lang.name} <span className="text-slate-500">({lang.proficiency})</span>
                 </span>
               ))}
@@ -274,16 +274,16 @@ export const CorporateTemplate: React.FC<TemplateProps> = ({ resume }) => {
         const customSec = customSections.find((cs) => cs.id === sectionKey);
         if (!customSec || customSec.items.length === 0) return null;
         return (
-          <div key={customSec.id} className="mb-4">
+          <div key={customSec.id} className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b-2"
               style={{ color: primaryColor, borderColor: primaryColor }}
             >
               {customSec.title}
             </h2>
             <div className="space-y-2">
               {customSec.items.map((item) => (
-                <div key={item.id} className="text-[10.5px]">
+                <div key={item.id} className="resume-item text-[10.5px]">
                   <div className="flex justify-between items-baseline">
                     <span className="font-bold text-slate-900">{item.title}</span>
                     {item.date && <span className="text-[9.5px] text-slate-500">{item.date}</span>}
@@ -305,9 +305,9 @@ export const CorporateTemplate: React.FC<TemplateProps> = ({ resume }) => {
   };
 
   return (
-    <div className="p-8 font-serif text-slate-900 bg-white min-h-[297mm]">
+    <div className="resume-template-root p-8 font-serif text-slate-900 bg-white min-h-[297mm]">
       {/* Authoritative Corporate Header */}
-      <header className="text-center mb-5 pb-4 border-b-2 border-slate-900">
+      <div className="resume-header text-center mb-5 pb-4 border-b-2 border-slate-900">
         <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-wider text-slate-950">
           {personalInfo.fullName || "Your Full Name"}
         </h1>
@@ -330,10 +330,10 @@ export const CorporateTemplate: React.FC<TemplateProps> = ({ resume }) => {
             <span>• {personalInfo.website.replace(/^https?:\/\//, "")}</span>
           )}
         </div>
-      </header>
+      </div>
 
       {/* Main Section Content */}
-      <main className="font-sans">{sectionOrder.map((sectionKey) => renderSection(sectionKey))}</main>
+      <div className="resume-main font-sans">{sectionOrder.map((sectionKey) => renderSection(sectionKey))}</div>
     </div>
   );
 };

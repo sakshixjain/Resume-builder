@@ -41,9 +41,9 @@ export const AcademicTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "summary":
         if (!summary) return null;
         return (
-          <div key="summary" className="mb-4">
+          <div key="summary" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
               style={{ color: primaryColor, borderColor: `${primaryColor}60` }}
             >
               Research Statement & Profile
@@ -57,16 +57,16 @@ export const AcademicTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "education":
         if (!education || education.length === 0) return null;
         return (
-          <div key="education" className="mb-4">
+          <div key="education" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
               style={{ color: primaryColor, borderColor: `${primaryColor}60` }}
             >
               Academic Education & Degrees
             </h2>
             <div className="space-y-2.5">
               {education.map((edu) => (
-                <div key={edu.id}>
+                <div key={edu.id} className="resume-item">
                   <div className="flex justify-between items-baseline flex-wrap gap-1">
                     <h3 className="text-[11.5px] font-bold text-slate-950">{edu.degree}</h3>
                     <span className="text-[10.5px] text-slate-600 font-medium">
@@ -90,16 +90,16 @@ export const AcademicTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "experience":
         if (!experience || experience.length === 0) return null;
         return (
-          <div key="experience" className="mb-4">
+          <div key="experience" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
               style={{ color: primaryColor, borderColor: `${primaryColor}60` }}
             >
               Academic Appointments & Research Experience
             </h2>
             <div className="space-y-3">
               {experience.map((exp) => (
-                <div key={exp.id}>
+                <div key={exp.id} className="resume-item">
                   <div className="flex justify-between items-baseline flex-wrap gap-1">
                     <h3 className="text-[11.5px] font-bold text-slate-950">{exp.jobTitle}</h3>
                     <span className="text-[10.5px] text-slate-600 font-medium">
@@ -134,16 +134,16 @@ export const AcademicTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "skills":
         if (!skills || skills.length === 0) return null;
         return (
-          <div key="skills" className="mb-4">
+          <div key="skills" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
               style={{ color: primaryColor, borderColor: `${primaryColor}60` }}
             >
               Research Methodologies & Technical Expertise
             </h2>
             <div className="text-[10.5px] text-slate-800 leading-relaxed">
               {skills.map((skill, idx) => (
-                <span key={skill.id}>
+                <span key={skill.id} className="resume-item inline">
                   <strong className="font-semibold text-slate-900">{skill.name}</strong>
                   {skill.category && <span className="text-slate-500 text-[10px]"> ({skill.category})</span>}
                   {idx < skills.length - 1 && " • "}
@@ -156,16 +156,16 @@ export const AcademicTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "projects":
         if (!projects || projects.length === 0) return null;
         return (
-          <div key="projects" className="mb-4">
+          <div key="projects" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
               style={{ color: primaryColor, borderColor: `${primaryColor}60` }}
             >
               Research Projects & Computational Frameworks
             </h2>
             <div className="space-y-2">
               {projects.map((proj) => (
-                <div key={proj.id} className="text-[10.5px]">
+                <div key={proj.id} className="resume-item text-[10.5px]">
                   <div className="flex justify-between items-baseline">
                     <span className="font-bold text-slate-950 text-[11px]">{proj.name}</span>
                     {(proj.startDate || proj.endDate) && (
@@ -189,16 +189,16 @@ export const AcademicTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "certifications":
         if (!certifications || certifications.length === 0) return null;
         return (
-          <div key="certifications" className="mb-4">
+          <div key="certifications" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
               style={{ color: primaryColor, borderColor: `${primaryColor}60` }}
             >
               Fellowships & Professional Accreditations
             </h2>
             <div className="space-y-1.5">
               {certifications.map((cert) => (
-                <div key={cert.id} className="text-[10.5px]">
+                <div key={cert.id} className="resume-item text-[10.5px]">
                   <div className="flex justify-between items-baseline">
                     <span className="font-bold text-slate-900">{cert.name}</span>
                     {cert.date && <span className="text-[10px] text-slate-500">{cert.date}</span>}
@@ -213,16 +213,16 @@ export const AcademicTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "achievements":
         if (!achievements || achievements.length === 0) return null;
         return (
-          <div key="achievements" className="mb-4">
+          <div key="achievements" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
               style={{ color: primaryColor, borderColor: `${primaryColor}60` }}
             >
               Honors, Grants & Scientific Awards
             </h2>
             <div className="space-y-1.5">
               {achievements.map((ach) => (
-                <div key={ach.id} className="text-[10.5px]">
+                <div key={ach.id} className="resume-item text-[10.5px]">
                   <div className="flex justify-between items-baseline">
                     <span className="font-bold text-slate-900">{ach.title}</span>
                     {ach.date && <span className="text-[10px] text-slate-500">{ach.date}</span>}
@@ -237,16 +237,16 @@ export const AcademicTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "languages":
         if (!languages || languages.length === 0) return null;
         return (
-          <div key="languages" className="mb-4">
+          <div key="languages" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
               style={{ color: primaryColor, borderColor: `${primaryColor}60` }}
             >
               Languages & Scholarly Translation
             </h2>
             <div className="text-[10.5px] text-slate-800">
               {languages.map((lang, idx) => (
-                <span key={lang.id}>
+                <span key={lang.id} className="resume-item inline">
                   <strong className="font-semibold text-slate-900">{lang.name}</strong> ({lang.proficiency})
                   {idx < languages.length - 1 && " • "}
                 </span>
@@ -259,22 +259,22 @@ export const AcademicTemplate: React.FC<TemplateProps> = ({ resume }) => {
         const customSec = customSections.find((cs) => cs.id === sectionKey);
         if (!customSec || customSec.items.length === 0) return null;
         return (
-          <div key={customSec.id} className="mb-4">
+          <div key={customSec.id} className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
               style={{ color: primaryColor, borderColor: `${primaryColor}60` }}
             >
               {customSec.title}
             </h2>
             <div className="space-y-2">
               {customSec.items.map((item) => (
-                <div key={item.id} className="text-[10.5px]">
+                <div key={item.id} className="resume-item text-[10.5px]">
                   <div className="flex justify-between items-baseline">
                     <span className="font-bold text-slate-950">{item.title}</span>
                     {item.date && <span className="text-[10px] text-slate-500">{item.date}</span>}
                   </div>
                   {item.subtitle && (
-                    <div className="text-[10.5px] text-slate-700 italic">{item.subtitle}</div>
+                    <div className="text-[10px] text-slate-700 italic">{item.subtitle}</div>
                   )}
                   {item.description && (
                     <p className="text-[10px] text-slate-700 mt-0.5 whitespace-pre-line leading-relaxed">
@@ -290,9 +290,9 @@ export const AcademicTemplate: React.FC<TemplateProps> = ({ resume }) => {
   };
 
   return (
-    <div className="p-8 font-serif text-slate-900 bg-white min-h-[297mm]">
+    <div className="resume-template-root p-8 font-serif text-slate-900 bg-white min-h-[297mm]">
       {/* Formal Academic Header */}
-      <header className="text-center mb-5 pb-3 border-b-2 border-slate-800">
+      <div className="resume-header text-center mb-5 pb-3 border-b-2 border-slate-800">
         <h1 className="text-2xl font-bold uppercase tracking-wide text-slate-950">
           {personalInfo.fullName || "Your Full Name"}
         </h1>
@@ -315,10 +315,10 @@ export const AcademicTemplate: React.FC<TemplateProps> = ({ resume }) => {
             <span>• Web: {personalInfo.website.replace(/^https?:\/\//, "")}</span>
           )}
         </div>
-      </header>
+      </div>
 
       {/* Main Flow */}
-      <main>{sectionOrder.map((sectionKey) => renderSection(sectionKey))}</main>
+      <div className="resume-main">{sectionOrder.map((sectionKey) => renderSection(sectionKey))}</div>
     </div>
   );
 };

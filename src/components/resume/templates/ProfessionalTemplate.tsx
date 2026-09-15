@@ -40,9 +40,9 @@ export const ProfessionalTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "summary":
         if (!summary) return null;
         return (
-          <div key="summary" className="mb-4">
+          <div key="summary" className="resume-section mb-4">
             <h3
-              className="text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-1.5"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-1.5"
               style={{ borderColor: primaryColor, color: primaryColor }}
             >
               Professional Summary
@@ -56,16 +56,16 @@ export const ProfessionalTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "experience":
         if (!experience || experience.length === 0) return null;
         return (
-          <div key="experience" className="mb-4">
+          <div key="experience" className="resume-section mb-4">
             <h3
-              className="text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-2"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-2"
               style={{ borderColor: primaryColor, color: primaryColor }}
             >
               Work Experience
             </h3>
             <div className="space-y-3">
               {experience.map((exp) => (
-                <div key={exp.id}>
+                <div key={exp.id} className="resume-item">
                   <div className="flex justify-between items-baseline text-xs">
                     <span className="font-bold text-slate-900">{exp.jobTitle}</span>
                     <span className="text-[11px] font-semibold text-slate-600">
@@ -90,16 +90,16 @@ export const ProfessionalTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "education":
         if (!education || education.length === 0) return null;
         return (
-          <div key="education" className="mb-4">
+          <div key="education" className="resume-section mb-4">
             <h3
-              className="text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-2"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-2"
               style={{ borderColor: primaryColor, color: primaryColor }}
             >
               Education
             </h3>
             <div className="space-y-2">
               {education.map((edu) => (
-                <div key={edu.id}>
+                <div key={edu.id} className="resume-item">
                   <div className="flex justify-between items-baseline text-xs">
                     <span className="font-bold text-slate-900">{edu.institution}</span>
                     <span className="text-[11px] text-slate-600 font-medium">
@@ -121,9 +121,9 @@ export const ProfessionalTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "skills":
         if (!skills || skills.length === 0) return null;
         return (
-          <div key="skills" className="mb-4">
+          <div key="skills" className="resume-section mb-4">
             <h3
-              className="text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-1.5"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-1.5"
               style={{ borderColor: primaryColor, color: primaryColor }}
             >
               Skills & Proficiencies
@@ -144,16 +144,16 @@ export const ProfessionalTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "projects":
         if (!projects || projects.length === 0) return null;
         return (
-          <div key="projects" className="mb-4">
+          <div key="projects" className="resume-section mb-4">
             <h3
-              className="text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-2"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-2"
               style={{ borderColor: primaryColor, color: primaryColor }}
             >
               Projects
             </h3>
             <div className="space-y-2.5">
               {projects.map((proj) => (
-                <div key={proj.id}>
+                <div key={proj.id} className="resume-item">
                   <div className="flex justify-between items-baseline text-xs">
                     <span className="font-bold text-slate-900">
                       {proj.name}
@@ -186,16 +186,16 @@ export const ProfessionalTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "certifications":
         if (!certifications || certifications.length === 0) return null;
         return (
-          <div key="certifications" className="mb-4">
+          <div key="certifications" className="resume-section mb-4">
             <h3
-              className="text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-1.5"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-1.5"
               style={{ borderColor: primaryColor, color: primaryColor }}
             >
               Certifications
             </h3>
             <div className="space-y-1 text-[11px]">
               {certifications.map((cert) => (
-                <div key={cert.id} className="flex justify-between items-baseline">
+                <div key={cert.id} className="resume-item flex justify-between items-baseline">
                   <span className="font-semibold text-slate-800">{cert.name} — <span className="font-normal text-slate-600">{cert.issuer}</span></span>
                   <span className="text-slate-500 text-[10px]">{cert.date}</span>
                 </div>
@@ -207,9 +207,9 @@ export const ProfessionalTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "languages":
         if (!languages || languages.length === 0) return null;
         return (
-          <div key="languages" className="mb-4">
+          <div key="languages" className="resume-section mb-4">
             <h3
-              className="text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-1.5"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-1.5"
               style={{ borderColor: primaryColor, color: primaryColor }}
             >
               Languages
@@ -228,16 +228,16 @@ export const ProfessionalTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "achievements":
         if (!achievements || achievements.length === 0) return null;
         return (
-          <div key="achievements" className="mb-4">
+          <div key="achievements" className="resume-section mb-4">
             <h3
-              className="text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-1.5"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-1.5"
               style={{ borderColor: primaryColor, color: primaryColor }}
             >
               Key Achievements & Honors
             </h3>
             <ul className="space-y-1 text-[11px] text-slate-700 list-disc list-inside">
               {achievements.map((ach) => (
-                <li key={ach.id}>
+                <li key={ach.id} className="resume-item">
                   <span className="font-semibold">{ach.title}</span>
                   {ach.date && <span className="text-slate-500 text-[10px] ml-1">({ach.date})</span>}
                   {ach.description && <span>: {ach.description}</span>}
@@ -251,16 +251,16 @@ export const ProfessionalTemplate: React.FC<TemplateProps> = ({ resume }) => {
         const customSec = customSections?.find((cs) => cs.id === sectionKey);
         if (!customSec || customSec.items.length === 0) return null;
         return (
-          <div key={customSec.id} className="mb-4">
+          <div key={customSec.id} className="resume-section mb-4">
             <h3
-              className="text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-1.5"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider border-b pb-0.5 mb-1.5"
               style={{ borderColor: primaryColor, color: primaryColor }}
             >
               {customSec.title}
             </h3>
             <div className="space-y-1.5">
               {customSec.items.map((item) => (
-                <div key={item.id} className="text-[11px]">
+                <div key={item.id} className="resume-item text-[11px]">
                   <div className="flex justify-between items-baseline">
                     <span className="font-semibold text-slate-800">{item.title}</span>
                     {item.date && <span className="text-slate-500 text-[10px]">{item.date}</span>}
@@ -276,9 +276,9 @@ export const ProfessionalTemplate: React.FC<TemplateProps> = ({ resume }) => {
   };
 
   return (
-    <div className="w-full h-full p-8 font-serif text-slate-800 flex flex-col justify-start">
+    <div className="resume-template-root w-full h-full p-8 font-serif text-slate-800 flex flex-col justify-start">
       {/* Header */}
-      <div className="text-center pb-3 border-b-2 mb-4" style={{ borderColor: primaryColor }}>
+      <div className="resume-header text-center pb-3 border-b-2 mb-4" style={{ borderColor: primaryColor }}>
         <h1 className="text-2xl font-bold tracking-tight text-slate-900 uppercase">
           {personalInfo.fullName || "Your Name"}
         </h1>
@@ -300,7 +300,7 @@ export const ProfessionalTemplate: React.FC<TemplateProps> = ({ resume }) => {
       </div>
 
       {/* Sections in user configured order */}
-      <div className="flex-1 space-y-1">
+      <div className="resume-main flex-1 space-y-1">
         {sectionOrder.map((sec) => renderSection(sec))}
       </div>
     </div>

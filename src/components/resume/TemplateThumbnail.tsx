@@ -54,12 +54,13 @@ export const TemplateThumbnail: React.FC<TemplateThumbnailProps> = ({
     academic: "#1e3a8a",
   };
 
-  const previewResume: Resume = resumeData || {
-    ...initialResumeData,
+  const baseResume: Resume = resumeData || initialResumeData;
+  const previewResume: Resume = {
+    ...baseResume,
     settings: {
-      ...initialResumeData.settings,
-      template: templateId,
-      primaryColor: primaryColor || defaultColorMap[templateId] || "#2563eb",
+      ...baseResume.settings,
+      template: templateId, // ALWAYS enforce the card's specific templateId
+      primaryColor: primaryColor || baseResume.settings?.primaryColor || defaultColorMap[templateId] || "#2563eb",
     },
   };
 
@@ -77,7 +78,7 @@ export const TemplateThumbnail: React.FC<TemplateThumbnailProps> = ({
         }}
         className="absolute top-0 left-0 bg-white"
       >
-        <ResumePreview resume={previewResume} />
+        <ResumePreview resume={previewResume} isThumbnail />
       </div>
     </div>
   );

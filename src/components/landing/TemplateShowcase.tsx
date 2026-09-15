@@ -188,6 +188,33 @@ export const TemplateShowcase: React.FC = () => {
         return academicCVData;
       case "modern":
         return techFresherResume;
+      case "professional":
+        return {
+          ...nonTechExperiencedResume,
+          settings: {
+            ...nonTechExperiencedResume.settings,
+            template: "professional",
+            primaryColor: "#0f766e",
+          },
+        };
+      case "minimal":
+        return {
+          ...techExperiencedResume,
+          settings: {
+            ...techExperiencedResume.settings,
+            template: "minimal",
+            primaryColor: "#334155",
+          },
+        };
+      case "executive":
+        return {
+          ...nonTechExperiencedResume,
+          settings: {
+            ...nonTechExperiencedResume.settings,
+            template: "executive",
+            primaryColor: "#0f172a",
+          },
+        };
       default:
         const card = TEMPLATE_CARDS.find((t) => t.id === tmplId);
         return {

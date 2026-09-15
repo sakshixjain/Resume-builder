@@ -64,9 +64,9 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "summary":
         if (!summary) return null;
         return (
-          <div key="summary" className="mb-4">
+          <div key="summary" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
               style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
               Professional Summary
@@ -80,16 +80,16 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "education":
         if (!education || education.length === 0) return null;
         return (
-          <div key="education" className="mb-4">
+          <div key="education" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
               style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
               Education
             </h2>
             <div className="space-y-3">
               {education.map((edu) => (
-                <div key={edu.id}>
+                <div key={edu.id} className="resume-item">
                   {/* Top line: Degree & Date */}
                   <div className="flex justify-between items-baseline flex-wrap gap-1">
                     <h3 className="text-xs font-bold text-slate-900">{edu.degree}</h3>
@@ -130,16 +130,16 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "experience":
         if (!experience || experience.length === 0) return null;
         return (
-          <div key="experience" className="mb-4">
+          <div key="experience" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
               style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
               Work Experience
             </h2>
             <div className="space-y-3.5">
               {experience.map((exp) => (
-                <div key={exp.id}>
+                <div key={exp.id} className="resume-item">
                   {/* Top Line: Job Title & Date */}
                   <div className="flex justify-between items-baseline flex-wrap gap-1">
                     <h3 className="text-xs font-bold text-slate-900">{exp.jobTitle}</h3>
@@ -180,9 +180,9 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "skills":
         if (!skills || skills.length === 0) return null;
         return (
-          <div key="skills" className="mb-4">
+          <div key="skills" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
               style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
               Skills & Proficiencies
@@ -191,7 +191,7 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
               {skills.map((skill) => (
                 <span
                   key={skill.id}
-                  className="inline-flex items-center px-2 py-0.5 text-[10px] font-medium rounded-md border text-slate-800"
+                  className="resume-item inline-flex items-center px-2 py-0.5 text-[10px] font-medium rounded-md border text-slate-800"
                   style={{
                     backgroundColor: `${primaryColor}08`,
                     borderColor: `${primaryColor}25`,
@@ -212,16 +212,16 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "projects":
         if (!projects || projects.length === 0) return null;
         return (
-          <div key="projects" className="mb-4">
+          <div key="projects" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
               style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
               Projects
             </h2>
             <div className="space-y-2.5">
               {projects.map((proj) => (
-                <div key={proj.id}>
+                <div key={proj.id} className="resume-item">
                   <div className="flex justify-between items-baseline flex-wrap gap-1">
                     <h3 className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
                       {proj.name}
@@ -261,16 +261,16 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "certifications":
         if (!certifications || certifications.length === 0) return null;
         return (
-          <div key="certifications" className="mb-4">
+          <div key="certifications" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
               style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
               Certifications
             </h2>
             <div className="space-y-1.5 text-[11px]">
               {certifications.map((cert) => (
-                <div key={cert.id} className="flex justify-between items-baseline">
+                <div key={cert.id} className="resume-item flex justify-between items-baseline">
                   <div>
                     <span className="font-semibold text-slate-800">{cert.name}</span>
                     <span className="text-slate-500 ml-1.5">— {cert.issuer}</span>
@@ -285,16 +285,16 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "languages":
         if (!languages || languages.length === 0) return null;
         return (
-          <div key="languages" className="mb-4">
+          <div key="languages" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
               style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
               Languages
             </h2>
             <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-700">
               {languages.map((l) => (
-                <div key={l.id} className="flex items-center gap-1.5">
+                <div key={l.id} className="resume-item flex items-center gap-1.5">
                   <span className="font-semibold text-slate-900">{l.name}</span>
                   <span className="text-slate-500 text-[10px]">({l.proficiency})</span>
                 </div>
@@ -306,16 +306,16 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "achievements":
         if (!achievements || achievements.length === 0) return null;
         return (
-          <div key="achievements" className="mb-4">
+          <div key="achievements" className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
               style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
               Key Achievements
             </h2>
             <ul className="space-y-1.5 text-[11px] text-slate-700">
               {achievements.map((ach) => (
-                <li key={ach.id} className="flex items-start gap-1.5">
+                <li key={ach.id} className="resume-item flex items-start gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: primaryColor }} />
                   <div>
                     <span className="font-semibold text-slate-900">{ach.title}</span>
@@ -332,16 +332,16 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
         const customSec = customSections?.find((cs) => cs.id === sectionKey);
         if (!customSec || customSec.items.length === 0) return null;
         return (
-          <div key={customSec.id} className="mb-4">
+          <div key={customSec.id} className="resume-section mb-3.5">
             <h2
-              className="text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
+              className="resume-section-title text-xs font-bold uppercase tracking-wider pb-1 mb-2 border-b"
               style={{ color: "#0f172a", borderColor: `${primaryColor}40` }}
             >
               {customSec.title}
             </h2>
             <div className="space-y-2">
               {customSec.items.map((item) => (
-                <div key={item.id} className="text-[11px]">
+                <div key={item.id} className="resume-item text-[11px]">
                   <div className="flex justify-between items-baseline">
                     <span className="font-semibold text-slate-800">{item.title}</span>
                     {item.date && <span className="text-[10px] text-slate-400">{item.date}</span>}
@@ -357,9 +357,9 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
   };
 
   return (
-    <div className="w-full h-full p-8 font-sans text-slate-800 flex flex-col justify-start bg-white">
+    <div className="resume-template-root w-full h-full p-8 font-sans text-slate-800 flex flex-col justify-start bg-white min-h-[297mm]">
       {/* Top Header Banner matching screenshot */}
-      <div className="pb-3 border-b border-slate-200/80 mb-4">
+      <div className="resume-header pb-3 border-b border-slate-200/80 mb-4">
         <div className="flex justify-between items-start gap-4">
           <div className="flex-1">
             {/* Dual color full name */}
@@ -421,28 +421,28 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
           {personalInfo.linkedin && (
             <div className="flex items-center gap-1.5">
               <LinkedinIcon className="w-3.5 h-3.5" style={{ color: primaryColor }} />
-              <span>{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</span>
+              <span>{personalInfo.linkedin.replace(/^https?:\/\//, "")}</span>
             </div>
           )}
 
           {personalInfo.github && (
             <div className="flex items-center gap-1.5">
               <GithubIcon className="w-3.5 h-3.5 text-slate-800" />
-              <span>{personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}</span>
+              <span>{personalInfo.github.replace(/^https?:\/\//, "")}</span>
             </div>
           )}
 
           {personalInfo.website && (
             <div className="flex items-center gap-1.5">
               <Globe className="w-3.5 h-3.5" style={{ color: primaryColor }} />
-              <span>{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</span>
+              <span>{personalInfo.website.replace(/^https?:\/\//, "")}</span>
             </div>
           )}
         </div>
       </div>
 
       {/* Sections list rendered in user-configured order */}
-      <div className="flex-1 space-y-1">
+      <div className="resume-main flex-1 space-y-1">
         {sectionOrder.map((sec) => renderSection(sec))}
       </div>
     </div>

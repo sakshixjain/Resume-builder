@@ -7,20 +7,15 @@ import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import {
   FileText,
-  Layout,
-  Palette,
-  Settings,
-  Check,
-  Undo2,
-  Redo2,
   Eye,
   Trash2,
   Download,
-  RotateCcw,
-  Sparkles,
+  ChevronDown,
+  Maximize2,
+  Minimize2,
+  Search,
 } from "lucide-react";
-import { exportResumeToPDF } from "@/lib/resume/pdfGenerator";
-import confetti from "canvas-confetti";
+import { TemplateId, FontFamily, Spacing, FontSize } from "@/lib/resume/types";
 import { toast } from "sonner";
 
 interface BuilderHeaderProps {
@@ -30,40 +25,79 @@ interface BuilderHeaderProps {
   setActiveNavTab?: (tab: string) => void;
 }
 
+const TEMPLATE_NAMES: Record<TemplateId, string> = {
+  tech: "Tech & Engineering",
+  corporate: "Corporate",
+  creative: "Creative & Portfolio",
+  academic: "Academic CV",
+  modern: "Modern",
+  professional: "ATS Pro",
+  minimal: "Minimal",
+  executive: "Executive",
+};
+
+const QUICK_COLORS = [
+  { name: "Blue", hex: "#2563eb" },
+  { name: "Emerald", hex: "#10b981" },
+  { name: "Red", hex: "#ef4444" },
+  { name: "Orange", hex: "#f59e0b" },
+  { name: "Navy", hex: "#0f172a" },
+];
+
+const FONT_OPTIONS: { id: FontFamily; label: string }[] = [
+  { id: "inter", label: "Inter" },
+  { id: "roboto", label: "Roboto" },
+  { id: "outfit", label: "Outfit" },
+  { id: "merriweather", label: "Merriweather" },
+  { id: "playfair", label: "Playfair" },
+];
+
 export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
   onOpenCustomizer,
-  onOpenPresetSelector,
-  activeNavTab = "builder",
-  setActiveNavTab,
 }) => {
   const {
     resume,
-    saveStatus,
+    updateSettings,
     clearResumeData,
     resetToDefaultData,
-    undo,
-    redo,
     setMobileTab,
+    zoom,
+    setZoom,
   } = useResumeStore();
 
   const [isClearModalOpen, setIsClearModalOpen] = useState(false);
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [pageSize, setPageSize] = useState<"A4" | "Letter">("A4");
+
+  const isOnePageFitted =
+    resume.settings.spacing === "compact" && resume.settings.fontSize === "sm";
+
+  const toggleFitOnePage = () => {
+    if (isOnePageFitted) {
+      updateSettings({ spacing: "normal", fontSize: "md" });
+    } else {
+      updateSettings({ spacing: "compact", fontSize: "sm" });
+    }
+  };
 
   const handleDownloadPDF = () => {
     setIsDownloading(true);
     toast.success("Opening Save as PDF dialog...");
-    
-    confetti({
-      particleCount: 50,
-      spread: 50,
-      origin: { y: 0.6 },
-    });
+
+    const originalTitle = document.title;
+    const cleanFileName = resume.personalInfo.fullName
+      ? `${resume.personalInfo.fullName.trim()}_Resume`
+      : "Resume";
+    document.title = cleanFileName;
 
     setTimeout(() => {
       window.print();
       setIsDownloading(false);
-    }, 120);
+      setTimeout(() => {
+        document.title = originalTitle;
+      }, 1000);
+    }, 80);
   };
 
   const handleConfirmClear = () => {
@@ -78,143 +112,220 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
     toast.success("Loaded sample resume data");
   };
 
+  const activeTemplateName =
+    TEMPLATE_NAMES[resume.settings.template] || "Corporate";
+
   return (
-    <header className="h-14 bg-white border-b border-slate-200/80 px-4 sm:px-6 flex items-center justify-between gap-3 z-30 shrink-0 select-none">
-      {/* Left: Brand Logo & Navigation Tabs */}
-      <div className="flex items-center gap-4 lg:gap-6">
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-[#6366f1] text-white flex items-center justify-center shadow-xs group-hover:bg-[#4f46e5] transition-colors">
-            <FileText className="w-4 h-4" />
+    <header className="builder-header print:hidden bg-white border-b border-slate-200/80 z-30 shrink-0 select-none shadow-2xs">
+      {/* Row 1: Brand, Template Selector, Actions */}
+      <div className="h-14 px-4 sm:px-6 flex items-center justify-between gap-3 border-b border-slate-100">
+        {/* Left: Brand Logo & Template Card */}
+        <div className="flex items-center gap-3.5 sm:gap-4">
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-8 h-8 rounded-lg bg-[#4f46e5] text-white flex items-center justify-center shadow-xs group-hover:bg-[#4338ca] transition-colors">
+              <FileText className="w-4 h-4" />
+            </div>
+            <span className="font-bold text-base tracking-tight text-slate-900">
+              QuickCV
+            </span>
+          </Link>
+
+          <div className="h-6 w-[1px] bg-slate-200 hidden sm:block" />
+
+          {/* Using Template Pill Button */}
+          <button
+            type="button"
+            onClick={onOpenCustomizer}
+            className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all cursor-pointer shadow-2xs group"
+          >
+            {/* Small Mini Template Icon Graphic */}
+            <div className="w-5 h-6.5 rounded-xs border border-blue-200 bg-blue-50/50 flex flex-col p-0.5 shrink-0 overflow-hidden shadow-2xs">
+              <div className="w-full h-1 bg-blue-500 rounded-2xs mb-0.5" />
+              <div className="w-full h-0.5 bg-slate-300 rounded-2xs mb-0.5" />
+              <div className="w-2/3 h-0.5 bg-slate-300 rounded-2xs mb-0.5" />
+              <div className="w-full h-0.5 bg-slate-300 rounded-2xs" />
+            </div>
+
+            <div className="text-left">
+              <span className="block text-[9.5px] text-slate-400 font-medium leading-none">
+                Using Template
+              </span>
+              <span className="block text-xs font-bold text-slate-900 leading-tight mt-0.5">
+                {activeTemplateName}
+              </span>
+            </div>
+
+            <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-700 transition-colors ml-0.5" />
+          </button>
+        </div>
+
+        {/* Right: Preview, Clear, Download PDF, User Avatar */}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Preview Button */}
+          <button
+            type="button"
+            onClick={() => setMobileTab("preview")}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium transition-colors cursor-pointer shadow-2xs"
+          >
+            <Eye className="w-3.5 h-3.5 text-slate-500" />
+            <span>Preview</span>
+          </button>
+
+          {/* Clear Button */}
+          <button
+            type="button"
+            onClick={() => setIsClearModalOpen(true)}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 hover:text-rose-600 text-xs font-medium transition-colors cursor-pointer shadow-2xs"
+          >
+            <Trash2 className="w-3.5 h-3.5 text-slate-500" />
+            <span>Clear</span>
+          </button>
+
+          {/* Download PDF Button */}
+          <button
+            type="button"
+            onClick={handleDownloadPDF}
+            disabled={isDownloading}
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white text-xs font-semibold shadow-xs hover:shadow transition-all active:scale-[0.98] cursor-pointer disabled:opacity-60"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>{isDownloading ? "Downloading..." : "Download PDF"}</span>
+          </button>
+
+          <div className="h-6 w-[1px] bg-slate-200 ml-1 hidden sm:block" />
+
+          {/* User Avatar */}
+          <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center font-semibold text-xs shadow-2xs">
+            S
           </div>
-          <span className="font-bold text-base tracking-tight text-slate-900">
-            QuickCV
-          </span>
-        </Link>
-
-        {/* Navigation Tabs */}
-        <nav className="hidden md:flex items-center gap-1">
-          <button
-            type="button"
-            onClick={() => setActiveNavTab?.("builder")}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-all cursor-pointer ${
-              activeNavTab === "builder"
-                ? "bg-[#eeeffc] text-[#4f46e5] border border-indigo-100 font-semibold"
-                : "text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent"
-            }`}
-          >
-            <Layout className="w-3.5 h-3.5" />
-            <span>Builder</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setActiveNavTab?.("templates");
-              onOpenCustomizer();
-            }}
-            className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 flex items-center gap-1.5 transition-colors cursor-pointer border border-transparent"
-          >
-            <FileText className="w-3.5 h-3.5" />
-            <span>Templates (8)</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => onOpenPresetSelector?.()}
-            className="px-3 py-1.5 rounded-lg text-xs font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100/80 border border-amber-200/80 flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span>Sample Presets</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setActiveNavTab?.("design");
-              onOpenCustomizer();
-            }}
-            className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 flex items-center gap-1.5 transition-colors cursor-pointer border border-transparent"
-          >
-            <Palette className="w-3.5 h-3.5" />
-            <span>Design</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setActiveNavTab?.("settings");
-              onOpenCustomizer();
-            }}
-            className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 flex items-center gap-1.5 transition-colors cursor-pointer border border-transparent"
-          >
-            <Settings className="w-3.5 h-3.5" />
-            <span>Settings</span>
-          </button>
-        </nav>
+        </div>
       </div>
 
-      {/* Right: Save Status, Undo/Redo, Preview, Clear, Download PDF, User Avatar */}
-      <div className="flex items-center gap-2 sm:gap-3">
-        {/* All changes saved */}
-        <div className="hidden sm:flex items-center gap-1.5 text-xs text-emerald-600 font-normal">
-          <Check className="w-3.5 h-3.5 text-emerald-500 stroke-[2.5]" />
-          <span>{saveStatus === "saving" ? "Saving changes..." : "All changes saved"}</span>
+      {/* Row 2: Fit to Page | Spacing | Font | Page | Zoom | Colors */}
+      <div className="px-4 sm:px-6 py-2 flex items-center gap-3.5 sm:gap-4 overflow-x-auto text-xs text-slate-700 scrollbar-none">
+        {/* Fit to Page Button */}
+        <button
+          type="button"
+          onClick={toggleFitOnePage}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border transition-all cursor-pointer shadow-2xs font-medium text-xs whitespace-nowrap shrink-0 ${
+            isOnePageFitted
+              ? "bg-emerald-50 border-emerald-500 text-emerald-700"
+              : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
+          }`}
+        >
+          {isOnePageFitted ? (
+            <Minimize2 className="w-3.5 h-3.5 text-emerald-600" />
+          ) : (
+            <Maximize2 className="w-3.5 h-3.5 text-slate-500" />
+          )}
+          <span>Fit to Page</span>
+        </button>
+
+        <div className="h-4 w-[1px] bg-slate-200 shrink-0" />
+
+        {/* Spacing */}
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-slate-500 font-medium">Spacing</span>
+          <div className="relative inline-block">
+            <select
+              value={resume.settings.spacing}
+              onChange={(e) =>
+                updateSettings({ spacing: e.target.value as Spacing })
+              }
+              className="appearance-none pl-3 pr-7 py-1.5 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-800 hover:border-slate-300 focus:outline-none focus:border-blue-500 cursor-pointer shadow-2xs capitalize"
+            >
+              <option value="compact">Compact</option>
+              <option value="normal">Normal</option>
+              <option value="relaxed">Relaxed</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          </div>
         </div>
 
-        {/* Undo / Redo */}
-        <div className="flex items-center gap-0.5">
-          <button
-            type="button"
-            onClick={undo}
-            title="Undo (Ctrl+Z)"
-            className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
-          >
-            <Undo2 className="w-4 h-4" />
-          </button>
-          <button
-            type="button"
-            onClick={redo}
-            title="Redo (Ctrl+Y)"
-            className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
-          >
-            <Redo2 className="w-4 h-4" />
-          </button>
+        <div className="h-4 w-[1px] bg-slate-200 shrink-0" />
+
+        {/* Font */}
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-slate-500 font-medium">Font</span>
+          <div className="relative inline-block">
+            <select
+              value={resume.settings.fontFamily}
+              onChange={(e) =>
+                updateSettings({ fontFamily: e.target.value as FontFamily })
+              }
+              className="appearance-none pl-3 pr-7 py-1.5 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-800 hover:border-slate-300 focus:outline-none focus:border-blue-500 cursor-pointer shadow-2xs"
+            >
+              {FONT_OPTIONS.map((f) => (
+                <option key={f.id} value={f.id}>
+                  {f.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          </div>
         </div>
 
-        {/* Preview Button */}
-        <button
-          type="button"
-          onClick={() => setMobileTab("preview")}
-          className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium transition-colors cursor-pointer shadow-2xs"
-        >
-          <Eye className="w-3.5 h-3.5 text-slate-500" />
-          <span>Preview</span>
-        </button>
+        <div className="h-4 w-[1px] bg-slate-200 shrink-0" />
 
-        {/* Clear Button */}
-        <button
-          type="button"
-          onClick={() => setIsClearModalOpen(true)}
-          className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 hover:text-rose-600 text-xs font-medium transition-colors cursor-pointer shadow-2xs"
-        >
-          <Trash2 className="w-3.5 h-3.5 text-slate-500" />
-          <span>Clear</span>
-        </button>
+        {/* Page Format */}
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-slate-500 font-medium">Page</span>
+          <div className="relative inline-block">
+            <select
+              value={pageSize}
+              onChange={(e) => setPageSize(e.target.value as "A4" | "Letter")}
+              className="appearance-none pl-3 pr-7 py-1.5 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-800 hover:border-slate-300 focus:outline-none focus:border-blue-500 cursor-pointer shadow-2xs"
+            >
+              <option value="A4">A4</option>
+              <option value="Letter">Letter</option>
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          </div>
+        </div>
 
-        {/* Download PDF Button */}
-        <button
-          type="button"
-          onClick={handleDownloadPDF}
-          disabled={isDownloading}
-          className="px-4 py-1.5 rounded-lg bg-[#4f46e5] hover:bg-[#4338ca] text-white text-xs font-medium flex items-center gap-1.5 shadow-sm hover:shadow transition-all active:scale-[0.98] cursor-pointer disabled:opacity-60"
-        >
-          <Download className="w-3.5 h-3.5" />
-          <span>{isDownloading ? "Downloading..." : "Download PDF"}</span>
-        </button>
+        <div className="h-4 w-[1px] bg-slate-200 shrink-0" />
 
-        {/* User Avatar Initial */}
-        <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center font-semibold text-xs ml-1 shadow-2xs">
-          S
+        {/* Zoom Selector */}
+        <div className="relative inline-block shrink-0">
+          <select
+            value={zoom}
+            onChange={(e) => setZoom(Number(e.target.value))}
+            className="appearance-none pl-7 pr-7 py-1.5 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-800 hover:border-slate-300 focus:outline-none focus:border-blue-500 cursor-pointer shadow-2xs"
+          >
+            <option value={75}>75%</option>
+            <option value={90}>90%</option>
+            <option value={100}>100%</option>
+            <option value={110}>110%</option>
+            <option value={125}>125%</option>
+            <option value={150}>150%</option>
+          </select>
+          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <ChevronDown className="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+        </div>
+
+        <div className="h-4 w-[1px] bg-slate-200 shrink-0" />
+
+        {/* Color Swatches */}
+        <div className="flex items-center gap-2 shrink-0">
+          {QUICK_COLORS.map((color) => {
+            const isSelected =
+              resume.settings.primaryColor.toLowerCase() ===
+              color.hex.toLowerCase();
+            return (
+              <button
+                key={color.hex}
+                type="button"
+                title={color.name}
+                onClick={() => updateSettings({ primaryColor: color.hex })}
+                className={`w-5 h-5 rounded-full transition-all cursor-pointer relative flex items-center justify-center ${
+                  isSelected
+                    ? "ring-2 ring-slate-900 ring-offset-2 scale-110 shadow-xs"
+                    : "hover:scale-110 opacity-90 hover:opacity-100"
+                }`}
+                style={{ backgroundColor: color.hex }}
+              />
+            );
+          })}
         </div>
       </div>
 
@@ -244,7 +355,7 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
         isOpen={isResetModalOpen}
         onClose={() => setIsResetModalOpen(false)}
         title="Load Sample Data?"
-        description="This will replace current form fields with example software engineer resume data."
+        description="This will replace current form fields with example resume data."
       >
         <div className="flex justify-end gap-2 pt-2">
           <Button

@@ -44,11 +44,11 @@
   background: #94a3b8;
 }
 
-/* Print Specific Rules for High-Quality A4 Output */
+/* Print Specific Rules for Clean Multi-Page A4 / Letter Output Without Browser Headers & Footers */
 @media print {
   @page {
     size: A4 portrait;
-    margin: 0;
+    margin: 0 !important; /* Removes browser default header (date, time, page title) and footer (URL, page number) */
   }
 
   html,
@@ -63,23 +63,23 @@
     overflow: visible !important;
   }
 
-  /* Hide navigation, header, sidebar, toolbars, buttons, and toasts */
-  header,
-  nav,
-  aside,
-  button,
-  .no-print,
-  [data-no-print="true"],
+  /* Hide app chrome, navigation, toolbars, sidebars, toasts, modal backdrops, canvas and markers */
+  .builder-header,
   .editor-panel-wrapper,
   .preview-toolbar,
-  [data-sonner-toaster] {
+  .page-boundary-marker,
+  .no-print,
+  [data-no-print="true"],
+  [data-sonner-toaster],
+  canvas {
     display: none !important;
   }
 
-  /* Reset layout containers */
+  /* Reset layout containers so content flows naturally across multiple pages */
   main,
   .preview-viewport-scroll,
-  .preview-canvas-wrapper {
+  .preview-canvas-wrapper,
+  #resume-transform-wrapper {
     display: block !important;
     width: 100% !important;
     height: auto !important;
@@ -92,10 +92,13 @@
     transform: none !important;
   }
 
-  /* Show only the resume document cleanly */
+  /* Show only the resume document cleanly with proper pagination */
   #resume-preview-document {
     width: 210mm !important;
+    max-width: 210mm !important;
     min-height: 297mm !important;
+    height: auto !important;
+    overflow: visible !important;
     margin: 0 auto !important;
     padding: 0 !important;
     box-shadow: none !important;
@@ -105,8 +108,65 @@
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     display: block !important;
-    position: relative !important;
+    position: static !important;
+  }
+
+  /* Ensure the template root maintains professional margins */
+  #resume-preview-document .resume-template-root {
+    padding: 12mm 14mm !important;
+    margin: 0 !important;
+    min-height: 297mm !important;
+    height: auto !important;
+    width: 100% !important;
+    display: block !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ensure resume header stays together on Page 1 */
+  .resume-header {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Section break rules */
+  .resume-section {
+    break-inside: auto;
+    page-break-inside: auto;
+    margin-bottom: 12pt !important;
+  }
+
+  /* Small single-block sections stay completely together */
+  .resume-section[data-section="summary"],
+  .resume-section[data-section="skills"],
+  .resume-section[data-section="languages"],
+  .resume-section[data-section="certifications"],
+  .resume-section[data-section="achievements"] {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Prevent headings from being orphaned at the bottom of a page */
+  .resume-section-title,
+  #resume-preview-document h2,
+  #resume-preview-document h3 {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Prevent individual items (work experience entry, edu entry, project) from breaking across pages */
+  .resume-item {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    break-after: auto;
+    margin-bottom: 8pt !important;
+  }
+
+  /* Ensure text colors, fills, and borders print with high fidelity */
+  #resume-preview-document,
+  #resume-preview-document * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }
-
-

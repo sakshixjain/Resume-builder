@@ -49,12 +49,12 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "summary":
         if (!summary) return null;
         return (
-          <div key="summary" className="mb-4">
+          <div key="summary" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-1.5 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
                 //
               </span>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Technical Summary
               </h2>
             </div>
@@ -67,18 +67,18 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "skills":
         if (!skills || skills.length === 0) return null;
         return (
-          <div key="skills" className="mb-4">
+          <div key="skills" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
                 //
               </span>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Technical Skills & Architecture
               </h2>
             </div>
             <div className="space-y-2">
               {Object.entries(skillCategories).map(([category, items]) => (
-                <div key={category} className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                <div key={category} className="resume-item flex flex-wrap items-baseline gap-x-2 gap-y-1">
                   <span className="text-[11px] font-bold text-slate-800 shrink-0 min-w-[110px]">
                     {category}:
                   </span>
@@ -106,18 +106,18 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "experience":
         if (!experience || experience.length === 0) return null;
         return (
-          <div key="experience" className="mb-4">
+          <div key="experience" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
                 //
               </span>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Engineering Experience
               </h2>
             </div>
             <div className="space-y-3">
               {experience.map((exp) => (
-                <div key={exp.id} className="relative pl-3 border-l-2" style={{ borderColor: `${primaryColor}40` }}>
+                <div key={exp.id} className="resume-item relative pl-3 border-l-2" style={{ borderColor: `${primaryColor}40` }}>
                   <div className="flex justify-between items-baseline flex-wrap gap-1">
                     <h3 className="text-[12px] font-bold text-slate-900">
                       {exp.jobTitle}
@@ -159,18 +159,18 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "projects":
         if (!projects || projects.length === 0) return null;
         return (
-          <div key="projects" className="mb-4">
+          <div key="projects" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
                 //
               </span>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Key Technical Projects & Open Source
               </h2>
             </div>
             <div className="grid grid-cols-1 gap-2.5">
               {projects.map((proj) => (
-                <div key={proj.id} className="p-2.5 rounded bg-slate-50 border border-slate-200/90">
+                <div key={proj.id} className="resume-item p-2.5 rounded bg-slate-50 border border-slate-200/90">
                   <div className="flex justify-between items-baseline flex-wrap gap-1 mb-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-[11.5px] font-bold text-slate-900">{proj.name}</span>
@@ -215,18 +215,18 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "education":
         if (!education || education.length === 0) return null;
         return (
-          <div key="education" className="mb-4">
+          <div key="education" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
                 //
               </span>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Education & Academics
               </h2>
             </div>
             <div className="space-y-2">
               {education.map((edu) => (
-                <div key={edu.id}>
+                <div key={edu.id} className="resume-item">
                   <div className="flex justify-between items-baseline flex-wrap gap-1">
                     <h3 className="text-[11.5px] font-bold text-slate-900">{edu.degree}</h3>
                     <span className="text-[10px] font-mono text-slate-500">
@@ -253,18 +253,18 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "certifications":
         if (!certifications || certifications.length === 0) return null;
         return (
-          <div key="certifications" className="mb-4">
+          <div key="certifications" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-1.5 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
                 //
               </span>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Certifications & Cloud Accreditations
               </h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
               {certifications.map((cert) => (
-                <div key={cert.id} className="text-[10.5px] flex items-center justify-between p-1.5 rounded bg-slate-50 border border-slate-200/80">
+                <div key={cert.id} className="resume-item text-[10.5px] flex items-center justify-between p-1.5 rounded bg-slate-50 border border-slate-200/80">
                   <div className="truncate pr-2">
                     <span className="font-bold text-slate-800 block truncate">{cert.name}</span>
                     <span className="text-[9.5px] text-slate-500">{cert.issuer}</span>
@@ -281,18 +281,18 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "achievements":
         if (!achievements || achievements.length === 0) return null;
         return (
-          <div key="achievements" className="mb-4">
+          <div key="achievements" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-1.5 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
                 //
               </span>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Hackathons, Honors & Awards
               </h2>
             </div>
             <div className="space-y-1.5">
               {achievements.map((ach) => (
-                <div key={ach.id} className="text-[10.5px]">
+                <div key={ach.id} className="resume-item text-[10.5px]">
                   <div className="flex justify-between items-baseline">
                     <span className="font-bold text-slate-900">{ach.title}</span>
                     {ach.date && (
@@ -309,18 +309,18 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "languages":
         if (!languages || languages.length === 0) return null;
         return (
-          <div key="languages" className="mb-4">
+          <div key="languages" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-1.5 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
                 //
               </span>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Languages
               </h2>
             </div>
             <div className="flex flex-wrap gap-2 text-[10.5px]">
               {languages.map((lang) => (
-                <span key={lang.id} className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
+                <span key={lang.id} className="resume-item px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
                   <span className="font-semibold text-slate-900">{lang.name}</span>
                   <span className="text-slate-500 ml-1">({lang.proficiency})</span>
                 </span>
@@ -334,18 +334,18 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
         const customSec = customSections.find((cs) => cs.id === sectionKey);
         if (!customSec || customSec.items.length === 0) return null;
         return (
-          <div key={customSec.id} className="mb-4">
+          <div key={customSec.id} className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-1.5 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
                 //
               </span>
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-900">
+              <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 {customSec.title}
               </h2>
             </div>
             <div className="space-y-2">
               {customSec.items.map((item) => (
-                <div key={item.id} className="text-[10.5px]">
+                <div key={item.id} className="resume-item text-[10.5px]">
                   <div className="flex justify-between items-baseline">
                     <span className="font-bold text-slate-900">{item.title}</span>
                     {item.date && (
@@ -369,10 +369,10 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
   };
 
   return (
-    <div className="p-8 font-sans text-slate-800 bg-white min-h-[297mm] flex flex-col justify-between">
+    <div className="resume-template-root p-8 font-sans text-slate-800 bg-white min-h-[297mm] flex flex-col justify-between">
       <div>
         {/* Header */}
-        <header className="mb-5 pb-4 border-b-2 border-slate-900">
+        <div className="resume-header mb-5 pb-4 border-b-2 border-slate-900">
           <div className="flex justify-between items-start gap-4 flex-wrap">
             <div>
               <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-950 font-mono">
@@ -430,17 +430,17 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
               </span>
             )}
           </div>
-        </header>
+        </div>
 
         {/* Dynamic Section Ordering */}
-        <main>{sectionOrder.map((sectionKey) => renderSection(sectionKey))}</main>
+        <div className="resume-main">{sectionOrder.map((sectionKey) => renderSection(sectionKey))}</div>
       </div>
 
       {/* Subtle Bottom Accent */}
-      <footer className="pt-3 border-t border-slate-200 flex justify-between items-center text-[9px] font-mono text-slate-400">
+      <div className="resume-footer pt-3 border-t border-slate-200 flex justify-between items-center text-[9px] font-mono text-slate-400">
         <span>// COMPILED FOR TECHNICAL ATS</span>
         <span>PAGE 1 / 1</span>
-      </footer>
+      </div>
     </div>
   );
 };
