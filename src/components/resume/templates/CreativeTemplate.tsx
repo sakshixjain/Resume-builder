@@ -41,7 +41,7 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "summary":
         if (!summary) return null;
         return (
-          <div key="summary" className="resume-section mb-3.5">
+          <div key="summary" className="resume-section mb-3">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
               <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
@@ -57,7 +57,7 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "skills":
         if (!skills || skills.length === 0) return null;
         return (
-          <div key="skills" className="resume-section mb-3.5">
+          <div key="skills" className="resume-section mb-3">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
               <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
@@ -89,7 +89,7 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "experience":
         if (!experience || experience.length === 0) return null;
         return (
-          <div key="experience" className="resume-section mb-3.5">
+          <div key="experience" className="resume-section mb-3">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
               <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
@@ -138,7 +138,7 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "projects":
         if (!projects || projects.length === 0) return null;
         return (
-          <div key="projects" className="resume-section mb-3.5">
+          <div key="projects" className="resume-section mb-3">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
               <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
@@ -173,7 +173,7 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "education":
         if (!education || education.length === 0) return null;
         return (
-          <div key="education" className="resume-section mb-3.5">
+          <div key="education" className="resume-section mb-3">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
               <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
@@ -211,7 +211,7 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "certifications":
         if (!certifications || certifications.length === 0) return null;
         return (
-          <div key="certifications" className="resume-section mb-3.5">
+          <div key="certifications" className="resume-section mb-3">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
               <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
@@ -232,7 +232,7 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "achievements":
         if (!achievements || achievements.length === 0) return null;
         return (
-          <div key="achievements" className="resume-section mb-3.5">
+          <div key="achievements" className="resume-section mb-3">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
               <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
@@ -256,7 +256,7 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
       case "languages":
         if (!languages || languages.length === 0) return null;
         return (
-          <div key="languages" className="resume-section mb-3.5">
+          <div key="languages" className="resume-section mb-3">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
               <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
@@ -277,7 +277,7 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
         const customSec = customSections.find((cs) => cs.id === sectionKey);
         if (!customSec || customSec.items.length === 0) return null;
         return (
-          <div key={customSec.id} className="resume-section mb-3.5">
+          <div key={customSec.id} className="resume-section mb-3">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full" style={{ backgroundColor: primaryColor }} />
               <h2 className="resume-section-title text-xs font-black uppercase tracking-wider text-slate-900">
@@ -308,7 +308,7 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
   };
 
   return (
-    <div className="resume-template-root p-8 font-sans text-slate-900 bg-white min-h-[297mm]">
+    <div className="resume-template-root p-6 sm:p-7 font-sans text-slate-900 bg-white min-h-[297mm]">
       {/* Dynamic Creative Header */}
       <div className="resume-header mb-6 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
         <div className="flex justify-between items-start gap-4 flex-wrap">

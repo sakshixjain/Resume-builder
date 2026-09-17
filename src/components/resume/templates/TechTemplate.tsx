@@ -6,7 +6,6 @@ import {
   Phone,
   MapPin,
   Globe,
-  Code2,
   ExternalLink,
 } from "lucide-react";
 import { LinkedinIcon, GithubIcon } from "@/components/ui/Icons";
@@ -52,7 +51,7 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
           <div key="summary" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-1.5 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
-                //
+                {"//"}
               </span>
               <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Technical Summary
@@ -70,7 +69,7 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
           <div key="skills" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
-                //
+                {"//"}
               </span>
               <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Technical Skills & Architecture
@@ -109,7 +108,7 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
           <div key="experience" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
-                //
+                {"//"}
               </span>
               <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Engineering Experience
@@ -162,7 +161,7 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
           <div key="projects" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
-                //
+                {"//"}
               </span>
               <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Key Technical Projects & Open Source
@@ -218,7 +217,7 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
           <div key="education" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-2 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
-                //
+                {"//"}
               </span>
               <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Education & Academics
@@ -256,7 +255,7 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
           <div key="certifications" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-1.5 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
-                //
+                {"//"}
               </span>
               <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Certifications & Cloud Accreditations
@@ -284,7 +283,7 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
           <div key="achievements" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-1.5 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
-                //
+                {"//"}
               </span>
               <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Hackathons, Honors & Awards
@@ -312,7 +311,7 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
           <div key="languages" className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-1.5 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
-                //
+                {"//"}
               </span>
               <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 Languages
@@ -337,7 +336,7 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
           <div key={customSec.id} className="resume-section mb-3.5">
             <div className="flex items-center gap-2 mb-1.5 pb-1 border-b border-slate-200">
               <span className="font-mono text-xs font-bold" style={{ color: primaryColor }}>
-                //
+                {"//"}
               </span>
               <h2 className="resume-section-title text-xs font-bold uppercase tracking-wider text-slate-900">
                 {customSec.title}
@@ -438,7 +437,7 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
 
       {/* Subtle Bottom Accent */}
       <div className="resume-footer pt-3 border-t border-slate-200 flex justify-between items-center text-[9px] font-mono text-slate-400">
-        <span>// COMPILED FOR TECHNICAL ATS</span>
+        <span>{"//"} COMPILED FOR TECHNICAL ATS</span>
         <span>PAGE 1 / 1</span>
       </div>
     </div>

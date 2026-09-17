@@ -1,6 +1,6 @@
 import React from "react";
 import { Resume } from "@/lib/resume/types";
-import { formatDateRange } from "@/lib/utils";
+import { formatDateRange, cn } from "@/lib/utils";
 import {
   Mail,
   Phone,
@@ -258,8 +258,15 @@ export const AcademicTemplate: React.FC<TemplateProps> = ({ resume }) => {
       default:
         const customSec = customSections.find((cs) => cs.id === sectionKey);
         if (!customSec || customSec.items.length === 0) return null;
+        const isGrants = customSec.id === "cs-grants";
         return (
-          <div key={customSec.id} className="resume-section mb-3.5">
+          <div
+            key={customSec.id}
+            className={cn(
+              "resume-section mb-3.5",
+              isGrants && "pt-8 mt-2"
+            )}
+          >
             <h2
               className="resume-section-title text-xs font-bold uppercase tracking-wider pb-0.5 mb-1.5 border-b"
               style={{ color: primaryColor, borderColor: `${primaryColor}60` }}

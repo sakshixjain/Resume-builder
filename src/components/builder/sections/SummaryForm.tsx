@@ -93,7 +93,7 @@ export const SummaryForm: React.FC = () => {
             </div>
 
             <p className="text-xs text-slate-700 leading-relaxed italic bg-white p-3.5 rounded-lg border border-slate-200">
-              "{selectedRole.summary}"
+              &ldquo;{selectedRole.summary}&rdquo;
             </p>
 
             <div className="flex justify-end gap-2 pt-2">

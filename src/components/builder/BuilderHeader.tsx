@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import { TemplateId, FontFamily, Spacing, FontSize } from "@/lib/resume/types";
 import { toast } from "sonner";
+import { UserMenu } from "@/components/auth/UserMenu";
+import { AuthModal, AuthView } from "@/components/auth/AuthModal";
 
 interface BuilderHeaderProps {
   onOpenCustomizer: () => void;
@@ -69,6 +71,13 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [pageSize, setPageSize] = useState<"A4" | "Letter">("A4");
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authModalView, setAuthModalView] = useState<AuthView>("login");
+
+  const handleOpenAuth = (view: AuthView = "login") => {
+    setAuthModalView(view);
+    setIsAuthModalOpen(true);
+  };
 
   const isOnePageFitted =
     resume.settings.spacing === "compact" && resume.settings.fontSize === "sm";
@@ -194,10 +203,8 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
 
           <div className="h-6 w-[1px] bg-slate-200 ml-1 hidden sm:block" />
 
-          {/* User Avatar */}
-          <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center font-semibold text-xs shadow-2xs">
-            S
-          </div>
+          {/* User Profile Menu / Sign In */}
+          <UserMenu onOpenAuthModal={handleOpenAuth} />
         </div>
       </div>
 
@@ -370,6 +377,14 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
           </Button>
         </div>
       </Modal>
+
+      {/* Interactive Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        initialView={authModalView}
+        callbackUrl="/builder"
+      />
     </header>
   );
 };

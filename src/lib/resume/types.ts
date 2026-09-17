@@ -44,6 +44,7 @@ export interface TemplateMetadata {
   tagColor: string;
   primaryColor: string;
   features: string[];
+  supportsPhoto?: boolean;
 }
 
 export type FontFamily =

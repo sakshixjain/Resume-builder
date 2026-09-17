@@ -1010,7 +1010,8 @@ export const ALL_TEMPLATES: TemplateMetadata[] = [
     tag: "Most Popular",
     tagColor: "bg-blue-100 text-blue-800 border-blue-300",
     primaryColor: "#2563eb",
-    features: ["Two-Column Layout", "Sidebar Skills & Contact", "Experience Timeline", "Universal Appeal"],
+    supportsPhoto: true,
+    features: ["Two-Column Layout", "Profile Photo / Avatar", "Sidebar Skills & Contact", "Experience Timeline", "Universal Appeal"],
   },
   {
     id: "professional",
@@ -1049,3 +1050,10 @@ export const ALL_TEMPLATES: TemplateMetadata[] = [
     features: ["Header Card Banner", "Core Competencies Grid", "Highlight Projects", "Leadership Ready"],
   },
 ];
+
+/**
+ * Returns whether a given template ID supports displaying a profile photo/avatar.
+ */
+export const templateSupportsPhoto = (templateId?: string): boolean => {
+  return templateId === "modern";
+};

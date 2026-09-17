@@ -69,7 +69,7 @@ export const Testimonials: React.FC = () => {
                 </div>
 
                 <p className="text-xs sm:text-sm text-slate-700 leading-relaxed mb-6 italic">
-                  "{rev.content}"
+                  &ldquo;{rev.content}&rdquo;
                 </p>
               </div>
 

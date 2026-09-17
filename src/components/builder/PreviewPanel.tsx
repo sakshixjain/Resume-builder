@@ -14,18 +14,27 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = () => {
   const [autoScale, setAutoScale] = useState(0.88);
 
   useEffect(() => {
-    const handleResize = () => {
+    if (!containerRef.current) return;
+
+    const updateScale = () => {
       if (containerRef.current) {
-        const availableWidth = containerRef.current.clientWidth - 48;
+        const padding = window.innerWidth < 640 ? 24 : 48;
+        const availableWidth = containerRef.current.clientWidth - padding;
         const a4WidthPx = 794;
-        const scale = Math.min(1.05, Math.max(0.4, availableWidth / a4WidthPx));
+        const scale = Math.min(1.05, Math.max(0.35, availableWidth / a4WidthPx));
         setAutoScale(scale);
       }
     };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    updateScale();
+    const observer = new ResizeObserver(updateScale);
+    observer.observe(containerRef.current);
+    window.addEventListener("resize", updateScale);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateScale);
+    };
   }, []);
 
   const effectiveScale = (zoom / 100) * autoScale;

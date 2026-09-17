@@ -106,41 +106,6 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({
         boxSizing: "border-box",
       }}
     >
-      {/* On-Screen Visual Page 1 / Page 2 Split Guideline (Hidden during print or inside thumbnails) */}
-      {!isThumbnail && (
-        <>
-          <div
-            className="page-boundary-marker absolute left-0 right-0 pointer-events-none print:hidden z-30 select-none"
-            style={{ top: "297mm" }}
-          >
-            <div className="relative flex items-center justify-center">
-              <div className="w-full border-b-2 border-dashed border-rose-400/80" />
-              <div className="absolute px-3 py-0.5 rounded-full bg-slate-900/90 text-white text-[9px] font-mono font-medium tracking-wide shadow-xs flex items-center gap-1.5 backdrop-blur-xs">
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse" />
-                <span>Page 1 End</span>
-                <span className="text-slate-400">•</span>
-                <span>Page 2 Start</span>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="page-boundary-marker absolute left-0 right-0 pointer-events-none print:hidden z-30 select-none"
-            style={{ top: "594mm" }}
-          >
-            <div className="relative flex items-center justify-center">
-              <div className="w-full border-b-2 border-dashed border-rose-400/80" />
-              <div className="absolute px-3 py-0.5 rounded-full bg-slate-900/90 text-white text-[9px] font-mono font-medium tracking-wide shadow-xs flex items-center gap-1.5 backdrop-blur-xs">
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse" />
-                <span>Page 2 End</span>
-                <span className="text-slate-400">•</span>
-                <span>Page 3 Start</span>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
-
       <div className="w-full h-full print:h-auto">
         {renderTemplate()}
       </div>

@@ -226,17 +226,15 @@ export const EditorPanel: React.FC = () => {
           return (
             <div
               key={sectionKey}
-              className={`rounded-2xl border transition-all duration-150 overflow-hidden ${
-                isOpen
-                  ? "border-blue-500/80 ring-2 ring-blue-500/10 shadow-sm bg-white"
-                  : "border-slate-200/80 bg-white hover:border-slate-300 hover:shadow-2xs"
-              }`}
+              className={`rounded-lg border transition-all duration-150 overflow-hidden ${isOpen
+                ? "border-blue-500/80 ring-2 ring-blue-500/10 shadow-sm bg-white"
+                : "border-slate-200/80 bg-white hover:border-slate-300 hover:shadow-2xs"
+                }`}
             >
               {/* Card Header */}
               <div
-                className={`p-3.5 sm:p-4 flex items-center justify-between cursor-pointer select-none transition-colors ${
-                  isOpen ? "bg-white border-b border-slate-100" : "bg-white hover:bg-slate-50/40"
-                }`}
+                className={`p-3 sm:p-3 flex items-center justify-between cursor-pointer select-none transition-colors ${isOpen ? "bg-white border-b border-slate-100" : "bg-white hover:bg-slate-50/40"
+                  }`}
                 onClick={() => setActiveSection(isOpen ? "" : sectionKey)}
               >
                 {/* Left: Icon, Title, Subtitle */}
@@ -258,17 +256,20 @@ export const EditorPanel: React.FC = () => {
                 </div>
 
                 {/* Right: Status Pill & Chevron */}
-                <div
-                  className="flex items-center gap-2.5 shrink-0 ml-2"
-                  onClick={(e) => isOpen && e.stopPropagation()}
-                >
+                <div className="flex items-center gap-2.5 shrink-0 ml-2">
                   {/* Reorder and Visibility controls when open */}
                   {isOpen && !isAnchored && (
-                    <div className="flex items-center gap-1 mr-1">
+                    <div
+                      className="flex items-center gap-1 mr-1"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <button
                         type="button"
                         title="Move Up"
-                        onClick={() => moveSection(sectionKey, "up")}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          moveSection(sectionKey, "up");
+                        }}
                         className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded transition-colors"
                       >
                         <ArrowUp className="w-3.5 h-3.5" />
@@ -276,7 +277,10 @@ export const EditorPanel: React.FC = () => {
                       <button
                         type="button"
                         title="Move Down"
-                        onClick={() => moveSection(sectionKey, "down")}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          moveSection(sectionKey, "down");
+                        }}
                         className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded transition-colors"
                       >
                         <ArrowDown className="w-3.5 h-3.5" />
@@ -284,7 +288,10 @@ export const EditorPanel: React.FC = () => {
                       <button
                         type="button"
                         title={isVisible ? "Hide in preview" : "Show in preview"}
-                        onClick={() => toggleSectionVisibility(sectionKey)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSectionVisibility(sectionKey);
+                        }}
                         className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded transition-colors"
                       >
                         {isVisible ? (
