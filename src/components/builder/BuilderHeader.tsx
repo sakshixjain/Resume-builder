@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useResumeStore } from "@/store/resumeStore";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
+import { Logo } from "@/components/ui/Logo";
 import {
   FileText,
   Eye,
@@ -129,15 +130,8 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
       {/* Row 1: Brand, Template Selector, Actions */}
       <div className="h-14 px-4 sm:px-6 flex items-center justify-between gap-3 border-b border-slate-100">
         {/* Left: Brand Logo & Template Card */}
-        <div className="flex items-center gap-3.5 sm:gap-4">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-[#4f46e5] text-white flex items-center justify-center shadow-xs group-hover:bg-[#4338ca] transition-colors">
-              <FileText className="w-4 h-4" />
-            </div>
-            <span className="font-bold text-base tracking-tight text-slate-900">
-              QuickCV
-            </span>
-          </Link>
+        <div className="flex items-center gap-3 sm:gap-3.5">
+          <Logo size="sm" />
 
           <div className="h-6 w-[1px] bg-slate-200 hidden sm:block" />
 

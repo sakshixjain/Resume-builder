@@ -21,9 +21,14 @@ const merriweather = Merriweather({
 });
 
 export const metadata: Metadata = {
-  title: "QuickCV — Free Modern Resume Builder | ATS-Optimized",
+  title: "CV Builder — Free Modern Resume & CV Maker | ATS-Optimized",
   description:
-    "Design and export clean, professional, ATS-friendly resumes in real-time with instant live preview and 1-click PDF download.",
+    "Design and export clean, professional, ATS-friendly resumes and CVs in real-time with instant live preview and 1-click PDF download.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/logo-icon.svg",
+    apple: "/logo-icon.svg",
+  },
 };
 
 export default function RootLayout({

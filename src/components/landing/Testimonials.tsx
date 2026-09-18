@@ -9,7 +9,7 @@ const REVIEWS = [
     initials: "SC",
     accentColor: "bg-blue-600",
     content:
-      "QuickCV helped me rebuild my resume in under 10 minutes. The real-time A4 preview and clean ATS layout got me 4 interview calls in the first week!",
+      "CV Builder helped me rebuild my resume in under 10 minutes. The real-time A4 preview and clean ATS layout got me 4 interview calls in the first week!",
     rating: 5,
   },
   {
@@ -19,7 +19,7 @@ const REVIEWS = [
     initials: "MM",
     accentColor: "bg-purple-600",
     content:
-      "Most resume builders lock your PDF download behind a $30 subscription paywall. QuickCV is fast, completely free, beautifully designed, and actually respects your privacy.",
+      "Most resume builders lock your PDF download behind a $30 subscription paywall. CV Builder is fast, completely free, beautifully designed, and actually respects your privacy.",
     rating: 5,
   },
   {

@@ -1,0 +1,23 @@
+<svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fav-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#4f46e5" />
+      <stop offset="50%" stopColor="#3b82f6" />
+      <stop offset="100%" stopColor="#06b6d4" />
+    </linearGradient>
+    <linearGradient id="fav-v" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stopColor="#38bdf8" />
+      <stop offset="100%" stopColor="#ffffff" />
+    </linearGradient>
+    <linearGradient id="fav-spark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#fde047" />
+      <stop offset="100%" stopColor="#fbbf24" />
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="12" fill="url(#fav-bg)" />
+  <path d="M 23 15 C 16.5 15 13 18.5 13 24 C 13 29.5 16.5 33 23 33" stroke="white" stroke-width="3.8" stroke-linecap="round" fill="none" />
+  <path d="M 23 21 L 28 33 L 36 14" stroke="url(#fav-v)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <line x1="18" y1="21" x2="21" y2="21" stroke="white" stroke-opacity="0.9" stroke-width="2.2" stroke-linecap="round" />
+  <line x1="18" y1="26" x2="23" y2="26" stroke="white" stroke-opacity="0.9" stroke-width="2.2" stroke-linecap="round" />
+  <path d="M 36 8 L 37.2 11.2 L 40.4 12.4 L 37.2 13.6 L 36 16.8 L 34.8 13.6 L 31.6 12.4 L 34.8 11.2 Z" fill="url(#fav-spark)" />
+</svg>

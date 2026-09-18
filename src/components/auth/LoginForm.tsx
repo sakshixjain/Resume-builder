@@ -81,7 +81,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           Welcome back
         </h2>
         <p className="text-xs text-slate-500">
-          Sign in to your QuickCV account to save & access all your resumes
+          Sign in to your CV Builder account to save & access all your resumes
         </p>
       </div>
 

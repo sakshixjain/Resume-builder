@@ -3,9 +3,9 @@ import { Suspense } from "react";
 import { BuilderLayout } from "@/components/builder/BuilderLayout";
 
 export const metadata: Metadata = {
-  title: "Resume Builder & Editor | QuickCV",
+  title: "CV & Resume Editor | CV Builder",
   description:
-    "Design and customize professional, ATS-friendly resumes in real-time with instant live preview and 1-click PDF download.",
+    "Design and customize professional, ATS-friendly resumes and CVs in real-time with instant live preview and 1-click PDF download.",
 };
 
 export default function BuilderPage() {

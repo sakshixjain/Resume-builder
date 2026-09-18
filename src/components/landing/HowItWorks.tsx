@@ -46,7 +46,7 @@ export const HowItWorks: React.FC = () => {
             3-STEP WORKFLOW
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-slate-950 tracking-tight mb-4 uppercase">
-            How QuickCV Works
+            How CV Builder Works
           </h2>
           <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
             Create an interview-winning, high-impact resume in under 5 minutes with real-time feedback.

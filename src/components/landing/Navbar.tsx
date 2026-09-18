@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { FileText, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { Logo } from "@/components/ui/Logo";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { AuthModal, AuthView } from "@/components/auth/AuthModal";
 
@@ -21,14 +22,7 @@ export const Navbar: React.FC = () => {
       <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 text-slate-900 shadow-2xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Brand */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-[#6366f1] text-white flex items-center justify-center font-bold shadow-xs group-hover:bg-[#4f46e5] transition-colors">
-              <FileText className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-lg tracking-tight text-slate-900">
-              QuickCV
-            </span>
-          </Link>
+          <Logo size="md" />
 
           {/* Center Nav Links */}
           <nav className="hidden md:flex items-center gap-8 text-xs font-medium text-slate-600">

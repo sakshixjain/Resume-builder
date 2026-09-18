@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { X, FileText } from "lucide-react";
+import { X } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 import { ForgotPasswordForm } from "./ForgotPasswordForm";
@@ -55,14 +56,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200/90 z-10 overflow-hidden flex flex-col max-h-[92vh]">
         {/* Top Header Strip */}
         <div className="flex items-center justify-between px-5 pt-4 pb-2 border-b border-slate-100 shrink-0">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-[#6366f1] text-white flex items-center justify-center font-bold shadow-xs">
-              <FileText className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="font-bold text-base tracking-tight text-slate-900">
-              QuickCV
-            </span>
-          </div>
+          <Logo size="sm" asLink={false} />
 
           <button
             onClick={onClose}

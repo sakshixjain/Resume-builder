@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { FileText } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
 
 export const Footer: React.FC = () => {
   return (
@@ -9,16 +9,9 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-slate-800">
           {/* Brand Col */}
           <div className="md:col-span-2 space-y-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-none bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 text-white flex items-center justify-center font-bold shadow-sm">
-                <FileText className="w-4 h-4" />
-              </div>
-              <span className="font-black text-lg text-white tracking-tight">
-                QuickCV<span className="text-cyan-400">.</span>
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
-              The free, modern, open-access Resume Builder for high-growth engineers, designers, product managers, and executives.
+            <Logo variant="light" size="md" showTagline tagline="Modern ATS Resume & CV Maker" />
+            <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed pt-1">
+              The free, modern, open-access CV & Resume Builder for high-growth engineers, designers, product managers, and executives.
             </p>
           </div>
 
@@ -72,7 +65,7 @@ export const Footer: React.FC = () => {
 
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-mono">
           <div>
-            © {new Date().getFullYear()} QuickCV. Built with Next.js, TypeScript & Tailwind CSS.
+            © {new Date().getFullYear()} CV Builder. Built with Next.js, TypeScript & Tailwind CSS.
           </div>
           <div className="flex items-center gap-1">
             <span>Crafted for high performance & clean design</span>

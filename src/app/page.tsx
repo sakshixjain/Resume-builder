@@ -8,9 +8,9 @@ import { Testimonials } from "@/components/landing/Testimonials";
 import { Footer } from "@/components/landing/Footer";
 
 export const metadata: Metadata = {
-  title: "QuickCV — Free Modern Resume Builder | ATS-Optimized",
+  title: "CV Builder — Free Modern Resume & CV Maker | ATS-Optimized",
   description:
-    "Build beautiful, recruiter-approved, ATS-friendly resumes in minutes. Live real-time A4 preview, multiple professional templates, instant PDF download.",
+    "Build beautiful, recruiter-approved, ATS-friendly resumes and CVs in minutes. Live real-time A4 preview, multiple professional templates, instant PDF download.",
 };
 
 export default function LandingPage() {

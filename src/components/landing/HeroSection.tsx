@@ -96,7 +96,7 @@ export const HeroSection: React.FC = () => {
                 <div className="w-2.5 h-2.5 bg-emerald-500" />
               </div>
               <div className="px-3 py-0.5 bg-white text-[11px] font-mono text-slate-600 border border-slate-200 flex items-center gap-1.5 shadow-2xs">
-                <span className="text-blue-600 font-bold">https://</span>quickcv.app/builder
+                <span className="text-blue-600 font-bold">https://</span>cvbuilder.app/builder
               </div>
               <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 border border-emerald-300">
                 <span className="w-1.5 h-1.5 bg-emerald-600 animate-ping" />

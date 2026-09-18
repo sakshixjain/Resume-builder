@@ -139,7 +139,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({
             {/* Provider Tag */}
             <div className="mt-2 flex items-center gap-1.5">
               <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-100 uppercase tracking-wide">
-                {provider === "google" ? "Google Account" : "QuickCV Account"}
+                {provider === "google" ? "Google Account" : "CV Builder Account"}
               </span>
             </div>
           </div>
