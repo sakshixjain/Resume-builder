@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { registerUser } from "@/lib/auth/userStore";
+import { registerUser } from "@/lib/db/userRepo";
 
 export async function POST(req: Request) {
   try {
@@ -13,7 +13,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const result = registerUser(name, email, password);
+    const result = await registerUser(name, email, password);
 
     if (!result.success) {
       return NextResponse.json(
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         success: true,
-        message: "Account created successfully!",
+        message: "Account created successfully in database!",
         user: {
           id: result.user?.id,
           name: result.user?.name,
@@ -34,11 +34,12 @@ export async function POST(req: Request) {
       },
       { status: 201 }
     );
-  } catch (error) {
-    console.error("Registration error:", error);
+  } catch (error: any) {
+    console.error("MySQL Registration route error:", error);
     return NextResponse.json(
-      { success: false, error: "An unexpected error occurred during registration." },
+      { success: false, error: error?.message || "An unexpected error occurred during database registration." },
       { status: 500 }
     );
   }
 }
+

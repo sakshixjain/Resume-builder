@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { useResumeStore } from "@/store/resumeStore";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
@@ -11,6 +12,7 @@ import {
   Eye,
   Trash2,
   Download,
+  Lock,
   ChevronDown,
   Maximize2,
   Minimize2,
@@ -58,6 +60,7 @@ const FONT_OPTIONS: { id: FontFamily; label: string }[] = [
 export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
   onOpenCustomizer,
 }) => {
+  const { data: session, status } = useSession();
   const {
     resume,
     updateSettings,
@@ -74,6 +77,7 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
   const [pageSize, setPageSize] = useState<"A4" | "Letter">("A4");
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalView, setAuthModalView] = useState<AuthView>("login");
+  const [pendingDownload, setPendingDownload] = useState(false);
 
   const handleOpenAuth = (view: AuthView = "login") => {
     setAuthModalView(view);
@@ -91,7 +95,7 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
     }
   };
 
-  const handleDownloadPDF = () => {
+  const executeDownload = () => {
     setIsDownloading(true);
     toast.success("Opening Save as PDF dialog...");
 
@@ -108,6 +112,53 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
         document.title = originalTitle;
       }, 1000);
     }, 80);
+  };
+
+  // If user signed in while download was pending, automatically start download
+  useEffect(() => {
+    if (pendingDownload && status === "authenticated" && session?.user) {
+      setPendingDownload(false);
+      setIsAuthModalOpen(false);
+      toast.success("Authenticated! Starting your resume download...");
+      executeDownload();
+    }
+  }, [pendingDownload, status, session]);
+
+  const handleDownloadPDF = async () => {
+    // 1. Client-side session check
+    if (status !== "authenticated" || !session?.user) {
+      setPendingDownload(true);
+      setAuthModalView("login");
+      setIsAuthModalOpen(true);
+      toast.info("Please sign in your account to download your resume.");
+      return;
+    }
+
+    try {
+      setIsDownloading(true);
+      // 2. Server-side MySQL Database check: verify user exists in database
+      const verifyRes = await fetch("/api/auth/verify-download-access", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ template: resume.settings.template }),
+      });
+
+      const verifyData = await verifyRes.json();
+
+      if (!verifyRes.ok || !verifyData.allowed) {
+        setIsDownloading(false);
+        setPendingDownload(true);
+        setAuthModalView("login");
+        setIsAuthModalOpen(true);
+        toast.error(verifyData.error || "User account not found in database. Please sign in.");
+        return;
+      }
+
+      executeDownload();
+    } catch (err) {
+      console.error("Database download verification error:", err);
+      executeDownload();
+    }
   };
 
   const handleConfirmClear = () => {
@@ -189,9 +240,18 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
             type="button"
             onClick={handleDownloadPDF}
             disabled={isDownloading}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white text-xs font-semibold shadow-xs hover:shadow transition-all active:scale-[0.98] cursor-pointer disabled:opacity-60"
+            title={
+              status === "unauthenticated"
+                ? "Sign in required to download your resume PDF"
+                : "Download high-DPI PDF resume"
+            }
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white text-xs font-semibold shadow-xs hover:shadow transition-all active:scale-[0.98] cursor-pointer disabled:opacity-60 group"
           >
-            <Download className="w-3.5 h-3.5" />
+            {status === "unauthenticated" ? (
+              <Lock className="w-3.5 h-3.5 text-indigo-200 group-hover:text-white transition-colors" />
+            ) : (
+              <Download className="w-3.5 h-3.5" />
+            )}
             <span>{isDownloading ? "Downloading..." : "Download PDF"}</span>
           </button>
 
@@ -208,11 +268,10 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
         <button
           type="button"
           onClick={toggleFitOnePage}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border transition-all cursor-pointer shadow-2xs font-medium text-xs whitespace-nowrap shrink-0 ${
-            isOnePageFitted
-              ? "bg-emerald-50 border-emerald-500 text-emerald-700"
-              : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
-          }`}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border transition-all cursor-pointer shadow-2xs font-medium text-xs whitespace-nowrap shrink-0 ${isOnePageFitted
+            ? "bg-emerald-50 border-emerald-500 text-emerald-700"
+            : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
+            }`}
         >
           {isOnePageFitted ? (
             <Minimize2 className="w-3.5 h-3.5 text-emerald-600" />
@@ -318,11 +377,10 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
                 type="button"
                 title={color.name}
                 onClick={() => updateSettings({ primaryColor: color.hex })}
-                className={`w-5 h-5 rounded-full transition-all cursor-pointer relative flex items-center justify-center ${
-                  isSelected
-                    ? "ring-2 ring-slate-900 ring-offset-2 scale-110 shadow-xs"
-                    : "hover:scale-110 opacity-90 hover:opacity-100"
-                }`}
+                className={`w-5 h-5 rounded-full transition-all cursor-pointer relative flex items-center justify-center ${isSelected
+                  ? "ring-2 ring-slate-900 ring-offset-2 scale-110 shadow-xs"
+                  : "hover:scale-110 opacity-90 hover:opacity-100"
+                  }`}
                 style={{ backgroundColor: color.hex }}
               />
             );
@@ -375,8 +433,17 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
       {/* Interactive Auth Modal */}
       <AuthModal
         isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
+        onClose={() => {
+          setIsAuthModalOpen(false);
+          setPendingDownload(false);
+        }}
         initialView={authModalView}
+        badge={pendingDownload ? "Sign In Required" : undefined}
+        message={
+          pendingDownload
+            ? "Please sign in your account to download your resume in high-resolution PDF format."
+            : undefined
+        }
         callbackUrl="/builder"
       />
     </header>

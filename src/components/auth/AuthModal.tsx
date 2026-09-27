@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { X } from "lucide-react";
+import { X, Sparkles } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
@@ -14,6 +14,8 @@ interface AuthModalProps {
   onClose: () => void;
   initialView?: AuthView;
   callbackUrl?: string;
+  badge?: string;
+  message?: string;
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({
@@ -21,6 +23,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   onClose,
   initialView = "login",
   callbackUrl = "/builder",
+  badge,
+  message,
 }) => {
   const [view, setView] = useState<AuthView>(initialView);
 
@@ -66,6 +70,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <X className="w-4 h-4" />
           </button>
         </div>
+
+        {/* Optional Context Banner (e.g. for Download Resume requirement) */}
+        {message && (
+          <div className="mx-6 mt-4 p-3 rounded-xl bg-indigo-50/90 border border-indigo-100/90 flex items-start gap-2.5 text-xs text-slate-800 shadow-2xs">
+            <Sparkles className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+            <div>
+              {badge && (
+                <span className="font-bold uppercase text-[10px] text-indigo-700 tracking-wider block mb-0.5">
+                  {badge}
+                </span>
+              )}
+              <p className="text-slate-700 font-medium leading-relaxed">{message}</p>
+            </div>
+          </div>
+        )}
 
         {/* View Switcher Tabs (Only shown for Login/Register) */}
         {view !== "forgot-password" && (

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createPasswordResetToken, resetPasswordWithToken } from "@/lib/auth/userStore";
+import { createPasswordResetToken, resetPasswordWithToken } from "@/lib/db/userRepo";
 
 export async function POST(req: Request) {
   try {
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
         );
       }
 
-      const result = resetPasswordWithToken(email, token, newPassword);
+      const result = await resetPasswordWithToken(email, token, newPassword);
 
       if (!result.success) {
         return NextResponse.json(
@@ -33,12 +33,12 @@ export async function POST(req: Request) {
 
       return NextResponse.json({
         success: true,
-        message: "Your password has been successfully reset! You can now log in.",
+        message: "Your password has been successfully reset in MySQL database! You can now log in.",
       });
     }
 
     // Step 1: Request reset code
-    const result = createPasswordResetToken(email);
+    const result = await createPasswordResetToken(email);
 
     if (!result.success) {
       return NextResponse.json(
@@ -49,8 +49,8 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
-      message: `Password reset code sent! (For demonstration: your verification code is ${result.token})`,
-      token: result.token, // In demo mode, returning the token facilitates instant preview & testing
+      message: `Password reset code sent! (Your verification code is ${result.token})`,
+      token: result.token,
     });
   } catch (error) {
     console.error("Forgot password error:", error);
@@ -60,3 +60,4 @@ export async function POST(req: Request) {
     );
   }
 }
+

@@ -1,7 +1,8 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { verifyCredentials, findUserByEmail } from "./userStore";
+import { verifyCredentials, findUserByEmail } from "@/lib/db/userRepo";
+import { query } from "@/lib/db/mysql";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -21,7 +22,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Please provide both email and password.");
         }
 
-        const user = verifyCredentials(credentials.email, credentials.password);
+        const user = await verifyCredentials(credentials.email, credentials.password);
         if (!user) {
           throw new Error("Invalid email or password. Please check and try again.");
         }
@@ -30,7 +31,7 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           name: user.name,
           email: user.email,
-          image: user.image,
+          image: user.image || undefined,
         };
       },
     }),
@@ -43,6 +44,23 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === "google" && user.email) {
+        try {
+          const existing = await findUserByEmail(user.email);
+          if (!existing) {
+            const userId = user.id || `usr_google_${Date.now()}`;
+            await query(
+              "INSERT INTO users (id, name, email, image, provider) VALUES (?, ?, ?, ?, ?)",
+              [userId, user.name || "Google User", user.email.toLowerCase(), user.image || null, "google"]
+            );
+          }
+        } catch (err) {
+          console.error("Google sign in DB sync error:", err);
+        }
+      }
+      return true;
+    },
     async jwt({ token, user, account }) {
       if (user) {
         token.id = user.id;
@@ -60,3 +78,4 @@ export const authOptions: NextAuthOptions = {
   },
   secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || "quickcv_default_secret_key_2026",
 };
+
