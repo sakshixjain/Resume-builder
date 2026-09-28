@@ -133,7 +133,6 @@ export const ProfessionalTemplate: React.FC<TemplateProps> = ({ resume }) => {
               {skills.map((s, idx) => (
                 <span key={s.id}>
                   {s.name}
-                  {s.level ? ` (${s.level})` : ""}
                   {idx < skills.length - 1 ? " • " : ""}
                 </span>
               ))}

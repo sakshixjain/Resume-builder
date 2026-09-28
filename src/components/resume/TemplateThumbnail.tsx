@@ -21,7 +21,7 @@ export const TemplateThumbnail: React.FC<TemplateThumbnailProps> = ({
   resumeData,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0.33);
+  const [scale, setScale] = useState(0.22);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -31,16 +31,20 @@ export const TemplateThumbnail: React.FC<TemplateThumbnailProps> = ({
         const width = containerRef.current.clientWidth;
         if (width > 0) {
           // Standard A4 width at 96 DPI is ~794px
-          setScale(width / 794);
+          setScale(Math.max(0.12, Math.min(0.5, width / 794)));
         }
       }
     };
 
     calculateScale();
+    const rafId = requestAnimationFrame(calculateScale);
     const observer = new ResizeObserver(calculateScale);
     observer.observe(containerRef.current);
 
-    return () => observer.disconnect();
+    return () => {
+      cancelAnimationFrame(rafId);
+      observer.disconnect();
+    };
   }, []);
 
   const defaultColorMap: Record<TemplateId, string> = {

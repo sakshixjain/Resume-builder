@@ -42,6 +42,7 @@ export const EditorPanel: React.FC = () => {
   const {
     resume,
     activeSection,
+    touchedSections,
     setActiveSection,
     moveSection,
     toggleSectionVisibility,
@@ -79,7 +80,7 @@ export const EditorPanel: React.FC = () => {
           expandedSubtitle: "Tell us about yourself. This information will appear at the top of your resume.",
           icon: <User className="w-5 h-5 text-blue-600" />,
           iconBg: "bg-blue-50 text-blue-600 border border-blue-100",
-          isFilled: !!resume.personalInfo.fullName && !!resume.personalInfo.email,
+          isFilled: !!touchedSections.personalInfo && !!resume.personalInfo.fullName && !!resume.personalInfo.email,
         };
       case "summary":
         return {
@@ -88,7 +89,7 @@ export const EditorPanel: React.FC = () => {
           expandedSubtitle: "Write a compelling professional summary highlighting your key strengths.",
           icon: <FileText className="w-5 h-5 text-teal-600" />,
           iconBg: "bg-teal-50 text-teal-600 border border-teal-100",
-          isFilled: !!resume.summary.trim(),
+          isFilled: !!touchedSections.summary && !!resume.summary.trim(),
         };
       case "education":
         const eduCount = resume.education.length;
@@ -98,7 +99,7 @@ export const EditorPanel: React.FC = () => {
           expandedSubtitle: "List your academic qualifications, degrees, GPA, and graduation dates.",
           icon: <GraduationCap className="w-5 h-5 text-orange-600" />,
           iconBg: "bg-orange-50 text-orange-600 border border-orange-100",
-          isFilled: eduCount > 0,
+          isFilled: !!touchedSections.education && eduCount > 0,
         };
       case "experience":
         const expCount = resume.experience.length;
@@ -108,7 +109,7 @@ export const EditorPanel: React.FC = () => {
           expandedSubtitle: "Highlight your career history, key responsibilities, and achievements.",
           icon: <Briefcase className="w-5 h-5 text-purple-600" />,
           iconBg: "bg-purple-50 text-purple-600 border border-purple-100",
-          isFilled: expCount > 0,
+          isFilled: !!touchedSections.experience && expCount > 0,
         };
       case "skills":
         const skCount = resume.skills.length;
@@ -118,7 +119,7 @@ export const EditorPanel: React.FC = () => {
           expandedSubtitle: "Add technical skills, programming languages, frameworks, and tools.",
           icon: <Code2 className="w-5 h-5 text-emerald-600" />,
           iconBg: "bg-emerald-50 text-emerald-600 border border-emerald-100",
-          isFilled: skCount > 0,
+          isFilled: !!touchedSections.skills && skCount > 0,
         };
       case "projects":
         const prjCount = resume.projects.length;
@@ -128,7 +129,7 @@ export const EditorPanel: React.FC = () => {
           expandedSubtitle: "Showcase notable projects, live demo links, and tech stacks.",
           icon: <Folder className="w-5 h-5 text-rose-600" />,
           iconBg: "bg-rose-50 text-rose-600 border border-rose-100",
-          isFilled: prjCount > 0,
+          isFilled: !!touchedSections.projects && prjCount > 0,
         };
       case "certifications":
         const certCount = resume.certifications.length;
@@ -138,7 +139,7 @@ export const EditorPanel: React.FC = () => {
           expandedSubtitle: "Include industry credentials, accredited licenses, and certifications.",
           icon: <Award className="w-5 h-5 text-fuchsia-600" />,
           iconBg: "bg-fuchsia-50 text-fuchsia-600 border border-fuchsia-100",
-          isFilled: certCount > 0,
+          isFilled: !!touchedSections.certifications && certCount > 0,
         };
       case "languages":
         const langCount = resume.languages.length;
@@ -148,7 +149,7 @@ export const EditorPanel: React.FC = () => {
           expandedSubtitle: "List languages you speak along with proficiency levels.",
           icon: <Globe className="w-5 h-5 text-sky-600" />,
           iconBg: "bg-sky-50 text-sky-600 border border-sky-100",
-          isFilled: langCount > 0,
+          isFilled: !!touchedSections.languages && langCount > 0,
         };
       case "achievements":
         const achCount = resume.achievements.length;
@@ -158,7 +159,7 @@ export const EditorPanel: React.FC = () => {
           expandedSubtitle: "Highlight major awards, competitions, and key recognitions.",
           icon: <Trophy className="w-5 h-5 text-yellow-600" />,
           iconBg: "bg-amber-50 text-amber-600 border border-amber-100",
-          isFilled: achCount > 0,
+          isFilled: !!touchedSections.achievements && achCount > 0,
         };
       default:
         const customSec = resume.customSections?.find((cs) => cs.id === sectionKey);
@@ -169,7 +170,7 @@ export const EditorPanel: React.FC = () => {
           expandedSubtitle: "Custom section items and details.",
           icon: <Layers className="w-5 h-5 text-indigo-600" />,
           iconBg: "bg-indigo-50 text-indigo-600 border border-indigo-100",
-          isFilled: count > 0,
+          isFilled: (!!touchedSections[sectionKey] || !!touchedSections.custom) && count > 0,
         };
     }
   };
@@ -216,7 +217,7 @@ export const EditorPanel: React.FC = () => {
       </div>
 
       {/* Section Cards Scrollable Area */}
-      <div className="flex-1 overflow-y-auto px-5 py-2 space-y-3 pb-20">
+      <div className="flex-1 overflow-y-auto px-3.5 sm:px-5 py-2 space-y-3 pb-28 sm:pb-20">
         {allSectionsToRender.map((sectionKey) => {
           const meta = getSectionMeta(sectionKey);
           const isOpen = activeSection === sectionKey;

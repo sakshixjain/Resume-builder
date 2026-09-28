@@ -257,7 +257,7 @@ export const BuilderLayout: React.FC = () => {
 
       {/* Mobile Bottom Navigation Toggle */}
       <div className="print:hidden">
-        <MobileTabs />
+        <MobileTabs onOpenCustomizer={() => setIsCustomizerOpen(true)} />
       </div>
 
       {/* Customizer Modal Dialog */}

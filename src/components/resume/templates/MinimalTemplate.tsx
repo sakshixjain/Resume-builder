@@ -111,7 +111,6 @@ export const MinimalTemplate: React.FC<TemplateProps> = ({ resume }) => {
                 {skills.map((s) => (
                   <span key={s.id} className="inline-flex items-center">
                     <span className="font-medium text-slate-800">{s.name}</span>
-                    {s.level && <span className="text-[9px] text-slate-400 ml-1">({s.level})</span>}
                   </span>
                 ))}
               </div>

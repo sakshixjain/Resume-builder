@@ -48,7 +48,7 @@
 @media print {
   @page {
     size: A4 portrait;
-    margin: 0 !important; /* Removes browser default header (date, time, page title) and footer (URL, page number) */
+    margin: 0 !important; /* Zero margin suppresses browser default headers (date, title name) and footers (domain URL) */
   }
 
   html,
@@ -68,6 +68,7 @@
   .editor-panel-wrapper,
   .preview-toolbar,
   .page-boundary-marker,
+  .page-count-badge,
   .no-print,
   [data-no-print="true"],
   [data-sonner-toaster],
@@ -111,7 +112,7 @@
     position: static !important;
   }
 
-  /* Ensure the template root maintains professional margins */
+  /* Professional template root padding on printed page */
   #resume-preview-document .resume-template-root {
     padding: 12mm 14mm !important;
     margin: 0 !important;
@@ -126,6 +127,7 @@
   .resume-header {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
+    margin-bottom: 12pt !important;
   }
 
   /* Section break rules */

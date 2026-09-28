@@ -2,10 +2,9 @@
 
 import React, { useState } from "react";
 import { toast } from "sonner";
-import { Mail, Lock, KeyRound, ArrowRight, ArrowLeft, Loader2, CheckCircle2, ShieldAlert } from "lucide-react";
+import { Mail, Lock, KeyRound, ArrowRight, ArrowLeft, Loader2, CheckCircle2, ShieldAlert, Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
-import { Button } from "@/components/ui/Button";
 
 interface ForgotPasswordFormProps {
   onSwitchToLogin: () => void;
@@ -114,23 +113,23 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
   };
 
   return (
-    <div className="w-full space-y-5">
+    <div className="w-full space-y-4">
       {/* STEP 1: REQUEST CODE */}
       {step === "request" && (
         <>
           <div className="text-center space-y-1">
-            <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-2 border border-blue-100 shadow-2xs">
-              <KeyRound className="w-6 h-6" />
+            <div className="w-11 h-11 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-2 border border-indigo-100 shadow-2xs">
+              <KeyRound className="w-5 h-5" />
             </div>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
               Reset your password
             </h2>
             <p className="text-xs text-slate-500 max-w-sm mx-auto">
-              Enter your registered email address and we&apos;ll send you a 6-digit verification code to reset your password.
+              Enter your registered email and we&apos;ll send you a 6-digit code to reset your password.
             </p>
           </div>
 
-          <form onSubmit={handleRequestCode} className="space-y-4">
+          <form onSubmit={handleRequestCode} className="space-y-3.5 pt-1">
             <div>
               <Label required>Registered Email Address</Label>
               <Input
@@ -141,15 +140,14 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
                 leftIcon={<Mail className="w-4 h-4 text-slate-400" />}
                 required
                 autoComplete="email"
+                className="h-10 rounded-xl"
               />
             </div>
 
-            <Button
+            <button
               type="submit"
-              variant="primary"
-              size="lg"
               disabled={isLoading}
-              className="w-full font-bold shadow-md shadow-blue-500/20 cursor-pointer"
+              className="w-full h-10.5 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-semibold text-xs sm:text-sm shadow-md shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <span className="flex items-center gap-2">
@@ -162,7 +160,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
                   <ArrowRight className="w-4 h-4" />
                 </span>
               )}
-            </Button>
+            </button>
           </form>
         </>
       )}
@@ -171,30 +169,40 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
       {step === "reset" && (
         <>
           <div className="text-center space-y-1">
-            <div className="w-12 h-12 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-2 border border-amber-100 shadow-2xs">
-              <Lock className="w-6 h-6" />
+            <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-2 border border-amber-100 shadow-2xs">
+              <Lock className="w-5 h-5" />
             </div>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
               Enter verification code
             </h2>
             <p className="text-xs text-slate-500">
-              We sent a code to <strong className="text-slate-800">{email}</strong>
+              We sent a 6-digit code to <strong className="text-slate-800">{email}</strong>
             </p>
           </div>
 
           {demoCodeHint && (
-            <div className="p-3 rounded-lg bg-blue-50 border border-blue-200/80 text-xs text-blue-900 flex items-start gap-2">
-              <ShieldAlert className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-              <div>
-                <span className="font-bold">Demo Verification Code:</span>{" "}
-                <span className="font-mono font-bold bg-white px-1.5 py-0.5 rounded border border-blue-200">
+            <div className="p-3 rounded-xl bg-blue-50/80 border border-blue-200/80 text-xs text-blue-900 flex items-center justify-between shadow-2xs">
+              <div className="flex items-center gap-2">
+                <ShieldAlert className="w-4 h-4 text-blue-600 shrink-0" />
+                <span>Demo Code:</span>
+                <span className="font-mono font-bold bg-white px-2 py-0.5 rounded-md border border-blue-200 text-blue-800 tracking-wider">
                   {demoCodeHint}
                 </span>
               </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setResetToken(demoCodeHint);
+                  toast.info("Demo code filled!");
+                }}
+                className="text-[11px] font-bold text-blue-700 hover:underline"
+              >
+                Use Code
+              </button>
             </div>
           )}
 
-          <form onSubmit={handleResetPassword} className="space-y-3.5">
+          <form onSubmit={handleResetPassword} className="space-y-3 pt-1">
             <div>
               <Label required>6-Digit Code</Label>
               <Input
@@ -205,7 +213,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
                 leftIcon={<KeyRound className="w-4 h-4 text-slate-400" />}
                 required
                 maxLength={6}
-                className="font-mono text-center tracking-widest text-base font-bold"
+                className="h-10 rounded-xl font-mono text-center tracking-widest text-base font-bold"
               />
             </div>
 
@@ -219,6 +227,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
                 leftIcon={<Lock className="w-4 h-4 text-slate-400" />}
                 required
                 autoComplete="new-password"
+                className="h-10 rounded-xl"
               />
             </div>
 
@@ -232,15 +241,14 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
                 leftIcon={<Lock className="w-4 h-4 text-slate-400" />}
                 required
                 autoComplete="new-password"
+                className="h-10 rounded-xl"
               />
             </div>
 
-            <Button
+            <button
               type="submit"
-              variant="primary"
-              size="lg"
               disabled={isLoading}
-              className="w-full font-bold shadow-md shadow-blue-500/20 cursor-pointer mt-2"
+              className="w-full h-10.5 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-semibold text-xs sm:text-sm shadow-md shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed mt-2"
             >
               {isLoading ? (
                 <span className="flex items-center gap-2">
@@ -253,19 +261,19 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
                   <ArrowRight className="w-4 h-4" />
                 </span>
               )}
-            </Button>
+            </button>
           </form>
         </>
       )}
 
       {/* STEP 3: SUCCESS CONFIRMATION */}
       {step === "success" && (
-        <div className="text-center space-y-4 py-4">
-          <div className="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-100 shadow-2xs">
-            <CheckCircle2 className="w-8 h-8" />
+        <div className="text-center space-y-4 py-3">
+          <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-100 shadow-2xs">
+            <CheckCircle2 className="w-7 h-7" />
           </div>
           <div className="space-y-1">
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
               Password Reset Complete!
             </h2>
             <p className="text-xs text-slate-500 max-w-xs mx-auto">
@@ -273,25 +281,23 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
             </p>
           </div>
 
-          <Button
+          <button
             type="button"
-            variant="primary"
-            size="lg"
             onClick={onSwitchToLogin}
-            className="w-full font-bold shadow-md shadow-blue-500/20 cursor-pointer"
+            className="w-full h-10.5 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-semibold text-xs sm:text-sm shadow-md shadow-indigo-600/20 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center"
           >
             Sign In Now
-          </Button>
+          </button>
         </div>
       )}
 
       {/* Back to Login link */}
       {step !== "success" && (
-        <div className="text-center pt-2">
+        <div className="text-center pt-2 pb-1">
           <button
             type="button"
             onClick={onSwitchToLogin}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 cursor-pointer transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-indigo-600 cursor-pointer transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             Back to Sign In

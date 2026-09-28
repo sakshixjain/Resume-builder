@@ -88,11 +88,6 @@ export const TechTemplate: React.FC<TemplateProps> = ({ resume }) => {
                         className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-800 border border-slate-200/80"
                       >
                         {skill.name}
-                        {skill.level && (
-                          <span className="ml-1 text-[9px] text-slate-400 font-mono">
-                            ({skill.level})
-                          </span>
-                        )}
                       </span>
                     ))}
                   </div>

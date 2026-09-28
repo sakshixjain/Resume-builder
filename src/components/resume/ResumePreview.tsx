@@ -106,8 +106,17 @@ export const ResumePreview: React.FC<ResumePreviewProps> = ({
         boxSizing: "border-box",
       }}
     >
-      <div className="w-full h-full print:h-auto">
+      <div className="w-full h-full print:h-auto relative">
         {renderTemplate()}
+
+        {/* Visual Page Boundary Indicator for multi-page resumes on screen (suppressed on print) */}
+        {!isThumbnail && (
+          <div className="page-boundary-marker absolute top-[297mm] left-0 right-0 border-b border-dashed border-indigo-300 pointer-events-none no-print z-10 opacity-70">
+            <span className="absolute right-3 -top-2.5 bg-indigo-50 text-indigo-700 border border-indigo-200 text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-2xs">
+              Page 2
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -28,9 +28,14 @@ interface ResumeStoreState {
   history: Resume[];
   historyIndex: number;
 
+  touchedSections: Record<string, boolean>;
+  pageCount: number;
+
   // Actions
+  setPageCount: (count: number) => void;
   setResume: (resume: Resume) => void;
   loadPreset: (presetId: PresetId) => void;
+  markSectionTouched: (sectionKey: string) => void;
   updatePersonalInfo: (info: Partial<PersonalInfo>) => void;
   updateSummary: (summary: string) => void;
   
@@ -115,6 +120,16 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   mobileTab: "edit",
   history: [initialResumeData],
   historyIndex: 0,
+  touchedSections: {},
+  pageCount: 1,
+
+  setPageCount: (count: number) => set({ pageCount: Math.max(1, count) }),
+
+  markSectionTouched: (sectionKey: string) => {
+    set((state) => ({
+      touchedSections: { ...state.touchedSections, [sectionKey]: true },
+    }));
+  },
 
   setResume: (resume: Resume) => {
     set((state) => {
@@ -150,6 +165,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   updatePersonalInfo: (info: Partial<PersonalInfo>) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, personalInfo: true },
       resume: {
         ...state.resume,
         personalInfo: { ...state.resume.personalInfo, ...info },
@@ -160,6 +176,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   updateSummary: (summary: string) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, summary: true },
       resume: {
         ...state.resume,
         summary,
@@ -180,6 +197,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
       description: "• Key accomplishment with measurable outcome\n• Led project delivering core features",
     };
     set((state) => ({
+      touchedSections: { ...state.touchedSections, experience: true },
       resume: {
         ...state.resume,
         experience: [newExp, ...state.resume.experience],
@@ -190,6 +208,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   updateExperience: (id: string, exp: Partial<Experience>) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, experience: true },
       resume: {
         ...state.resume,
         experience: state.resume.experience.map((item) =>
@@ -202,6 +221,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   deleteExperience: (id: string) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, experience: true },
       resume: {
         ...state.resume,
         experience: state.resume.experience.filter((item) => item.id !== id),
@@ -222,6 +242,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
       gpa: "",
     };
     set((state) => ({
+      touchedSections: { ...state.touchedSections, education: true },
       resume: {
         ...state.resume,
         education: [newEdu, ...state.resume.education],
@@ -232,6 +253,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   updateEducation: (id: string, edu: Partial<Education>) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, education: true },
       resume: {
         ...state.resume,
         education: state.resume.education.map((item) =>
@@ -244,6 +266,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   deleteEducation: (id: string) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, education: true },
       resume: {
         ...state.resume,
         education: state.resume.education.filter((item) => item.id !== id),
@@ -260,6 +283,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
       category: skill?.category || "General",
     };
     set((state) => ({
+      touchedSections: { ...state.touchedSections, skills: true },
       resume: {
         ...state.resume,
         skills: [...state.resume.skills, newSkill],
@@ -270,6 +294,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   updateSkill: (id: string, skill: Partial<Skill>) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, skills: true },
       resume: {
         ...state.resume,
         skills: state.resume.skills.map((item) =>
@@ -282,6 +307,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   deleteSkill: (id: string) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, skills: true },
       resume: {
         ...state.resume,
         skills: state.resume.skills.filter((item) => item.id !== id),
@@ -302,6 +328,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
       endDate: "",
     };
     set((state) => ({
+      touchedSections: { ...state.touchedSections, projects: true },
       resume: {
         ...state.resume,
         projects: [newProj, ...state.resume.projects],
@@ -312,6 +339,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   updateProject: (id: string, proj: Partial<Project>) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, projects: true },
       resume: {
         ...state.resume,
         projects: state.resume.projects.map((item) =>
@@ -324,6 +352,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   deleteProject: (id: string) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, projects: true },
       resume: {
         ...state.resume,
         projects: state.resume.projects.filter((item) => item.id !== id),
@@ -341,6 +370,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
       url: "",
     };
     set((state) => ({
+      touchedSections: { ...state.touchedSections, certifications: true },
       resume: {
         ...state.resume,
         certifications: [newCert, ...state.resume.certifications],
@@ -351,6 +381,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   updateCertification: (id: string, cert: Partial<Certification>) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, certifications: true },
       resume: {
         ...state.resume,
         certifications: state.resume.certifications.map((item) =>
@@ -363,6 +394,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   deleteCertification: (id: string) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, certifications: true },
       resume: {
         ...state.resume,
         certifications: state.resume.certifications.filter((item) => item.id !== id),
@@ -378,6 +410,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
       proficiency: "Proficient",
     };
     set((state) => ({
+      touchedSections: { ...state.touchedSections, languages: true },
       resume: {
         ...state.resume,
         languages: [...state.resume.languages, newLang],
@@ -388,6 +421,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   updateLanguage: (id: string, lang: Partial<Language>) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, languages: true },
       resume: {
         ...state.resume,
         languages: state.resume.languages.map((item) =>
@@ -400,6 +434,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   deleteLanguage: (id: string) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, languages: true },
       resume: {
         ...state.resume,
         languages: state.resume.languages.filter((item) => item.id !== id),
@@ -416,6 +451,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
       date: new Date().getFullYear().toString(),
     };
     set((state) => ({
+      touchedSections: { ...state.touchedSections, achievements: true },
       resume: {
         ...state.resume,
         achievements: [...state.resume.achievements, newAch],
@@ -426,6 +462,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   updateAchievement: (id: string, ach: Partial<Achievement>) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, achievements: true },
       resume: {
         ...state.resume,
         achievements: state.resume.achievements.map((item) =>
@@ -438,6 +475,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   deleteAchievement: (id: string) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, achievements: true },
       resume: {
         ...state.resume,
         achievements: state.resume.achievements.filter((item) => item.id !== id),
@@ -462,6 +500,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
       ],
     };
     set((state) => ({
+      touchedSections: { ...state.touchedSections, custom: true, [newId]: true },
       resume: {
         ...state.resume,
         customSections: [...state.resume.customSections, newSec],
@@ -474,6 +513,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   updateCustomSectionTitle: (id: string, title: string) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, custom: true, [id]: true },
       resume: {
         ...state.resume,
         customSections: state.resume.customSections.map((sec) =>
@@ -486,6 +526,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   deleteCustomSection: (id: string) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, custom: true, [id]: true },
       resume: {
         ...state.resume,
         customSections: state.resume.customSections.filter((sec) => sec.id !== id),
@@ -504,6 +545,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
       description: "",
     };
     set((state) => ({
+      touchedSections: { ...state.touchedSections, custom: true, [sectionId]: true },
       resume: {
         ...state.resume,
         customSections: state.resume.customSections.map((sec) =>
@@ -516,6 +558,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   updateCustomSectionItem: (sectionId: string, itemId: string, item: Partial<CustomSectionItem>) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, custom: true, [sectionId]: true },
       resume: {
         ...state.resume,
         customSections: state.resume.customSections.map((sec) =>
@@ -533,6 +576,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
 
   deleteCustomSectionItem: (sectionId: string, itemId: string) => {
     set((state) => ({
+      touchedSections: { ...state.touchedSections, custom: true, [sectionId]: true },
       resume: {
         ...state.resume,
         customSections: state.resume.customSections.map((sec) =>
@@ -601,6 +645,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   resetToDefaultData: () => {
     set({
       resume: { ...initialResumeData, updatedAt: new Date().toISOString() },
+      touchedSections: {},
       saveStatus: "saved",
     });
     triggerAutosave(get, set);
@@ -609,6 +654,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   clearResumeData: () => {
     set({
       resume: { ...emptyResumeData, updatedAt: new Date().toISOString() },
+      touchedSections: {},
       saveStatus: "saved",
     });
     triggerAutosave(get, set);

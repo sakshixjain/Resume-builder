@@ -191,18 +191,13 @@ export const ModernTemplate: React.FC<TemplateProps> = ({ resume }) => {
               {skills.map((skill) => (
                 <span
                   key={skill.id}
-                  className="resume-item inline-flex items-center px-2 py-0.5 text-[10px] font-medium rounded-md border text-slate-800"
+                  className="resume-item inline-flex items-center px-2.5 py-1 text-[10.5px] font-semibold rounded-md border text-slate-800"
                   style={{
                     backgroundColor: `${primaryColor}08`,
                     borderColor: `${primaryColor}25`,
                   }}
                 >
                   {skill.name}
-                  {skill.level && (
-                    <span className="text-slate-400 ml-1 text-[9px]">
-                      • {skill.level}
-                    </span>
-                  )}
                 </span>
               ))}
             </div>

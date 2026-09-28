@@ -118,11 +118,11 @@ export const ExecutiveTemplate: React.FC<TemplateProps> = ({ resume }) => {
             >
               Core Competencies
             </h3>
-            <div className="grid grid-cols-2 gap-2 text-[11px]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[11px]">
               {skills.map((s) => (
-                <div key={s.id} className="resume-item flex items-center justify-between bg-slate-50 p-1.5 border border-slate-300">
+                <div key={s.id} className="resume-item flex items-center gap-1.5 bg-slate-50 px-2.5 py-1.5 border border-slate-200 rounded-md">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-700 shrink-0" style={{ backgroundColor: primaryColor }} />
                   <span className="font-semibold text-slate-800">{s.name}</span>
-                  {s.level && <span className="text-[9px] font-mono uppercase font-bold px-1.5 py-0.5 bg-slate-200 text-slate-800">{s.level}</span>}
                 </div>
               ))}
             </div>

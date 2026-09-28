@@ -77,9 +77,6 @@ export const CreativeTemplate: React.FC<TemplateProps> = ({ resume }) => {
                   }}
                 >
                   {skill.name}
-                  {skill.level && (
-                    <span className="opacity-70 text-[9.5px] ml-1">· {skill.level}</span>
-                  )}
                 </span>
               ))}
             </div>

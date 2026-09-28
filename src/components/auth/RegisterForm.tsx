@@ -117,35 +117,36 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   };
 
   return (
-    <div className="w-full space-y-5">
+    <div className="w-full space-y-4">
       {/* Header Info */}
       <div className="text-center space-y-1">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
           Create an Account
         </h2>
         <p className="text-xs text-slate-500">
-          Join thousands of professionals creating recruiter-tested resumes
+          Join thousands creating professional resumes in minutes
         </p>
       </div>
 
       {/* Google OAuth Button */}
-      <div className="space-y-3">
+      <div className="pt-1">
         <GoogleButton
           label="Sign up with Google"
           callbackUrl={callbackUrl}
         />
 
-        {/* Divider */}
-        <div className="relative flex items-center justify-center">
-          <div className="w-full border-t border-slate-200" />
-          <span className="bg-white px-3 text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+        {/* Symmetrical Clean Divider */}
+        <div className="relative flex items-center justify-center my-3.5">
+          <div className="grow border-t border-slate-200" />
+          <span className="shrink-0 px-3 text-[10.5px] font-semibold text-slate-400 uppercase tracking-wider">
             or sign up with email
           </span>
+          <div className="grow border-t border-slate-200" />
         </div>
       </div>
 
       {/* Register Form */}
-      <form onSubmit={handleSubmit} className="space-y-3.5">
+      <form onSubmit={handleSubmit} className="space-y-3">
         {/* Full Name */}
         <div>
           <Label required>Full Name</Label>
@@ -157,6 +158,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
             leftIcon={<User className="w-4 h-4 text-slate-400" />}
             required
             autoComplete="name"
+            className="h-10 rounded-xl"
           />
         </div>
 
@@ -171,6 +173,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
             leftIcon={<Mail className="w-4 h-4 text-slate-400" />}
             required
             autoComplete="email"
+            className="h-10 rounded-xl"
           />
         </div>
 
@@ -186,12 +189,14 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               leftIcon={<Lock className="w-4 h-4 text-slate-400" />}
               required
               autoComplete="new-password"
+              className="h-10 rounded-xl pr-10"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
               tabIndex={-1}
+              aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? (
                 <EyeOff className="w-4 h-4" />
@@ -209,7 +214,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                   className={`h-full flex-1 transition-all ${
                     strengthScore >= 1
                       ? strengthScore === 1
-                        ? "bg-red-500"
+                        ? "bg-rose-500"
                         : strengthScore === 2
                         ? "bg-amber-500"
                         : "bg-emerald-500"
@@ -253,25 +258,26 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
             leftIcon={<Lock className="w-4 h-4 text-slate-400" />}
             required
             autoComplete="new-password"
+            className="h-10 rounded-xl"
           />
         </div>
 
         {/* Terms agreement checkbox */}
-        <div className="pt-1">
-          <label className="flex items-start gap-2 text-xs text-slate-600 cursor-pointer select-none">
+        <div className="pt-0.5">
+          <label className="flex items-start gap-2 text-xs text-slate-600 hover:text-slate-900 cursor-pointer select-none">
             <input
               type="checkbox"
               checked={agreeTerms}
               onChange={(e) => setAgreeTerms(e.target.checked)}
-              className="mt-0.5 rounded-xs border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+              className="mt-0.5 w-4 h-4 rounded-md border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer accent-indigo-600"
             />
-            <span>
+            <span className="leading-snug">
               I agree to the{" "}
-              <span className="text-blue-600 font-semibold hover:underline">
+              <span className="text-indigo-600 font-semibold hover:underline">
                 Terms of Service
               </span>{" "}
               and{" "}
-              <span className="text-blue-600 font-semibold hover:underline">
+              <span className="text-indigo-600 font-semibold hover:underline">
                 Privacy Policy
               </span>
               .
@@ -280,12 +286,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         </div>
 
         {/* Submit Button */}
-        <Button
+        <button
           type="submit"
-          variant="primary"
-          size="lg"
           disabled={isLoading}
-          className="w-full font-bold shadow-md shadow-blue-500/20 cursor-pointer mt-2"
+          className="w-full h-10.5 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-semibold text-xs sm:text-sm shadow-md shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed mt-2"
         >
           {isLoading ? (
             <span className="flex items-center gap-2">
@@ -298,17 +302,17 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               <ArrowRight className="w-4 h-4" />
             </span>
           )}
-        </Button>
+        </button>
       </form>
 
       {/* Bottom Switch to Login */}
       {onSwitchToLogin && (
-        <div className="text-center text-xs text-slate-500 pt-1">
+        <div className="text-center text-xs text-slate-500 pt-1 pb-1">
           Already have an account?{" "}
           <button
             type="button"
             onClick={onSwitchToLogin}
-            className="font-bold text-blue-600 hover:text-blue-700 hover:underline cursor-pointer"
+            className="font-bold text-indigo-600 hover:text-indigo-700 hover:underline cursor-pointer ml-1"
           >
             Sign in
           </button>

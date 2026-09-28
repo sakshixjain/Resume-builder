@@ -35,7 +35,7 @@ export async function exportResumeToPDF(
     options?.onProgress?.(35);
 
     const canvas = await html2canvas(element, {
-      scale: 2, // 2x DPI for crisp text and graphics
+      scale: 2, // 2x scale for sharp output without memory issues
       useCORS: true,
       allowTaint: true,
       logging: false,
@@ -43,13 +43,46 @@ export async function exportResumeToPDF(
       scrollX: 0,
       scrollY: 0,
       windowWidth: 1200,
+      ignoreElements: (el) => {
+        return (
+          el.classList?.contains("no-print") ||
+          el.classList?.contains("page-boundary-marker") ||
+          el.classList?.contains("page-count-badge")
+        );
+      },
+      onclone: (clonedDoc, clonedElement) => {
+        // Sanitize all style tags in the cloned document to prevent oklch color parser crashes in html2canvas
+        const styleElements = clonedDoc.querySelectorAll("style");
+        styleElements.forEach((styleTag) => {
+          try {
+            if (styleTag.textContent && /oklch|color-mix|lab\(|lch\(/i.test(styleTag.textContent)) {
+              styleTag.textContent = styleTag.textContent
+                .replace(/oklch\([^)]+\)/gi, "#1e293b")
+                .replace(/color-mix\([^)]+\)/gi, "#64748b")
+                .replace(/lab\([^)]+\)/gi, "#0f172a")
+                .replace(/lch\([^)]+\)/gi, "#334155");
+            }
+          } catch {}
+        });
+
+        // Ensure cloned element is clean and properly sized
+        if (clonedElement) {
+          clonedElement.style.transform = "none";
+          clonedElement.style.margin = "0 auto";
+          clonedElement.style.boxShadow = "none";
+          clonedElement.style.display = "block";
+          clonedElement.style.position = "static";
+        }
+      },
     });
 
     options?.onProgress?.(70);
 
-    const imgData = canvas.toDataURL("image/jpeg", 0.98);
+    // Standard A4 aspect ratio: 297mm / 210mm = 1.4142857
+    const a4Ratio = 297 / 210;
+    const pageHeightInCanvasPx = Math.floor(canvas.width * a4Ratio);
+    const totalPages = Math.max(1, Math.ceil((canvas.height - 5) / pageHeightInCanvasPx));
 
-    // Standard A4 dimensions in mm: 210 x 297
     const pdf = new jsPDF({
       orientation: "portrait",
       unit: "mm",
@@ -57,23 +90,39 @@ export async function exportResumeToPDF(
       compress: true,
     });
 
-    const pdfWidth = 210;
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-    if (pdfHeight <= 297) {
-      pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
-    } else {
-      let position = 0;
-      let heightLeft = pdfHeight;
-
-      pdf.addImage(imgData, "JPEG", 0, position, pdfWidth, pdfHeight);
-      heightLeft -= 297;
-
-      while (heightLeft > 0) {
-        position = position - 297;
+    for (let pageIdx = 0; pageIdx < totalPages; pageIdx++) {
+      if (pageIdx > 0) {
         pdf.addPage();
-        pdf.addImage(imgData, "JPEG", 0, position, pdfWidth, pdfHeight);
-        heightLeft -= 297;
+      }
+
+      // Create an exact A4 slice canvas for each page
+      const pageCanvas = document.createElement("canvas");
+      pageCanvas.width = canvas.width;
+      pageCanvas.height = pageHeightInCanvasPx;
+
+      const pageCtx = pageCanvas.getContext("2d");
+      if (pageCtx) {
+        // Pure white background
+        pageCtx.fillStyle = "#ffffff";
+        pageCtx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+
+        const sourceY = pageIdx * pageHeightInCanvasPx;
+        const sourceHeight = Math.min(pageHeightInCanvasPx, canvas.height - sourceY);
+
+        pageCtx.drawImage(
+          canvas,
+          0,
+          sourceY,
+          canvas.width,
+          sourceHeight,
+          0,
+          0,
+          pageCanvas.width,
+          sourceHeight
+        );
+
+        const pageImgData = pageCanvas.toDataURL("image/jpeg", 0.98);
+        pdf.addImage(pageImgData, "JPEG", 0, 0, 210, 297);
       }
     }
 
@@ -81,8 +130,8 @@ export async function exportResumeToPDF(
     pdf.save(fileName);
     options?.onProgress?.(100);
   } catch (err) {
-    console.warn("Direct PDF generation error, executing browser print fallback", err);
-    window.print();
+    console.warn("Direct PDF generation error, executing browser print fallback:", err);
+    throw err;
   } finally {
     if (transformWrapper) {
       transformWrapper.style.transform = originalTransform;

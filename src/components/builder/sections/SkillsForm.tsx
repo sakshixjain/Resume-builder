@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { useResumeStore } from "@/store/resumeStore";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { SkillLevel } from "@/lib/resume/types";
 import { Plus, X, Sparkles, Check } from "lucide-react";
 import { toast } from "sonner";
 
@@ -27,25 +26,24 @@ const POPULAR_SKILL_SUGGESTIONS = [
   "MongoDB",
 ];
 
-const SKILL_LEVELS: SkillLevel[] = [
-  "Beginner",
-  "Intermediate",
-  "Advanced",
-  "Expert",
-];
-
 export const SkillsForm: React.FC = () => {
-  const { resume, addSkill, updateSkill, deleteSkill } = useResumeStore();
+  const { resume, addSkill, deleteSkill } = useResumeStore();
   const [customSkillName, setCustomSkillName] = useState("");
-  const [selectedLevel, setSelectedLevel] = useState<SkillLevel>("Advanced");
 
   const handleAddCustomSkill = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!customSkillName.trim()) return;
 
+    const exists = resume.skills.some(
+      (s) => s.name.toLowerCase() === customSkillName.trim().toLowerCase()
+    );
+    if (exists) {
+      toast.info(`"${customSkillName.trim()}" is already in your skills list`);
+      return;
+    }
+
     addSkill({
       name: customSkillName.trim(),
-      level: selectedLevel,
     });
     setCustomSkillName("");
     toast.success(`Added "${customSkillName.trim()}"`);
@@ -61,7 +59,6 @@ export const SkillsForm: React.FC = () => {
     }
     addSkill({
       name: skillName,
-      level: "Advanced",
     });
     toast.success(`Added "${skillName}"`);
   };
@@ -75,24 +72,12 @@ export const SkillsForm: React.FC = () => {
             placeholder="Type a skill name (e.g. Next.js, Kubernetes, UI Design)"
             value={customSkillName}
             onChange={(e) => setCustomSkillName(e.target.value)}
-            className="flex-1 text-xs"
+            className="flex-1 text-xs h-10 rounded-xl"
           />
-
-          <select
-            value={selectedLevel}
-            onChange={(e) => setSelectedLevel(e.target.value as SkillLevel)}
-            className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-800 focus:outline-none focus:border-blue-500 cursor-pointer shadow-2xs"
-          >
-            {SKILL_LEVELS.map((lvl) => (
-              <option key={lvl} value={lvl}>
-                {lvl}
-              </option>
-            ))}
-          </select>
 
           <Button type="submit" size="sm" className="shrink-0 text-xs font-semibold rounded-xl px-4 shadow-xs">
             <Plus className="w-3.5 h-3.5" />
-            Add
+            Add Skill
           </Button>
         </div>
       </form>
@@ -140,43 +125,24 @@ export const SkillsForm: React.FC = () => {
             No skills added yet. Type a skill above or click from suggestions.
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div className="flex flex-wrap gap-2">
             {resume.skills.map((skill) => (
               <div
                 key={skill.id}
-                className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50/70 border border-slate-200 text-xs shadow-2xs hover:border-slate-300 transition-colors"
+                className="inline-flex items-center gap-2 pl-3 pr-1.5 py-1 rounded-xl bg-slate-50 border border-slate-200 text-xs shadow-2xs hover:border-slate-300 transition-colors"
               >
-                <div className="flex items-center gap-2 truncate mr-2">
-                  <span className="font-semibold text-slate-900 truncate">
-                    {skill.name}
-                  </span>
-                </div>
+                <span className="font-semibold text-slate-900">
+                  {skill.name}
+                </span>
 
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <select
-                    value={skill.level || "Advanced"}
-                    onChange={(e) =>
-                      updateSkill(skill.id, {
-                        level: e.target.value as SkillLevel,
-                      })
-                    }
-                    className="h-6 text-[10px] font-semibold rounded-md border border-slate-200 bg-white px-1.5 text-slate-700 cursor-pointer shadow-2xs"
-                  >
-                    {SKILL_LEVELS.map((lvl) => (
-                      <option key={lvl} value={lvl}>
-                        {lvl}
-                      </option>
-                    ))}
-                  </select>
-
-                  <button
-                    type="button"
-                    onClick={() => deleteSkill(skill.id)}
-                    className="text-slate-400 hover:text-rose-600 p-1 rounded hover:bg-rose-50 transition-colors"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => deleteSkill(skill.id)}
+                  className="text-slate-400 hover:text-rose-600 p-1 rounded-lg hover:bg-rose-50 transition-colors cursor-pointer"
+                  title="Remove skill"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
               </div>
             ))}
           </div>

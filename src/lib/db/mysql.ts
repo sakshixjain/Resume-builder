@@ -89,6 +89,22 @@ export async function initializeDatabase(): Promise<void> {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `);
 
+    // User feedbacks table
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS user_feedbacks (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id VARCHAR(64) NULL,
+        user_email VARCHAR(255) NULL,
+        user_name VARCHAR(255) NULL,
+        rating INT NOT NULL DEFAULT 5,
+        tags VARCHAR(512) NULL,
+        feedback_text TEXT NULL,
+        improvement_suggestions TEXT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_user_feedback (user_id)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `);
+
     // Seed default demo user if table is empty
     const [existingUsers]: any = await db.query("SELECT COUNT(*) as cnt FROM users");
     const count = existingUsers?.[0]?.cnt || 0;

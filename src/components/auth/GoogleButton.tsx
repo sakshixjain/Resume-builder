@@ -34,12 +34,12 @@ export const GoogleButton: React.FC<GoogleButtonProps> = ({
       type="button"
       onClick={handleGoogleSignIn}
       disabled={isLoading}
-      className={`w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-sm shadow-2xs transition-all hover:border-slate-400 active:scale-[0.99] disabled:opacity-60 cursor-pointer ${className}`}
+      className={`w-full h-10.5 flex items-center justify-center gap-3 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50/90 text-slate-700 font-medium text-xs sm:text-sm shadow-2xs hover:border-slate-300 hover:shadow-xs active:scale-[0.99] transition-all duration-150 disabled:opacity-60 cursor-pointer ${className}`}
     >
       {isLoading ? (
         <Loader2 className="w-4 h-4 animate-spin text-slate-500" />
       ) : (
-        <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+        <svg className="w-4.5 h-4.5 shrink-0" viewBox="0 0 24 24">
           <path
             fill="#4285F4"
             d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"

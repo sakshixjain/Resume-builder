@@ -4,10 +4,9 @@ import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Mail, Lock, Eye, EyeOff, Loader2, ArrowRight, Sparkles } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Loader2, ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
-import { Button } from "@/components/ui/Button";
 import { GoogleButton } from "./GoogleButton";
 
 interface LoginFormProps {
@@ -67,42 +66,37 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     }
   };
 
-  const handleFillDemo = () => {
-    setEmail("demo@quickcv.com");
-    setPassword("password123");
-    toast.info("Demo credentials filled in!");
-  };
-
   return (
-    <div className="w-full space-y-5">
+    <div className="w-full space-y-4">
       {/* Header Info */}
       <div className="text-center space-y-1">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
           Welcome back
         </h2>
         <p className="text-xs text-slate-500">
-          Sign in to your CV Builder account to save & access all your resumes
+          Sign in to your CV Builder account to save & access your resumes
         </p>
       </div>
 
       {/* Google OAuth Button */}
-      <div className="space-y-3">
+      <div className="pt-1">
         <GoogleButton
           label="Continue with Google"
           callbackUrl={callbackUrl}
         />
 
-        {/* Divider */}
-        <div className="relative flex items-center justify-center">
-          <div className="w-full border-t border-slate-200" />
-          <span className="bg-white px-3 text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+        {/* Symmetrical Clean Divider */}
+        <div className="relative flex items-center justify-center my-3.5">
+          <div className="grow border-t border-slate-200" />
+          <span className="shrink-0 px-3 text-[10.5px] font-semibold text-slate-400 uppercase tracking-wider">
             or sign in with email
           </span>
+          <div className="grow border-t border-slate-200" />
         </div>
       </div>
 
       {/* Email / Password Form */}
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-3.5">
         {/* Email Field */}
         <div>
           <Label required>Email Address</Label>
@@ -114,6 +108,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             leftIcon={<Mail className="w-4 h-4 text-slate-400" />}
             required
             autoComplete="email"
+            className="h-10 rounded-xl"
           />
         </div>
 
@@ -125,7 +120,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               <button
                 type="button"
                 onClick={onSwitchToForgotPassword}
-                className="text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline cursor-pointer"
+                className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:underline cursor-pointer"
               >
                 Forgot password?
               </button>
@@ -140,12 +135,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               leftIcon={<Lock className="w-4 h-4 text-slate-400" />}
               required
               autoComplete="current-password"
+              className="h-10 rounded-xl pr-10"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
               tabIndex={-1}
+              aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? (
                 <EyeOff className="w-4 h-4" />
@@ -156,26 +153,24 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           </div>
         </div>
 
-        {/* Remember me */}
-        <div className="flex items-center justify-between text-xs">
-          <label className="flex items-center gap-2 text-slate-600 cursor-pointer select-none">
+        {/* Remember me checkbox */}
+        <div className="flex items-center justify-between text-xs pt-0.5">
+          <label className="flex items-center gap-2 text-slate-600 hover:text-slate-900 cursor-pointer select-none">
             <input
               type="checkbox"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
-              className="rounded-xs border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+              className="w-4 h-4 rounded-md border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer accent-indigo-600"
             />
-            <span>Remember me for 30 days</span>
+            <span>Remember me</span>
           </label>
         </div>
 
         {/* Submit Button */}
-        <Button
+        <button
           type="submit"
-          variant="primary"
-          size="lg"
           disabled={isLoading}
-          className="w-full font-bold shadow-md shadow-blue-500/20 cursor-pointer"
+          className="w-full h-10.5 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-semibold text-xs sm:text-sm shadow-md shadow-indigo-600/20 hover:shadow-lg hover:shadow-indigo-600/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed mt-1"
         >
           {isLoading ? (
             <span className="flex items-center gap-2">
@@ -188,32 +183,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               <ArrowRight className="w-4 h-4" />
             </span>
           )}
-        </Button>
-      </form>
-
-      {/* Demo Credentials Helper Pill */}
-      <div className="p-3 rounded-lg bg-slate-50 border border-slate-200/80 flex items-center justify-between text-xs">
-        <div className="flex items-center gap-1.5 text-slate-600">
-          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-          <span>Need a test account?</span>
-        </div>
-        <button
-          type="button"
-          onClick={handleFillDemo}
-          className="text-blue-600 hover:text-blue-700 font-bold hover:underline cursor-pointer"
-        >
-          Auto-fill Demo
         </button>
-      </div>
+      </form>
 
       {/* Bottom Switch to Register */}
       {onSwitchToRegister && (
-        <div className="text-center text-xs text-slate-500 pt-1">
+        <div className="text-center text-xs text-slate-500 pt-1 pb-1">
           Don&apos;t have an account?{" "}
           <button
             type="button"
             onClick={onSwitchToRegister}
-            className="font-bold text-blue-600 hover:text-blue-700 hover:underline cursor-pointer"
+            className="font-bold text-indigo-600 hover:text-indigo-700 hover:underline cursor-pointer ml-1"
           >
             Create an account
           </button>
