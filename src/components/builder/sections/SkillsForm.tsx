@@ -69,10 +69,11 @@ export const SkillsForm: React.FC = () => {
       <form onSubmit={handleAddCustomSkill} className="space-y-2">
         <div className="flex gap-2">
           <Input
+            id="field-skills-input"
             placeholder="Type a skill name (e.g. Next.js, Kubernetes, UI Design)"
             value={customSkillName}
             onChange={(e) => setCustomSkillName(e.target.value)}
-            className="flex-1 text-xs h-10 rounded-xl"
+            className="flex-1 text-xs h-10 rounded-xl transition-all"
           />
 
           <Button type="submit" size="sm" className="shrink-0 text-xs font-semibold rounded-xl px-4 shadow-xs">

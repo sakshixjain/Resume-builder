@@ -17,7 +17,12 @@ import {
 } from "@/lib/resume/types";
 import { initialResumeData, emptyResumeData } from "@/lib/resume/defaultResume";
 import { RESUME_PRESETS } from "@/lib/resume/presets";
-import { getStoredResume, saveResumeToStorage } from "@/lib/resume/storage";
+import {
+  getStoredResume,
+  saveResumeToStorage,
+  getStoredTouchedFields,
+  saveTouchedFieldsToStorage,
+} from "@/lib/resume/storage";
 
 interface ResumeStoreState {
   resume: Resume;
@@ -29,6 +34,7 @@ interface ResumeStoreState {
   historyIndex: number;
 
   touchedSections: Record<string, boolean>;
+  touchedFields: Record<string, boolean>;
   pageCount: number;
 
   // Actions
@@ -36,6 +42,8 @@ interface ResumeStoreState {
   setResume: (resume: Resume) => void;
   loadPreset: (presetId: PresetId) => void;
   markSectionTouched: (sectionKey: string) => void;
+  markFieldTouched: (fieldKey: string) => void;
+  setTouchedFields: (fields: Record<string, boolean>) => void;
   updatePersonalInfo: (info: Partial<PersonalInfo>) => void;
   updateSummary: (summary: string) => void;
   
@@ -107,7 +115,9 @@ function triggerAutosave(get: () => ResumeStoreState, set: (state: Partial<Resum
   if (saveTimeout) clearTimeout(saveTimeout);
   saveTimeout = setTimeout(() => {
     const currentResume = get().resume;
+    const currentTouchedFields = get().touchedFields;
     saveResumeToStorage(currentResume);
+    saveTouchedFieldsToStorage(currentTouchedFields);
     set({ saveStatus: "saved" });
   }, 500);
 }
@@ -121,6 +131,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   history: [initialResumeData],
   historyIndex: 0,
   touchedSections: {},
+  touchedFields: {},
   pageCount: 1,
 
   setPageCount: (count: number) => set({ pageCount: Math.max(1, count) }),
@@ -129,6 +140,16 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
     set((state) => ({
       touchedSections: { ...state.touchedSections, [sectionKey]: true },
     }));
+  },
+
+  markFieldTouched: (fieldKey: string) => {
+    set((state) => ({
+      touchedFields: { ...state.touchedFields, [fieldKey]: true },
+    }));
+  },
+
+  setTouchedFields: (fields: Record<string, boolean>) => {
+    set({ touchedFields: fields });
   },
 
   setResume: (resume: Resume) => {
@@ -164,19 +185,27 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   },
 
   updatePersonalInfo: (info: Partial<PersonalInfo>) => {
-    set((state) => ({
-      touchedSections: { ...state.touchedSections, personalInfo: true },
-      resume: {
-        ...state.resume,
-        personalInfo: { ...state.resume.personalInfo, ...info },
-      },
-    }));
+    set((state) => {
+      const newTouched = { ...state.touchedFields };
+      Object.keys(info).forEach((key) => {
+        newTouched[`personalInfo.${key}`] = true;
+      });
+      return {
+        touchedSections: { ...state.touchedSections, personalInfo: true },
+        touchedFields: newTouched,
+        resume: {
+          ...state.resume,
+          personalInfo: { ...state.resume.personalInfo, ...info },
+        },
+      };
+    });
     triggerAutosave(get, set);
   },
 
   updateSummary: (summary: string) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, summary: true },
+      touchedFields: { ...state.touchedFields, summary: true },
       resume: {
         ...state.resume,
         summary,
@@ -188,16 +217,17 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   addExperience: () => {
     const newExp: Experience = {
       id: `exp-${Date.now()}`,
-      jobTitle: "Software Engineer",
-      company: "Company Name",
-      location: "City, Country",
+      jobTitle: "",
+      company: "",
+      location: "",
       startDate: new Date().toISOString().slice(0, 7),
       endDate: "",
       current: true,
-      description: "• Key accomplishment with measurable outcome\n• Led project delivering core features",
+      description: "",
     };
     set((state) => ({
       touchedSections: { ...state.touchedSections, experience: true },
+      touchedFields: { ...state.touchedFields, experience: true },
       resume: {
         ...state.resume,
         experience: [newExp, ...state.resume.experience],
@@ -209,6 +239,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   updateExperience: (id: string, exp: Partial<Experience>) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, experience: true },
+      touchedFields: { ...state.touchedFields, experience: true },
       resume: {
         ...state.resume,
         experience: state.resume.experience.map((item) =>
@@ -222,6 +253,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   deleteExperience: (id: string) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, experience: true },
+      touchedFields: { ...state.touchedFields, experience: true },
       resume: {
         ...state.resume,
         experience: state.resume.experience.filter((item) => item.id !== id),
@@ -233,16 +265,17 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   addEducation: () => {
     const newEdu: Education = {
       id: `edu-${Date.now()}`,
-      degree: "Bachelor of Science",
-      institution: "University Name",
-      location: "City, Country",
-      startDate: "2018-09",
-      endDate: "2022-05",
+      degree: "",
+      institution: "",
+      location: "",
+      startDate: "",
+      endDate: "",
       description: "",
       gpa: "",
     };
     set((state) => ({
       touchedSections: { ...state.touchedSections, education: true },
+      touchedFields: { ...state.touchedFields, education: true },
       resume: {
         ...state.resume,
         education: [newEdu, ...state.resume.education],
@@ -254,6 +287,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   updateEducation: (id: string, edu: Partial<Education>) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, education: true },
+      touchedFields: { ...state.touchedFields, education: true },
       resume: {
         ...state.resume,
         education: state.resume.education.map((item) =>
@@ -267,6 +301,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   deleteEducation: (id: string) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, education: true },
+      touchedFields: { ...state.touchedFields, education: true },
       resume: {
         ...state.resume,
         education: state.resume.education.filter((item) => item.id !== id),
@@ -278,12 +313,13 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   addSkill: (skill?: Partial<Skill>) => {
     const newSkill: Skill = {
       id: `sk-${Date.now()}-${Math.random().toString(36).substring(2, 5)}`,
-      name: skill?.name || "New Skill",
+      name: skill?.name || "",
       level: skill?.level || "Advanced",
       category: skill?.category || "General",
     };
     set((state) => ({
       touchedSections: { ...state.touchedSections, skills: true },
+      touchedFields: { ...state.touchedFields, skills: true },
       resume: {
         ...state.resume,
         skills: [...state.resume.skills, newSkill],
@@ -295,6 +331,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   updateSkill: (id: string, skill: Partial<Skill>) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, skills: true },
+      touchedFields: { ...state.touchedFields, skills: true },
       resume: {
         ...state.resume,
         skills: state.resume.skills.map((item) =>
@@ -308,6 +345,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   deleteSkill: (id: string) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, skills: true },
+      touchedFields: { ...state.touchedFields, skills: true },
       resume: {
         ...state.resume,
         skills: state.resume.skills.filter((item) => item.id !== id),
@@ -319,9 +357,9 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   addProject: () => {
     const newProj: Project = {
       id: `proj-${Date.now()}`,
-      name: "New Project",
-      description: "A description of your project, architecture, and impact.",
-      technologies: "React, TypeScript, Node.js",
+      name: "",
+      description: "",
+      technologies: "",
       projectUrl: "",
       githubUrl: "",
       startDate: "",
@@ -329,6 +367,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
     };
     set((state) => ({
       touchedSections: { ...state.touchedSections, projects: true },
+      touchedFields: { ...state.touchedFields, projects: true },
       resume: {
         ...state.resume,
         projects: [newProj, ...state.resume.projects],
@@ -340,6 +379,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   updateProject: (id: string, proj: Partial<Project>) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, projects: true },
+      touchedFields: { ...state.touchedFields, projects: true },
       resume: {
         ...state.resume,
         projects: state.resume.projects.map((item) =>
@@ -353,6 +393,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   deleteProject: (id: string) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, projects: true },
+      touchedFields: { ...state.touchedFields, projects: true },
       resume: {
         ...state.resume,
         projects: state.resume.projects.filter((item) => item.id !== id),
@@ -364,13 +405,14 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   addCertification: () => {
     const newCert: Certification = {
       id: `cert-${Date.now()}`,
-      name: "Certificate Name",
-      issuer: "Issuing Organization",
+      name: "",
+      issuer: "",
       date: new Date().toISOString().slice(0, 7),
       url: "",
     };
     set((state) => ({
       touchedSections: { ...state.touchedSections, certifications: true },
+      touchedFields: { ...state.touchedFields, certifications: true },
       resume: {
         ...state.resume,
         certifications: [newCert, ...state.resume.certifications],
@@ -382,6 +424,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   updateCertification: (id: string, cert: Partial<Certification>) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, certifications: true },
+      touchedFields: { ...state.touchedFields, certifications: true },
       resume: {
         ...state.resume,
         certifications: state.resume.certifications.map((item) =>
@@ -395,6 +438,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   deleteCertification: (id: string) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, certifications: true },
+      touchedFields: { ...state.touchedFields, certifications: true },
       resume: {
         ...state.resume,
         certifications: state.resume.certifications.filter((item) => item.id !== id),
@@ -403,7 +447,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
     triggerAutosave(get, set);
   },
 
-  addLanguage: (name = "Language") => {
+  addLanguage: (name = "") => {
     const newLang: Language = {
       id: `lang-${Date.now()}`,
       name,
@@ -411,6 +455,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
     };
     set((state) => ({
       touchedSections: { ...state.touchedSections, languages: true },
+      touchedFields: { ...state.touchedFields, languages: true },
       resume: {
         ...state.resume,
         languages: [...state.resume.languages, newLang],
@@ -422,6 +467,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   updateLanguage: (id: string, lang: Partial<Language>) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, languages: true },
+      touchedFields: { ...state.touchedFields, languages: true },
       resume: {
         ...state.resume,
         languages: state.resume.languages.map((item) =>
@@ -435,6 +481,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   deleteLanguage: (id: string) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, languages: true },
+      touchedFields: { ...state.touchedFields, languages: true },
       resume: {
         ...state.resume,
         languages: state.resume.languages.filter((item) => item.id !== id),
@@ -446,12 +493,13 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   addAchievement: () => {
     const newAch: Achievement = {
       id: `ach-${Date.now()}`,
-      title: "Award or Achievement Title",
-      description: "Brief summary of what you achieved and its significance.",
+      title: "",
+      description: "",
       date: new Date().getFullYear().toString(),
     };
     set((state) => ({
       touchedSections: { ...state.touchedSections, achievements: true },
+      touchedFields: { ...state.touchedFields, achievements: true },
       resume: {
         ...state.resume,
         achievements: [...state.resume.achievements, newAch],
@@ -463,6 +511,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   updateAchievement: (id: string, ach: Partial<Achievement>) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, achievements: true },
+      touchedFields: { ...state.touchedFields, achievements: true },
       resume: {
         ...state.resume,
         achievements: state.resume.achievements.map((item) =>
@@ -476,6 +525,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
   deleteAchievement: (id: string) => {
     set((state) => ({
       touchedSections: { ...state.touchedSections, achievements: true },
+      touchedFields: { ...state.touchedFields, achievements: true },
       resume: {
         ...state.resume,
         achievements: state.resume.achievements.filter((item) => item.id !== id),
@@ -646,6 +696,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
     set({
       resume: { ...initialResumeData, updatedAt: new Date().toISOString() },
       touchedSections: {},
+      touchedFields: {},
       saveStatus: "saved",
     });
     triggerAutosave(get, set);
@@ -655,6 +706,7 @@ export const useResumeStore = create<ResumeStoreState>((set, get) => ({
     set({
       resume: { ...emptyResumeData, updatedAt: new Date().toISOString() },
       touchedSections: {},
+      touchedFields: {},
       saveStatus: "saved",
     });
     triggerAutosave(get, set);

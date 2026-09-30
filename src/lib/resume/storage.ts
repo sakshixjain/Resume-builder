@@ -2,6 +2,7 @@ import { Resume } from "./types";
 import { initialResumeData } from "./defaultResume";
 
 const STORAGE_KEY = "quickcv_resume_data_v1";
+const TOUCHED_FIELDS_KEY = "quickcv_touched_fields_v1";
 
 export function getStoredResume(): Resume {
   if (typeof window === "undefined") return initialResumeData;
@@ -29,6 +30,25 @@ export function saveResumeToStorage(resume: Resume): void {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   } catch (err) {
     console.error("Failed to save resume to localStorage", err);
+  }
+}
+
+export function getStoredTouchedFields(): Record<string, boolean> {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = localStorage.getItem(TOUCHED_FIELDS_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+export function saveTouchedFieldsToStorage(touched: Record<string, boolean>): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(TOUCHED_FIELDS_KEY, JSON.stringify(touched));
+  } catch (err) {
+    console.error("Failed to save touched fields to localStorage", err);
   }
 }
 

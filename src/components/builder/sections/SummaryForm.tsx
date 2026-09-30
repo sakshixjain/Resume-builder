@@ -42,11 +42,12 @@ export const SummaryForm: React.FC = () => {
       </div>
 
       <Textarea
+        id="field-summary-text"
         placeholder="e.g. Results-driven Senior Full Stack Software Engineer with 6+ years of experience architecting high-throughput distributed web systems..."
         value={resume.summary}
         onChange={(e) => updateSummary(e.target.value)}
         rows={5}
-        className="text-xs leading-relaxed"
+        className="text-xs leading-relaxed transition-all"
       />
 
       <div className="flex justify-between items-center text-xs text-slate-400">

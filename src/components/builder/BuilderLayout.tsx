@@ -7,7 +7,7 @@ import { EditorPanel } from "./EditorPanel";
 import { PreviewPanel } from "./PreviewPanel";
 import { CustomizerModal } from "./CustomizerModal";
 import { MobileTabs } from "./MobileTabs";
-import { getStoredResume } from "@/lib/resume/storage";
+import { getStoredResume, getStoredTouchedFields } from "@/lib/resume/storage";
 
 import { useSearchParams } from "next/navigation";
 import { PresetSelectorModal } from "./PresetSelectorModal";
@@ -17,7 +17,7 @@ import { RESUME_PRESETS } from "@/lib/resume/presets";
 const subscribe = () => () => {};
 
 export const BuilderLayout: React.FC = () => {
-  const { mobileTab, setResume, updateSettings, loadPreset } = useResumeStore();
+  const { mobileTab, setResume, updateSettings, loadPreset, setTouchedFields } = useResumeStore();
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
   const [isPresetSelectorOpen, setIsPresetSelectorOpen] = useState(false);
   const [activeNavTab, setActiveNavTab] = useState("builder");
@@ -101,6 +101,10 @@ export const BuilderLayout: React.FC = () => {
   // Restore saved resume from localStorage on mount and apply template/preset query params
   useEffect(() => {
     const saved = getStoredResume();
+    const savedTouched = getStoredTouchedFields();
+    if (savedTouched && Object.keys(savedTouched).length > 0) {
+      setTouchedFields(savedTouched);
+    }
     const templateParam = searchParams.get("template");
     const presetParam = searchParams.get("preset");
     const validTemplates: TemplateId[] = [
@@ -157,7 +161,7 @@ export const BuilderLayout: React.FC = () => {
         updateSettings({ primaryColor: colorParam });
       }
     }
-  }, [setResume, searchParams, updateSettings, loadPreset]);
+  }, [setResume, searchParams, updateSettings, loadPreset, setTouchedFields]);
 
   if (!isHydrated) {
     return (

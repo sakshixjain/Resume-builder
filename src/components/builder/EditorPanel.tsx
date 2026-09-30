@@ -16,6 +16,9 @@ import { Modal } from "@/components/ui/Modal";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { Button } from "@/components/ui/Button";
+import { getSectionProgress } from "@/lib/resume/sectionProgress";
+import { ProgressCircle } from "@/components/ui/ProgressCircle";
+import { cn } from "@/lib/utils";
 import {
   User,
   FileText,
@@ -43,6 +46,7 @@ export const EditorPanel: React.FC = () => {
     resume,
     activeSection,
     touchedSections,
+    touchedFields,
     setActiveSection,
     moveSection,
     toggleSectionVisibility,
@@ -220,6 +224,7 @@ export const EditorPanel: React.FC = () => {
       <div className="flex-1 overflow-y-auto px-3.5 sm:px-5 py-2 space-y-3 pb-28 sm:pb-20">
         {allSectionsToRender.map((sectionKey) => {
           const meta = getSectionMeta(sectionKey);
+          const progress = getSectionProgress(sectionKey, resume, touchedFields);
           const isOpen = activeSection === sectionKey;
           const isVisible = resume.sectionVisibility[sectionKey] !== false;
           const isAnchored = sectionKey === "personalInfo";
@@ -256,7 +261,7 @@ export const EditorPanel: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Right: Status Pill & Chevron */}
+                {/* Right: Status Pill, Progress Circle & Chevron */}
                 <div className="flex items-center gap-2.5 shrink-0 ml-2">
                   {/* Reorder and Visibility controls when open */}
                   {isOpen && !isAnchored && (
@@ -304,19 +309,22 @@ export const EditorPanel: React.FC = () => {
                     </div>
                   )}
 
-                  {/* Completed Green Badge Pill when open or checkmark when collapsed */}
-                  {meta.isFilled && (
-                    isOpen ? (
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600 border border-emerald-200/80 shadow-2xs">
-                        <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                        Completed
-                      </span>
-                    ) : (
-                      <div className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center shrink-0">
-                        <Check className="w-3 h-3 stroke-[2.5]" />
-                      </div>
-                    )
-                  )}
+                  {/* Progress Indicator - always visible on the header */}
+                  <div
+                    className="flex items-center gap-1.5"
+                    title={`${progress.percentage}% completed (${progress.completedCount}/${progress.totalCount} details)`}
+                  >
+                    <ProgressCircle
+                      percentage={progress.percentage}
+                      size={26}
+                      strokeWidth={3}
+                      showValue={false}
+                      showIconOnComplete={true}
+                    />
+                    <span className="text-[11px] font-bold text-slate-500 tabular-nums">
+                      {progress.percentage}%
+                    </span>
+                  </div>
 
                   {/* Chevron Indicator */}
                   {isOpen ? (

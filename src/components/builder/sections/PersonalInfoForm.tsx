@@ -51,7 +51,10 @@ export const PersonalInfoForm: React.FC = () => {
     <div className="space-y-5">
       {/* Profile Photo / Avatar Upload Box (Only rendered for templates that display a photo) */}
       {supportsPhoto && (
-        <div className="p-4 sm:p-5 rounded-2xl bg-[#f8faff] border border-blue-100/90 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+        <div
+          id="field-photo"
+          className="p-4 sm:p-5 rounded-2xl bg-[#f8faff] border border-blue-100/90 flex flex-col sm:flex-row items-start sm:items-center gap-5 transition-all"
+        >
           {/* Dashed Avatar Box */}
           <div className="w-28 h-28 rounded-2xl border-2 border-dashed border-blue-200/80 bg-white/50 flex items-center justify-center relative shrink-0">
             <div className="w-20 h-20 rounded-full bg-slate-100/90 flex items-center justify-center text-slate-300 overflow-hidden relative shadow-2xs">
@@ -123,7 +126,7 @@ export const PersonalInfoForm: React.FC = () => {
 
       {/* Basic Contact Info Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
+        <div id="field-fullName" className="transition-all rounded-lg">
           <Label required>Full Name</Label>
           <Input
             placeholder="Shumayla Khan"
@@ -133,7 +136,7 @@ export const PersonalInfoForm: React.FC = () => {
           />
         </div>
 
-        <div>
+        <div id="field-title" className="transition-all rounded-lg">
           <Label required>Professional Title</Label>
           <Input
             placeholder="Senior Full Stack Software Engineer"
@@ -143,7 +146,7 @@ export const PersonalInfoForm: React.FC = () => {
           />
         </div>
 
-        <div>
+        <div id="field-email" className="transition-all rounded-lg">
           <Label required>Email Address</Label>
           <Input
             type="email"
@@ -154,7 +157,7 @@ export const PersonalInfoForm: React.FC = () => {
           />
         </div>
 
-        <div>
+        <div id="field-phone" className="transition-all rounded-lg">
           <Label required>Phone Number</Label>
           <Input
             placeholder="+1 (555) 234-5678"
@@ -164,7 +167,7 @@ export const PersonalInfoForm: React.FC = () => {
           />
         </div>
 
-        <div>
+        <div id="field-location" className="transition-all rounded-lg">
           <Label>Location</Label>
           <Input
             placeholder="San Francisco, CA"
@@ -174,7 +177,7 @@ export const PersonalInfoForm: React.FC = () => {
           />
         </div>
 
-        <div>
+        <div id="field-website" className="transition-all rounded-lg">
           <Label>Portfolio / Website</Label>
           <Input
             placeholder="https://alexmorgan.dev"
@@ -184,7 +187,7 @@ export const PersonalInfoForm: React.FC = () => {
           />
         </div>
 
-        <div>
+        <div id="field-linkedin" className="transition-all rounded-lg">
           <Label>LinkedIn Profile</Label>
           <Input
             placeholder="https://linkedin.com/in/alexandermorgan"
@@ -194,7 +197,7 @@ export const PersonalInfoForm: React.FC = () => {
           />
         </div>
 
-        <div>
+        <div id="field-github" className="transition-all rounded-lg">
           <Label>GitHub Profile</Label>
           <Input
             placeholder="https://github.com/alexmorgan-dev"
@@ -207,4 +210,5 @@ export const PersonalInfoForm: React.FC = () => {
     </div>
   );
 };
+
 

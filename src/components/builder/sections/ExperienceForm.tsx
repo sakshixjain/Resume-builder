@@ -75,6 +75,7 @@ export const ExperienceForm: React.FC = () => {
             return (
               <div
                 key={exp.id}
+                id={index === 0 ? "field-experience-first" : undefined}
                 className="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-2xs transition-all"
               >
                 {/* Header */}
@@ -249,6 +250,7 @@ export const ExperienceForm: React.FC = () => {
       )}
 
       <button
+        id="field-experience-add"
         type="button"
         className="w-full text-xs font-semibold border border-dashed border-blue-200 hover:border-blue-500 bg-blue-50/20 hover:bg-blue-50/40 text-blue-600 rounded-xl py-2.5 shadow-2xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
         onClick={addExperience}
