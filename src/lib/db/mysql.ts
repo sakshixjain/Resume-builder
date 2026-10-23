@@ -1,5 +1,14 @@
 import mysql from "mysql2/promise";
 
+const isRemote =
+  Boolean(process.env.DB_HOST) &&
+  process.env.DB_HOST !== "localhost" &&
+  process.env.DB_HOST !== "127.0.0.1";
+
+const sslConfig = isRemote
+  ? { minVersion: "TLSv1.2", rejectUnauthorized: true }
+  : undefined;
+
 // Database configuration with environment variables and sensible defaults
 const dbConfig = {
   host: process.env.DB_HOST || "localhost",
@@ -10,6 +19,7 @@ const dbConfig = {
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+  ssl: sslConfig,
 };
 
 let pool: mysql.Pool | null = null;
@@ -32,12 +42,13 @@ export async function initializeDatabase(): Promise<void> {
   if (isInitialized) return;
 
   try {
-    // 1. Create connection without database first to ensure database exists
+    // 1. Create connection to ensure database exists
     const setupConn = await mysql.createConnection({
       host: dbConfig.host,
       port: dbConfig.port,
       user: dbConfig.user,
       password: dbConfig.password,
+      ssl: sslConfig,
     });
 
     await setupConn.query(`CREATE DATABASE IF NOT EXISTS \`${dbConfig.database}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`);
