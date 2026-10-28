@@ -1,9 +1,24 @@
 import { MongoClient, Db } from "mongodb";
 
-// MongoDB URI from environment (MongoDB Atlas in production, local MongoDB fallback)
-const uri =
-  process.env.MONGODB_URI ||
-  "mongodb://127.0.0.1:27017/resume_builder";
+function getMongoUri(): string {
+  const uri =
+    process.env.MONGODB_URI ||
+    process.env.MONGODB_URL ||
+    process.env.DATABASE_URL ||
+    process.env.MONGO_URI;
+
+  if (uri && uri.trim() !== "") {
+    return uri.trim();
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      "MONGODB_URI environment variable is not set in Vercel. Please check Vercel > Settings > Environment Variables."
+    );
+  }
+
+  return "mongodb://127.0.0.1:27017/resume_builder";
+}
 
 const options = {
   maxPoolSize: 10,
@@ -11,32 +26,24 @@ const options = {
   connectTimeoutMS: 10000,
 };
 
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
-
 declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
-if (process.env.NODE_ENV === "development") {
-  // In development mode, use a global variable so that the value
-  // is preserved across module reloads caused by HMR (Hot Module Replacement).
+export function getClientPromise(): Promise<MongoClient> {
+  const uri = getMongoUri();
   if (!global._mongoClientPromise) {
-    client = new MongoClient(uri, options);
+    const client = new MongoClient(uri, options);
     global._mongoClientPromise = client.connect();
   }
-  clientPromise = global._mongoClientPromise;
-} else {
-  // In production mode, it's best to not use a global variable.
-  client = new MongoClient(uri, options);
-  clientPromise = client.connect();
+  return global._mongoClientPromise;
 }
 
 /**
  * Get MongoDB Database instance
  */
 export async function getDb(): Promise<Db> {
-  const connectedClient = await clientPromise;
+  const connectedClient = await getClientPromise();
   const dbName = process.env.MONGODB_DB_NAME || "resume_builder";
   return connectedClient.db(dbName);
 }
@@ -100,4 +107,4 @@ export async function initializeDatabase(): Promise<void> {
   }
 }
 
-export default clientPromise;
+export default getClientPromise;
