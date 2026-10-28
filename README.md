@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QuickCV - Resume Builder
+
+Built with Next.js App Router, Tailwind CSS, NextAuth, and **MongoDB NoSQL Database**.
 
 ## Getting Started
 
