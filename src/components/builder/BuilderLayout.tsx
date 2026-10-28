@@ -25,22 +25,22 @@ export const BuilderLayout: React.FC = () => {
   const searchParams = useSearchParams();
 
   // Adjustable panel split width percentage (Editor width: default 38%, min 22%, max 65%)
-  const [editorWidthPct, setEditorWidthPct] = useState<number>(38);
+  const [editorWidthPct, setEditorWidthPct] = useState<number>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const savedWidth = localStorage.getItem("resume_builder_split_pct");
+        if (savedWidth) {
+          const parsed = parseFloat(savedWidth);
+          if (!isNaN(parsed) && parsed >= 20 && parsed <= 70) {
+            return parsed;
+          }
+        }
+      } catch {}
+    }
+    return 38;
+  });
   const [isDragging, setIsDragging] = useState(false);
   const mainContainerRef = useRef<HTMLDivElement>(null);
-
-  // Load saved split width percentage from localStorage
-  useEffect(() => {
-    try {
-      const savedWidth = localStorage.getItem("resume_builder_split_pct");
-      if (savedWidth) {
-        const parsed = parseFloat(savedWidth);
-        if (!isNaN(parsed) && parsed >= 20 && parsed <= 70) {
-          setEditorWidthPct(parsed);
-        }
-      }
-    } catch {}
-  }, []);
 
   // Dragging handlers for split pane
   const handlePointerDown = (e: React.PointerEvent) => {

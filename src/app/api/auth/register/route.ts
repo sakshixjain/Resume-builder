@@ -35,7 +35,7 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error: any) {
-    console.error("MySQL Registration route error:", error);
+    console.error("MongoDB Registration route error:", error);
     return NextResponse.json(
       { success: false, error: error?.message || "An unexpected error occurred during database registration." },
       { status: 500 }

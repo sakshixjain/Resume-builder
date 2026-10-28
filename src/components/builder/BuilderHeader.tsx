@@ -180,7 +180,7 @@ export const BuilderHeader: React.FC<BuilderHeaderProps> = ({
 
     try {
       setIsDownloading(true);
-      // 2. Server-side MySQL Database check: verify user exists in database
+      // 2. Server-side MongoDB NoSQL Database check: verify user exists in database
       const verifyRes = await fetch("/api/auth/verify-download-access", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

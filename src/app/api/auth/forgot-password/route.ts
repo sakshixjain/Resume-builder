@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
       return NextResponse.json({
         success: true,
-        message: "Your password has been successfully reset in MySQL database! You can now log in.",
+        message: "Your password has been successfully reset! You can now log in.",
       });
     }
 

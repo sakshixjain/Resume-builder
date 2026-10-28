@@ -1,8 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { verifyCredentials, findUserByEmail } from "@/lib/db/userRepo";
-import { query } from "@/lib/db/mysql";
+import { verifyCredentials, upsertGoogleUser } from "@/lib/db/userRepo";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -46,18 +45,12 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === "google" && user.email) {
-        try {
-          const existing = await findUserByEmail(user.email);
-          if (!existing) {
-            const userId = user.id || `usr_google_${Date.now()}`;
-            await query(
-              "INSERT INTO users (id, name, email, image, provider) VALUES (?, ?, ?, ?, ?)",
-              [userId, user.name || "Google User", user.email.toLowerCase(), user.image || null, "google"]
-            );
-          }
-        } catch (err) {
-          console.error("Google sign in DB sync error:", err);
-        }
+        await upsertGoogleUser({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image,
+        });
       }
       return true;
     },

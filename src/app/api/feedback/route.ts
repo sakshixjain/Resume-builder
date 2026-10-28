@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
-import { query } from "@/lib/db/mysql";
+import { saveFeedback } from "@/lib/db/userRepo";
 
 export async function POST(req: NextRequest) {
   try {
@@ -22,23 +22,15 @@ export async function POST(req: NextRequest) {
       .filter(Boolean)
       .join(" | ");
 
-    try {
-      await query(
-        `INSERT INTO user_feedbacks (user_id, user_email, user_name, rating, tags, feedback_text, improvement_suggestions) 
-         VALUES (?, ?, ?, ?, ?, ?, ?)`,
-        [
-          userId,
-          userEmail,
-          userName,
-          ratingNum,
-          tagsString,
-          combinedFeedback || "",
-          improvementSuggestions || "",
-        ]
-      );
-    } catch (dbErr) {
-      console.warn("MySQL feedback insert warning (fallback):", dbErr);
-    }
+    await saveFeedback({
+      userId,
+      userEmail,
+      userName,
+      rating: ratingNum,
+      tags: tagsString,
+      feedbackText: combinedFeedback || "",
+      improvementSuggestions: improvementSuggestions || "",
+    });
 
     return NextResponse.json({
       success: true,

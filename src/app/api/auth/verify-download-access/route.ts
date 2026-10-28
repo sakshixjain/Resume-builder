@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // Verify directly against MySQL database
+    // Verify directly against MongoDB database
     const dbUser = await findUserByEmail(session.user.email);
 
     if (!dbUser) {
@@ -37,12 +37,12 @@ export async function POST(req: Request) {
       if (body?.template) templateUsed = body.template;
     } catch {}
 
-    // Log the download action in MySQL download_logs
+    // Log the download action in MongoDB download_logs
     await logDownload(dbUser.id, dbUser.email, templateUsed);
 
     return NextResponse.json({
       allowed: true,
-      message: "Download authorized by MySQL database",
+      message: "Download authorized by MongoDB database",
       user: {
         id: dbUser.id,
         name: dbUser.name,
