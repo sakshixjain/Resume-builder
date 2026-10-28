@@ -1,14 +1,21 @@
 import { MongoClient, Db } from "mongodb";
 
 function getMongoUri(): string {
-  const uri =
+  const rawUri =
     process.env.MONGODB_URI ||
     process.env.MONGODB_URL ||
     process.env.DATABASE_URL ||
     process.env.MONGO_URI;
 
-  if (uri && uri.trim() !== "") {
-    return uri.trim();
+  if (rawUri && rawUri.trim() !== "") {
+    let cleanUri = rawUri.trim();
+    // Atlas users are stored in the 'admin' auth database.
+    // Ensure authSource=admin is present so MongoDB doesn't authenticate against resume_builder
+    if (cleanUri.startsWith("mongodb+srv://") && !cleanUri.includes("authSource=")) {
+      const separator = cleanUri.includes("?") ? "&" : "?";
+      cleanUri = `${cleanUri}${separator}authSource=admin`;
+    }
+    return cleanUri;
   }
 
   if (process.env.NODE_ENV === "production") {
